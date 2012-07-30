@@ -1,65 +1,67 @@
 <!DOCTYPE html>
 
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dépouillage en ligne">  
-	<meta name="author" content="Jean-Pascal MILCENT">
-	
-	<title>Depim</title>
-    
-    <link rel="shortcut icon" href="img/favicon.ico">
-    
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/depim.css">
-  </head>
-  <body>
-     <header id="header"> 
-		<h1 class="site-title">
-		  <a href="/">
-		  	<img src="img/depim.png" alt="Depim"/>
-		  	Outils de dépouillement en ligne
-          </a>
-        </h1>
-        <div id="busy" class="startup">
-          <img src="img/chargement.gif" alt="Loading..." /> 
-        </div>
-        <div class="sys-menu">
-          <span id="account"></span>
-        </div>
-    </header>
-
-    <aside id="sidebar" class="column">
-      <section class="menu">
-        
-      </section>
-      <hr/>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Dépouillage en ligne">  
+		<meta name="author" content="Jean-Pascal MILCENT">
+		
+		<title>Depim</title>
+		
+		<link rel="shortcut icon" href="img/favicon.ico">
+		
+		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/depim.css">
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<header class="span12"> 
+					<h1 class="site-title">
+						<a href="/">
+							<img src="img/depim.png" alt="Depim"/>
+							Outils de dépouillement en ligne
+						</a>
+					</h1>
+					<div class="sys-menu">
+						<span id="account"></span>
+					</div>
+				</header>
       
-      <section id="copyright">
-        Copyright 2012 <br/> 
-        Jean-Pascal Milcent<br/>
-        <hr/>
-        Aide sur 
-        <a href="http://www.depim.net/communauté">
-          Depim Wiki 
-        </a>
-        <hr/>
-        <a href="terms.html">Terms</a> | <a href="termsofuse.html">Terms of Use</a>
-      </section>
-    </aside>
-    
-    <section id="msg-bloc" class="msg widget"> </section>
-    
-    <section id="main">
-      <section id="main-bloc" class="widget scroll"> </section>
-    </section> 
-    
-    <section id="dialog-overlay">
-      <div id="dialog-bloc" class="widget scroll"> </div>
-    </section>
+				<div class="row-fluid">
+					<aside id="sidebar" class="span2">
+						<nav id="menu">
+						</nav>
+						<hr/>
+						
+						<section id="copyright">
+							Copyright 2012 <br/> 
+							Jean-Pascal Milcent<br/>
+							Aide sur 
+							<a href="http://www.depim.net/communauté">
+								Depim Wiki 
+							</a><br />
+							<a href="terms.html">Terms</a> | <a href="termsofuse.html">Terms of Use</a>
+						</section>
+					</aside>
+	    	
+					<div class="span10">
+						<section id="msg-bloc" class="msg widget"> </section>
 
-    <script type="application/dart" src="depim.dart"></script>
-    <script src="http://dart.googlecode.com/svn/branches/bleeding_edge/dart/client/dart.js"></script>
-  </body>
+						<section id="main">
+							<section id="main-bloc" class="widget scroll"> </section>
+						</section> 
+					</div>
+				</div>
+				
+				<footer class="span12">DPIM v0.1</footer>
+			</div>
+		</div>
+		
+		<section id="dialog-overlay"></section>
+
+		<script type="application/dart" src="depim.dart"></script>
+		<script src="http://dart.googlecode.com/svn/branches/bleeding_edge/dart/client/dart.js"></script>
+	</body>
 </html>

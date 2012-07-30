@@ -23,25 +23,17 @@ img {
     padding: 8px;
     /*border: 1px solid #3f7785;*/
 }
-.module.editor {
-    margin: 8px;
-    padding: 8px;
-    border: 1px solid #AAA;
-    background-color: #EEE;
-    border-radius: 5px 5px 5px 5px;
-}
+
 header {
-    -moz-box-shadow:inset 0px -10px 5px #EEE;
-    -webkit-box-shadow:inset 0px -10px 5px #EEE;
-}
-header#header {
-    background: white;
+    box-shadow: -2px 1px 6px lightGrey;
+	background-color: #EEE;
+	border-bottom: 1px none #D3D3D3;
     height: 55px;
     width: 100%;
     position: fixed;
     z-index: 1000;
 }
-header#header h1.site-title a {
+header h1.site-title a {
 	color: #333;
 	font-size: 0.6em;
 	font-weight: lighter;
@@ -49,20 +41,20 @@ header#header h1.site-title a {
 	text-decoration: none;
 	margin-left: 8px;
 }
-header#header .sys_menu {
+header .sys_menu {
 	color: #AAA;
 	float: right;
 	margin-top: -30px;
 	margin-right: 15px;
 }
-header#header .sys_menu a {
+header .sys_menu a {
 	color: #AAA;
 	text-decoration: none;
 	margin-left: 1px;
 	font-weight: bold;
 	padding: 0 5px 0 5px
 }
-header#header .sys_menu a:hover {
+header .sys_menu a:hover {
 	color: #FFFFFF;
 	background-color: #8eb533;
 	-moz-box-shadow: none;
@@ -192,7 +184,9 @@ section.msg.err {
 
 section#main-bloc {
 	background: transparent;
-	min-height: 600px;
+	min-height: 400px;
+	display:block;
+	overflow: auto;
 }
 
 section#dialog-overlay {
@@ -214,7 +208,6 @@ div#dialog-bloc {
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-khtml-border-radius: 5px;
-	background-color: #eee;
 	position: relative;
 	top: 30px;
         left: 0px;
@@ -230,13 +223,8 @@ div#dialog-bloc {
         overflow: auto;
         /*text-align:center*/}
 
-div#dialog-bloc table {
-    margin-left:auto; 
-    margin-right:auto;
-}
-
 aside#sidebar {
-	background: repeat scroll 0 0 #E0E0E3;
+	background-color:#E0E0E3;
 	position:fixed;
 	top:0px;
 	z-index:10;
@@ -244,8 +232,8 @@ aside#sidebar {
 	height: 100%;
 	min-height: 600px;
 	width: 215px;
-	box-shadow: -1px -7px 6px #000000;
-	background-color: #EEEEEE;
+	box-shadow: -2px -7px 6px lightGrey;
+	background-color: #EEE;
 	border-right: 1px none #D3D3D3;
 	
 }
