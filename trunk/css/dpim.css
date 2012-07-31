@@ -1,0 +1,319 @@
+/* Bases */
+html, body {
+	width:100%;
+	height:100%;
+}
+body {
+	margin: 0;
+	padding: 0;
+	border-collapse: collapse;
+	/* TODO: Package font for non-macs. */
+	font-family: Gill Sans MT, Gill Sans;
+	font-size: 14px;
+	display: box; display: -webkit-box; display: -moz-box;
+	-webkit-box-orient: horizontal; -moz-box-orient: horizontal; box-orient: horizontal;
+}
+#page {
+	display: box; display: -webkit-box; display: -moz-box; 
+	-webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
+	-webkit-box-orient:vertical; -moz-box-orient:vertical; box-orient:vertical;
+}
+#center {
+	background-color: yellow;
+	display: box; display: -webkit-box; display: -moz-box;
+	-webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
+	-webkit-box-orient: horizontal; -moz-box-orient: horizontal; box-orient: horizontal;
+	height:100%;
+}
+#left {
+	background-color: #e8eaeb;
+	width: 250px;
+	max-width: 400px;
+	overflow: auto;
+	-webkit-resize: horizontal; -moz-resize: horizontal; resize: horizontal;
+}
+#right {
+	background-color: grey;
+	display: -webkit-box; display: -moz-box; display: box;
+	-webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
+	-webkit-box-orient: vertical; -moz-box-orient: vertical; box-orient: vertical;
+	overflow: auto;
+}
+
+header {
+	display : block;
+}
+#topbar-controls img {
+	display: block;
+}
+#topbar-controls {
+	display: -webkit-box;display: -moz-box;
+	-webkit-box-flex: 0;-moz-box-flex: 0;
+	-webkit-box-align: center;-moz-box-align: center;
+}
+#topbar-name {
+	display: block;
+	color: white;
+	font-size: 10pt;
+	padding: 0 5px;
+	font: 13px/27px Arial,sans-serif;
+	text-shadow: 1px 1px 1px #666;
+}
+#appli-titre {
+	-webkit-box-flex: 1;-moz-box-flex: 1;
+	font-size: 28px;
+	font-weight: bold;
+	padding-left: 5px;
+	margin:0;
+	/* text-shadow is meant to give title a stark, even thinner appearance */
+	text-shadow: 1px 1px 1px #666;
+	color: #6ef;
+}
+footer {
+	display : block;
+}
+footer #statut-infos {
+	webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
+}
+footer #statut-dart {
+	webkit-box-flex: 0; -moz-box-flex: 0; box-flex: 0;
+}
+
+#panneau-saisie {
+	display: -webkit-box; display: -moz-box; display: box;
+}
+#saisie-doc {
+	-webkit-box-flex: 0; -moz-box-flex: 0; box-flex: 0;
+}
+#saisie-personne {
+	-webkit-box-flex: 1; -moz-box-flex: 1; box-flex: 1;
+}
+#panneau-personnes {
+	display: -webkit-box; display: -moz-box; display: box;
+	-webkit-box-orient: vertical; -moz-box-orient: vertical; box-orient: vertical;
+	-webkit-box-pack: justify;-moz-box-pack: center;
+}
+table#personnes{
+	width:100%;
+}
+
+.barre{
+	display: -webkit-box; display: -moz-box; display: box;
+	-webkit-box-align: center;-moz-box-align: center;
+	-webkit-box-pack: justify;-moz-box-pack: justify;
+	-webkit-box-shadow: 5px rgba(0, 0, 0, 0.4);-moz-box-shadow: 5px rgba(0, 0, 0, 0.4);
+	height: 33px; /* CssStyles.SANDBAR_HEIGHT */
+	background: #332;
+	padding: 2px;
+	color:white;
+}
+
+/* FORMULAIRE */
+ul.champs {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+}
+form {
+	-moz-border-radius: 5px; -webkit-border-radius: 5px; -khtml-border-radius: 5px;	border-radius: 5px;
+	counter-reset: fieldsets;
+	padding: 5px;
+}
+form fieldset {
+	border: none;
+	margin-bottom: 10px;
+}	
+form fieldset:last-of-type {
+	margin-bottom: 0;
+}
+form legend {
+	color: #384313;
+	font-size: 16px;
+	font-weight: bold;
+	padding-bottom: 10px;
+	text-shadow: 0 1px 1px #c0d576;
+}
+form fieldset fieldset legend {
+	color: #111111;
+	font-size: 13px;
+	font-weight: normal;
+	padding-bottom: 0;
+}
+form ol li {
+	background: #b9cf6a;
+	background: rgba(255,255,255,.3);
+	border-color: #e3ebc3;
+	border-color: rgba(255,255,255,.6);
+	border-style: solid;
+	border-width: 2px;
+	-moz-border-radius: 5px; -webkit-border-radius: 5px; khtml-border-radius: 5px;border-radius: 5px;
+	line-height: 30px;
+	list-style: none;
+	padding: 5px 10px;
+	margin-bottom: 2px;
+}
+form ol ol li {
+	background: none;
+	border: none;
+	float: left;
+}
+form label {
+	float: left;
+	font-size: 13px;
+	width: 110px;
+}
+form fieldset fieldset label {
+	background:none no-repeat left 50%;
+	line-height: 20px;
+	padding: 0 0 0 30px;
+	width: auto;
+}
+form fieldset fieldset label:hover {
+	cursor: pointer;
+}
+form input:not([type=radio]), form textarea {
+	background: #ffffff;
+	border: none;
+	-moz-border-radius: 3px;-webkit-border-radius: 3px;-khtml-border-radius: 3px;border-radius: 3px;
+	outline: none;
+	padding: 5px;
+	width: 210px;
+}
+form input:not([type=submit]):focus, form textarea:focus {
+	background: #eaeaea;
+}
+form input[type=radio] {
+	float: left;
+	margin-right: 5px;
+}
+button {
+	background: #384313;
+	border: none;
+	-moz-border-radius: 20px;-webkit-border-radius: 20px;-khtml-border-radius: 20px;border-radius: 20px;
+	color: #ffffff;
+	display: block;
+	letter-spacing: 1px;
+	margin: auto;
+	padding: 7px;
+	text-shadow: 0 1px 1px #000000;
+	text-transform: uppercase;
+}
+button:hover {
+	background: #1e2506;
+	cursor: pointer;
+}
+
+/* TABLEAU */
+table, caption, tbody, tfoot, thead, tr, th, td {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+table {
+    border:1px solid #d3d3d3;
+    background:#fefefe;
+    margin:5% auto 0;
+    -moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+th, td {padding:8px 8px 8px; text-align:center; }
+th {padding-top:2px; text-shadow: 1px 1px 1px #fff; background:#e8eaeb;}
+td {border-top:1px solid #e0e0e0; border-right:1px solid #e0e0e0;}
+tr.odd-row td {background:#f6f6f6;}
+td.first, th.first {text-align:left}
+td.last {border-right:none;}
+/*Background gradients are completely unnecessary but a neat effect.*/
+td {
+    background: -moz-linear-gradient(100% 25% 90deg, #fefefe, #f9f9f9);
+    background: -webkit-gradient(linear, 0% 0%, 0% 25%, from(#f9f9f9), to(#fefefe));
+}
+tr.odd-row td {
+    background: -moz-linear-gradient(100% 25% 90deg, #f6f6f6, #f1f1f1);
+    background: -webkit-gradient(linear, 0% 0%, 0% 25%, from(#f1f1f1), to(#f6f6f6));
+}
+th {
+    background: -moz-linear-gradient(100% 20% 90deg, #e8eaeb, #ededed);
+    background: -webkit-gradient(linear, 0% 0%, 0% 20%, from(#ededed), to(#e8eaeb));
+}
+/*I know this is annoying, but we need additional styling so webkit will recognize rounded corners on background elements.  Nice write up of this issue: http://www.onenaught.com/posts/266/css-inner-elements-breaking-border-radius
+And, since we've applied the background colors to td/th element because of IE, Gecko browsers also need it.*/
+tr:first-child th.first {
+    -moz-border-radius-topleft:5px;-webkit-border-top-left-radius:5px;
+}
+tr:first-child th.last {
+    -moz-border-radius-topright:5px;-webkit-border-top-right-radius:5px;
+}
+tr:last-child td.first {
+    -moz-border-radius-bottomleft:5px;-webkit-border-bottom-left-radius:5px;
+}
+tr:last-child td.last {
+    -moz-border-radius-bottomright:5px;-webkit-border-bottom-right-radius:5px;
+}
+
+/*MISE EN PAGE SAISIE*/
+
+form#saisie {
+	width:400px;
+}
+form .champ {
+	clear:both;
+	
+}
+form .champ label, form .champ input, form .champ select {
+	float:left;
+	margin:2px;
+}
+form datalist label {
+	width:30px;
+	text-align:center;
+}
+form select {
+	padding:3px;
+}
+#type-acte-chp input, #date-chp input {
+	width:100px;
+}
+#sous-acte-chp input, #page-acte-num-chp input, #acte-page-chp input {
+	width:30px;
+}
+#sous-acte-chp label[for=sous_acte_nbre], .champ label[for=page_actes], .champ label[for=page_nbre_total] {
+	width:20px;
+	text-align:center;
+}
+#sous-acte-nbre-chp label {
+	padding-left:5px;
+	width:60px;
+	text-align:center;
+}
+/*MISE EN PAGE LISTE*/
+#liste-titre{
+	color:white;
+	background-color:#333322;
+	border:0px solid red;
+	writing-mode:tb-rl;
+	/*-webkit-transform:rotate(-90deg); -moz-transform:rotate(-90deg) translatex(-100%); -o-transform: rotate(-90deg);*/
+	white-space:nowrap;
+	text-align:center;
+	height:100%;
+	width:30px;
+	float: left;
+	margin:0;
+	padding:0;
+	font-family: ‘Treebuchet MS’, Helvetica, sans-serif;
+	font-size:24px;
+	font-weight:normal;
+	text-shadow: 0 0 1px grey;
+}
+#liste{
+	margin-left: 20px
+}
+.liste-navigation {
+	text-align:center;
+}
+.liste-navigation button{
+	display:inline;
+}

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<title>dpim</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<link href="css/bootstrap.css" rel="stylesheet" text="text/css">
+		<link href="css/bootstrap-responsive.css" rel="stylesheet" text="text/css">
+		<link href="css/dpim.css" rel="stylesheet" text="text/css">
+	</head>
+	<body>
+		<div id="page">
+			<header class="barre">
+				<h1 id="appli-titre">
+					DPIM
+				</h1>
+				<div id="topbar-controls">
+					<img src="img/avatar.jpg" width="23" height="24">
+					<span id="topbar-name">Jean-Pascal</span>
+					<img src="img/icone_config.png" width="77" height="30">
+				</div>
+			</header>
+			<div id="center">
+				<div id="left">
+					<h2 id="liste-titre">Liste des actes</h2>
+					<div id="liste">
+						<form id="liste-filtre">
+							<label for="filtre-nom">Filtrer</label>
+							<input id="filtre-nom" type="text" placeholder="Filtrer les noms" />
+						</form>
+						
+						<ul id="liste-noms">
+						</ul>
+						
+					    <div class="pagination">
+						    <ul>
+							    <li><a href="#">Prev</a></li>
+						    	<li class="active"><a href="#">1</a></li>
+						    	<li><a href="#">2</a></li>
+						    	<li><a href="#">3</a></li>
+						    	<li><a href="#">Next</a></li>
+						    </ul>
+						</div>
+					</div>
+				</div>
+				<div id="right">
+					<div id="panneau-saisie">
+						<form id="saisie-doc" autocomplete="on">
+							<fieldset>
+								<legend>Document</legend>
+								<div class="champ">
+									<label for="commune">Commune</label>
+									<input id="commune" name="commune" type="text" placeholder="Nom de la commune" required value=""/>
+								</div>
+								<div class="champ">
+									<label for="commune_insee">Code INSEE</label>
+									<input id="commune_insee" name="commune_insee" type="text" maxlength="5" required value=""/>
+								</div>
+								<div class="champ">
+									
+								</div>
+							</fieldset>
+							<fieldset>
+								<legend>Page</legend>
+								<div id="acte-page-chp" class="champ">
+									<label for="page">Page n°</label>
+									<input id="page" name="page" type="text" required value=""/>
+									<label for="page_nbre_total">/</label>
+									<input id="page_nbre_total" name="page_nbre_total" type="text" title="Nombre total de pages du document" required value=""/>
+								</div>
+							</fieldset>
+							<fieldset id="acte">
+								<legend>Acte</legend>
+								<div id="page-acte-num-chp" class="champ">
+									<label for="page_acte_num" title="Position de l'acte dans la page en partant de d'en haut à gauche">Acte n°</label>
+									<input id="page_acte_num" name="page_acte_num" type="text" pattern="[0-9]+" required value=""/>
+									<label for="page_actes" title="Nombre d'actes total de la page">/</label>
+									<input id="page_actes" name="page_actes" pattern="[0-9]+" required type="text" title="Nombre total d'actes de la page" value=""/>
+								</div>
+								<div id="sous-acte-chp" class="champ nbre">
+									<label for="sous_acte_num" title="Si l'acte contient plusieurs mariages, bâptème... indiqué le numéro">Sous-acte n°</label>
+									<input class="nbre" id="sous_acte_num" name="sous_acte_num" pattern="[0-9]+" type="text" value=""/>
+									<label for="sous_acte_nbre">/</label>
+									<input class="nbre" id="sous_acte_nbre" name="sous_acte_nbre" pattern="[0-9]+" type="text" title="Nombre de sous-acte" value=""/>
+								</div>
+								<div id="type-acte-chp" class="champ">
+									<label for="acte_type">Type d'acte</label>
+									<input id="acte_type" name="acte_type" type="text" list="liste-types-acte" value=""/>
+									<datalist id="liste-types-acte">
+										<label for="acte_type_std" class="choix" title="Choisir une valeur standard">ou</label>
+										<select id="acte_type_std" name="acte_type_std" >
+											<option value="B">Bâpteme</option>
+											<option value="N">Naissance</option>
+											<option value="M">Mariage</option>
+											<option value="S">Sépulture</option>
+											<option value="D">Décès</option>
+										</select>
+									</datalist>
+								</div>
+								<div id="date-chp" class="champ">
+									<label for="date_acte">Date</label>
+									<input id="date_acte" name="date_acte" type="date" pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}" title="La date de l'acte au format jj/mm/aaaa. Mettre des 0 en cas de valeur inconnue." value=""/>
+								</div>
+							</fieldset>
+						</form>
+						<form id="saisie-personne" autocomplete="on">
+								<legend>Personne</legend>
+								<ul class="champs">
+									<li id="type-personne-chp" class="champ">
+										<label for="type_personne">Type</label>
+										<input id="type_personne" name="type_personne" type="text" list="liste-types-personne" value="" style="width:80px"/>
+										<datalist id="liste-types-personne">
+											<label for="type_personne_std" title="Choisir une valeur standard">ou</label>
+											<select id="type_personne_std" name="type_personne_std">
+												<option value="Inhumé">Inhumé</option>
+												<option value="Témoin">Témoin</option>
+												<option value="Baptisé">Baptisé</option>
+												<option value="Père">Père</option>
+												<option value="Mère">Mère</option>
+												<option value="Parrain">Parrain</option>
+												<option value="Maraine">Maraine</option>
+												<option value="Époux">Époux</option>
+												<option value="Ex-épouse">Ex-épouse</option>
+												<option value="Père époux">Père époux</option>
+												<option value="Mère époux">Mère époux</option>
+												<option value="Épouse">Épouse</option>
+												<option value="Ex-époux">Ex-époux</option>
+												<option value="Père épouse">Père épouse</option>
+												<option value="Mère épouse">Mère épouse</option>
+												<option value="Citée">Citée</option>
+											</select>
+										</datalist>
+									</li>
+									<li class="champ">
+										<label for="parente">Lien de parenté</label>
+										<input id="parente" name="parente" type="text" title="Lien de parenté avec le sujet principal de l'acte" value=""/>
+									</li>
+									<li class="champ">
+										<label for="prefixe">Préfixe</label>
+										<input id="prefixe" name="prefixe" type="text" value=""/>
+									</li>
+									<li class="champ">
+										<label for="nom">Nom</label>
+										<input id="nom" name="nom" type="text" value=""/>
+									</li>
+									<li class="champ">
+										<label for="prenoms">Prénom</label>
+										<input id="prenoms" name="prenoms" type="text" value=""/>
+									</li>
+									<li class="champ">
+										<label for="sexe">Sexe</label>
+										<input id="sexe" name="sexe" type="text" pattern="MF?" list="liste-sexe" value="" style="width:130px"/>
+										<datalist id="liste-sexe">
+											<label for="sexe_std" title="Choisir une valeur standard">ou</label>
+											<select id="sexe_std" name="sexe_std">
+												<option value=""></option>
+												<option value="M">Masculin</option>
+												<option value="F">Féminin</option>
+												<option value="I">Illisible</option>
+											</select>
+										</datalist>
+									</li>
+									<li class="champ">
+										<label for="age">Age</label>
+										<input id="age" name="age" type="text" value="" style="width:50px"/>
+										<select id="type_age" name="type_age">
+											<option value="ans" selected>ans</option>
+											<option value="heures">heures</option>
+											<option value="jours">jours</option>
+											<option value="semaines">semaines</option>
+											<option value="mois">mois</option>
+										</select>
+									</li>
+									<li class="champ">
+										<label for="signature">Signature</label>
+										<select id="signature" name="signature">
+											<option value="" selected></option>
+											<option value="oui">Oui</option>
+											<option value="non">Non</option>
+										</select>
+									</li>
+									<li class="champ">
+										<label for="defunt">Défunt</label>
+										<select id="defunt" name="defunt">
+											<option value="" selected></option>
+											<option value="oui">Oui</option>
+											<option value="non">Non</option>
+										</select>
+									</li>
+									<li class="champ">
+										<label for="profession">Profession</label>
+										<input id="profession" name="profession" type="text" value=""/>
+									</li>
+									<li class="champ">
+										<label for="origine">Lieu d'origine</label>
+										<input id="origine" name="origine" type="text" value=""/>
+									</li>
+									<li class="champ">
+										<label for="notes">Notes</label>
+										<textarea id="notes" name="notes"></textarea>
+									</li>
+									<li>
+										<button id="ajouter-personne">Ajouter</button>
+									</li>
+								</ul>
+							</fieldset>
+						</form>
+					</div>
+					<div id="panneau-personnes">
+						<h2>Personnes de l'acte</h2>
+						<table id="personnes">
+							<thead>
+								<tr>
+									<th>Type</th>
+									<th>Parenté</th>
+									<th>Préfixe</th>
+									<th>Nom</th>
+									<th>Prénom</th>
+									<th>Sexe</th>
+									<th>Age</th>
+									<th>Signé</th>
+									<th>Défunt</th>
+									<th>Profession</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></th>
+									<td></td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div>
+						<button id="enregistrer">Enregistrer</button>
+					</div>
+				</div>
+			</div>
+			<footer class="barre">
+				<p id="statut-infos" >©Clapas.org - 2011</p>
+				<p id="statut-dart">dart is not running</p>
+			</footer>
+		</div>
+	    <script type="application/dart" src="Dpim.dart"></script>
+	    <script src="http://dart.googlecode.com/svn/branches/bleeding_edge/dart/client/dart.js"></script>
+	</body>
+</html>
