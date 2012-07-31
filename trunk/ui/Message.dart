@@ -1,21 +1,36 @@
 class Message {
   String type;
   Element elem;
+  int msgDuration = 3000;
 
   Message(this.type);
 
   void show(text) {
-    this.elem = new Element.html('''
+    elem = new Element.html('''
       <div class="alert alert-${type}">
         <button class="close" data-dismiss="alert">×</button>
         <h4 class="alert-heading">${type}</h4>
         ${text}.
       </div>''');
 
-    elem.query('.close').on.click.add((e) {
-      this.elem.remove();
-    });
+    addCloseEvent();
+    query('#msg-bloc').nodes.add(elem);
+    addTimer();
+  }
 
-    query("#msg-bloc").nodes.add(elem);
+  addCloseEvent() {
+    elem.query('.close').on.click.add((e) {
+      delete();
+    });
+  }
+
+  addTimer() {
+    new Timer(msgDuration, (Timer t) {
+      delete();
+    });
+  }
+
+  delete() {
+    elem.remove();
   }
 }
