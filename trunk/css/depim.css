@@ -70,7 +70,7 @@ header #version {
 }
 header #account {
 	padding-left: 20px;
-	background: url(../img/icons/user.png) 0 2px no-repeat;
+	background: url(../img/user.png) 0 2px no-repeat;
 	text-transform: capitalize;
 }
 header #busy {
