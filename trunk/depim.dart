@@ -1,7 +1,6 @@
-#import('dart:core');
-#import('dart:html');
+import 'dart:html';
 
-#import('ui/ui.dart');
+import 'ui/ui.dart';
 
 void main() {
   query("#menu-home a").on.click.add(openHomeView);

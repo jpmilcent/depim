@@ -1,5 +1,5 @@
 class MessageOverlay {
-  String type;
+  var type;
 
   MessageOverlay(this.type);
 

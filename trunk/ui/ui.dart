@@ -1,6 +1,5 @@
 #library('depim:ui');
 
-#import('dart:core');
 #import('dart:isolate');
 #import('dart:html');
 

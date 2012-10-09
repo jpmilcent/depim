@@ -1,7 +1,7 @@
 class Message {
   String type;
   Element elem;
-  int msgDuration = 3000;
+  var msgDuration = 3000;
 
   Message(this.type);
 

@@ -1,0 +1,5 @@
+name:  depim
+description:  Gestion des dépouillements en ligne
+dependencies:
+  unittest: { sdk: unittest }
+

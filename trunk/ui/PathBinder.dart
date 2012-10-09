@@ -1,10 +1,10 @@
 class PathBinder {
-  var PATH = const RegExp(@'^[^#]*(#.+)$');
-  var PATH_REPLACER = const RegExp(@'([^\/]+)');
-  var PATH_NAME_MATCHER = const RegExp(@'/:([\w\d]+)/g');
-  var QUERY_STRING_MATCHER = const RegExp(@'/\?([^#]*)$/');
-  var SPLAT_MATCHER = const RegExp(@'/(\*)/');
-  var SPLAT_REPLACER = const RegExp(@'(.+)');
+  var PATH = const RegExp(r'^[^#]*(#.+)$');
+  var PATH_REPLACER = const RegExp(r'([^\/]+)');
+  var PATH_NAME_MATCHER = const RegExp(r'/:([\w\d]+)/g');
+  var QUERY_STRING_MATCHER = const RegExp(r'/\?([^#]*)$/');
+  var SPLAT_MATCHER = const RegExp(r'/(\*)/');
+  var SPLAT_REPLACER = const RegExp(r'(.+)');
   var _currentPath;
   var _lastPath;
   var _pathInterval;
