@@ -1,0 +1,2 @@
+# Ce fichier est là pour éviter l'accès au fichier .ini depuis un navigateur.
+deny from all
