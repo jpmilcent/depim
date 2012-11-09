@@ -1,8 +1,8 @@
-#library('depim:ui');
+library depim_ui;
 
-#import('dart:isolate');
-#import('dart:html');
+import 'dart:isolate';
+import 'dart:html';
 
-#source('Message.dart');
-#source('MessageOverlay.dart');
-#source('PathBinder.dart');
+part 'Message.dart';
+part 'MessageOverlay.dart';
+part 'PathBinder.dart';

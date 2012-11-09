@@ -14,7 +14,7 @@ void openHomeView(Event event) {
   var pathBinder = new PathBinder();
   var path = '';
   var html = '''
-    <h1>Accueil</h1>    
+    <h1>Accueil</h1>
     <p>
       Path : <span id="path">${path}</span>
       <button class="msg">Add msg</button>

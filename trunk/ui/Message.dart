@@ -1,3 +1,5 @@
+part of depim_ui;
+
 class Message {
   String type;
   Element elem;

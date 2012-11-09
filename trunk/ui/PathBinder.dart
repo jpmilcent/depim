@@ -1,3 +1,5 @@
+part of depim_ui;
+
 class PathBinder {
   var PATH = const RegExp(r'^[^#]*(#.+)$');
   var PATH_REPLACER = const RegExp(r'([^\/]+)');
