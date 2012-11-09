@@ -1,8 +1,9 @@
-import 'dart:html';
+library depim;
 
+import 'dart:html';
 import 'ui/ui.dart';
 
-void main() {
+main() {
   query("#menu-home a").on.click.add(openHomeView);
   query("#menu-warehouse a").on.click.add(openWareHouseView);
 
@@ -26,7 +27,7 @@ void openHomeView(Event event) {
   query('button.msg').on.click.add((e) {
     var now = new Date.now();
     var msg = new Message('success').show('''Welcome to Dart! ${now}''');
-    query('#path').text = pathBinder.getPath();
+    //query('#path').text = pathBinder.getPath();
   });
 
   query('button.msg-overlay').on.click.add((e) {
@@ -38,7 +39,11 @@ void openHomeView(Event event) {
 
 void openWareHouseView(Event event) {
   switchMenu('#menu-warehouse');
-  var html = '<div><h1>Warehouse</h1></div>';
+  var html = '''
+    <div>
+      <h1>Warehouse</h1>
+    </div>
+  ''';
   addMainBlocView(html);
 }
 
@@ -57,7 +62,7 @@ void addMainBlocView(mainBlocHtml) {
 }
 
 void switchMenu(id) {
-  queryAll('.nav-list .active').forEach((elem) {
+  queryAll('#menu .active').forEach((elem) {
     elem.attributes['class'] = '';
   });
   query(id).attributes['class'] = 'active';

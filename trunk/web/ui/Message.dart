@@ -10,7 +10,7 @@ class Message {
   void show(text) {
     elem = new Element.html('''
       <div class="alert alert-${type}">
-        <button class="close" data-dismiss="alert">×</button>
+        <button class="close" data-dismiss="alert">&times;</button>
         <h4 class="alert-heading">${type}</h4>
         ${text}.
       </div>''');
@@ -21,9 +21,7 @@ class Message {
   }
 
   addCloseEvent() {
-    elem.query('.close').on.click.add((e) {
-      delete();
-    });
+    elem.query('.close').on.click.add((e) => delete());
   }
 
   addTimer() {

@@ -1,0 +1,20 @@
+@charset "utf8";
+
+/* BLOC POSITIONNING */
+#menu {
+  padding: 78px 0 0 0;
+}
+
+#breadcrumb {
+  position: absolute;
+  top: 42px;
+  left: 130px;
+}
+
+#msg-bloc {
+  position:fixed;
+  z-index : 10000;
+  top : 50px;
+  right : 20px;
+  width : 300px;
+}
