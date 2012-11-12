@@ -48,9 +48,11 @@ class Init extends RestService {
 	}
 	
 	private function chargerJeuxTest() {
-		$jeuxTest = array([1, 'MARTIN', 'Pierre'],
-				[2, 'Paul', 'DUPONT'],
-				[3, 'Amélie', 'DUBOIS']);
+		$jeuxTest = [
+			[1, 'MARTIN', 'Pierre'],
+			[2, 'Paul', 'DUPONT'],
+			[3, 'Amélie', 'DUBOIS']
+		];
 		
 		foreach ($jeuxTest as $personne) {
 			list($id, $prenom, $nom) = $this->getBdd()->protegerTableau($personne);
