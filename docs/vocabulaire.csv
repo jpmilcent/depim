@@ -1,0 +1,90 @@
+"ID";"ID PARENT";"ID PROJET";"NOM";"ABREVIATION";"DESCRIPTION";"NOTES";"DATE_MAJ";"ID MODIFIER PAR";"ID ETAT"
+1;1001;1;"Ajouté";"A";"Enregistrement ajouté.";"Initialisation de la valeur «A» pour la liste «1».";2009-03-19 13:07:46;1;1
+2;1001;1;"Modifié";"M";"Enregistrement modifié.";"Initialisation de la valeur «M» pour la liste «1».";2009-03-19 13:07:46;1;1
+3;1001;1;"Supprimé";"S";"Enregistrement supprimé.";"Initialisation de la valeur «S» pour la liste «1».";2009-03-19 13:07:46;1;1
+11;1002;1;"TINYINT";"1";"Un très petit entier. L'intervalle de validité pour les entiers signés est de -128 à 127. L'intervalle de validité pour les entiers non-signés est 0 à 255.";"Initialisation de la valeur «1» pour la liste «2».";2009-03-19 13:07:46;1;1
+12;1002;1;"SMALLINT";"2";"Un petit entier. L'intervalle de validité pour les entiers signés est de -32768 à 32767. L'intervalle de validité pour les entiers non-signés est 0 à 65535. ";"Initialisation de la valeur «2» pour la liste «2».";2009-03-19 13:07:46;1;1
+13;1002;1;"MEDIUMINT";"3";"Un entier. L'intervalle de validité pour les entiers signés est de -8388608 à 8388607. L'intervalle de validité pour les entiers non-signés est 0 à 16777215. ";"Initialisation de la valeur «3» pour la liste «2».";2009-03-19 13:07:46;1;1
+14;1002;1;"INT";"4";"Un grand entier. L'intervalle de validité pour les entiers signés est de -2147483648 à 2147483647. L'intervalle de validité pour les entiers non-signés est 0 à 4294967295. ";"Initialisation de la valeur «4» pour la liste «2».";2009-03-19 13:07:46;1;1
+15;1002;1;"INTEGER";"5";"Ceci est un synonyme INT.";"Initialisation de la valeur «5» pour la liste «2».";2009-03-19 13:07:46;1;1
+16;1002;1;"BIGINT";"6";"NULL";"Initialisation de la valeur «6» pour la liste «2».";2009-03-19 13:07:46;1;1
+17;1002;1;"FLOAT";"7";"NULL";"Initialisation de la valeur «7» pour la liste «2».";2009-03-19 13:07:46;1;1
+18;1002;1;"DOUBLE";"8";"NULL";"Initialisation de la valeur «8» pour la liste «2».";2009-03-19 13:07:46;1;1
+19;1002;1;"DOUBLE PRECISION";"9";"NULL";"Initialisation de la valeur «9» pour la liste «2».";2009-03-19 13:07:46;1;1
+20;1002;1;"REAL";"10";"NULL";"Initialisation de la valeur «10» pour la liste «2».";2009-03-19 13:07:46;1;1
+21;1002;1;"DECIMAL";"11";"NULL";"Initialisation de la valeur «11» pour la liste «2».";2009-03-19 13:07:46;1;1
+22;1002;1;"NUMERIC";"12";"NULL";"Initialisation de la valeur «12» pour la liste «2».";2009-03-19 13:07:46;1;1
+23;1002;1;"DATE";"13";"NULL";"Initialisation de la valeur «13» pour la liste «2».";2009-03-19 13:07:46;1;1
+24;1002;1;"DATETIME";"14";"NULL";"Initialisation de la valeur «14» pour la liste «2».";2009-03-19 13:07:46;1;1
+25;1002;1;"TIMESTAMP";"15";"NULL";"Initialisation de la valeur «15» pour la liste «2».";2009-03-19 13:07:46;1;1
+26;1002;1;"TIME";"16";"NULL";"Initialisation de la valeur «16» pour la liste «2».";2009-03-19 13:07:46;1;1
+27;1002;1;"YEAR";"17";"NULL";"Initialisation de la valeur «17» pour la liste «2».";2009-03-19 13:07:46;1;1
+28;1002;1;"CHAR";"18";"NULL";"Initialisation de la valeur «18» pour la liste «2».";2009-03-19 13:07:46;1;1
+29;1002;1;"VARCHAR";"19";"NULL";"Initialisation de la valeur «19» pour la liste «2».";2009-03-19 13:07:46;1;1
+30;1002;1;"BIT";"20";"NULL";"Initialisation de la valeur «20» pour la liste «2».";2009-03-19 13:07:46;1;1
+31;1002;1;"BOOL";"21";"NULL";"Initialisation de la valeur «21» pour la liste «2».";2009-03-19 13:07:46;1;1
+32;1002;1;"TINYBLOB";"22";"NULL";"Initialisation de la valeur «22» pour la liste «2».";2009-03-19 13:07:46;1;1
+33;1002;1;"BLOB";"23";"NULL";"Initialisation de la valeur «23» pour la liste «2».";2009-03-19 13:07:46;1;1
+34;1002;1;"MEDIUMBLOB";"24";"NULL";"Initialisation de la valeur «24» pour la liste «2».";2009-03-19 13:07:46;1;1
+35;1002;1;"LONGBLOB";"25";"NULL";"Initialisation de la valeur «25» pour la liste «2».";2009-03-19 13:07:46;1;1
+36;1002;1;"TINYTEXT";"26";"NULL";"Initialisation de la valeur «26» pour la liste «2».";2009-03-19 13:07:46;1;1
+37;1002;1;"TEXT";"27";"NULL";"Initialisation de la valeur «27» pour la liste «2».";2009-03-19 13:07:46;1;1
+38;1002;1;"MEDIUMTEXT";"28";"NULL";"Initialisation de la valeur «28» pour la liste «2».";2009-03-19 13:07:46;1;1
+39;1002;1;"LONGTEXT";"29";"NULL";"Initialisation de la valeur «29» pour la liste «2».";2009-03-19 13:07:46;1;1
+40;1002;1;"ENUM";"30";"NULL";"Initialisation de la valeur «30» pour la liste «2».";2009-03-19 13:07:46;1;1
+41;1002;1;"SET";"31";"NULL";"Initialisation de la valeur «31» pour la liste «2».";2009-03-19 13:07:46;1;1
+42;1002;1;"GEOMETRY";"32";"NULL";"Initialisation de la valeur «32» pour la liste «2».";2009-03-19 13:07:46;1;1
+43;1002;1;"LINESTRING";"33";"NULL";"Initialisation de la valeur «33» pour la liste «2».";2009-03-19 13:07:46;1;1
+44;1002;1;"POLYGON";"34";"NULL";"Initialisation de la valeur «34» pour la liste «2».";2009-03-19 13:07:46;1;1
+45;1002;1;"MULTIPOINT";"35";"NULL";"Initialisation de la valeur «35» pour la liste «2».";2009-03-19 13:07:46;1;1
+46;1002;1;"MULTILINESTRING";"36";"NULL";"Initialisation de la valeur «36» pour la liste «2».";2009-03-19 13:07:46;1;1
+47;1002;1;"MULTIPOLYGON";"37";"NULL";"Initialisation de la valeur «37» pour la liste «2».";2009-03-19 13:07:46;1;1
+48;1002;1;"GEOMETRYCOLLECTION";"38";"NULL";"Initialisation de la valeur «38» pour la liste «2».";2009-03-19 13:07:46;1;1
+1001;0;1;"Liste des états des enregistrements de la base de données";"1";"NULL";"Initialisation de la liste «1».";2009-03-19 13:07:46;1;1
+1002;0;1;"Liste des formats de champs SQL de la base de données";"2";"NULL";"Initialisation de la liste «2».";2009-03-19 13:07:46;1;1
+1003;0;1;"Liste des tables de la base de données";"3";"NULL";"Initialisation de la liste «3».";2009-03-19 13:07:46;1;1
+1004;0;1;"Liste des types de téléphone";"4";"NULL";"Initialisation de la liste «4».";2009-03-19 13:07:46;1;1
+1005;0;1;"Liste des rôles d'une personne";"5";"NULL";"Initialisation de la liste «5».";2009-03-19 13:07:46;1;1
+1006;0;1;"Liste des types d'acte";"6";"NULL";"Initialisation de la liste «6».";2009-03-19 13:07:46;1;1
+1007;0;1;"Liste des types de structure";"7";"NULL";"Initialisation de la liste «7».";2009-03-19 13:07:46;1;1
+1008;0;1;"Liste des types d'entité géographique";"8";"NULL";"Initialisation de la liste «8».";2009-03-19 13:07:46;1;1
+2000;1004;1;"Portable";"GSM";"NULL";"Initialisation de la valeur «GSM» pour la liste «4».";2009-03-19 13:07:46;1;1
+2001;1004;1;"Téléphone fixe";"FIX";"NULL";"Initialisation de la valeur «FIX» pour la liste «4».";2009-03-19 13:07:46;1;1
+2002;1004;1;"Pager";"PAG";"NULL";"Initialisation de la valeur «PAG» pour la liste «4».";2009-03-19 13:07:47;1;1
+2003;1004;1;"Fax";"FAX";"NULL";"Initialisation de la valeur «FAX» pour la liste «4».";2009-03-19 13:07:47;1;1
+2004;1005;1;"Principal";"1";"Personne directement concernée par l'acte (naissance, baptême, décè).";;2009-08-04 22:08:00;1;1
+2005;1005;1;"Père";"P";"Père de la personne directement concernée par l'acte.";;2009-08-04 22:08:00;1;1
+2006;1005;1;"Mère";"M";"Mère de la personne directement concernée par l'acte.";;2009-08-04 22:08:00;1;1
+2007;1005;1;"Témoin";"t";"Témoin de l'acte.";;2009-08-04 22:08:00;1;1
+2008;1005;1;"Parrain";"p";"Parrain de la personne directement concernée par l'acte de baptême.";;2009-08-04 22:08:00;1;1
+2009;1005;1;"Marraine";"m";"Marraine de la personne directement concernée par l'acte de baptême.";;2009-08-04 22:08:00;1;1
+2010;1005;1;"Rédacteur";"r";"Rédacteur de l'acte.";;2009-08-04 22:08:00;1;1
+2011;1005;1;"Époux";"épx";"Le marié.";;2009-08-04 22:08:00;1;1
+2012;1005;1;"Épouse";"épse";"La mariée.";;2009-08-04 22:08:00;1;1
+2013;1005;1;"Père de l'époux";"épx-P";"Père du marié.";;2009-08-04 22:08:00;1;1
+2014;1005;1;"Mère de l'époux";"épx-M";"Mère du marié.";;2009-08-04 22:08:00;1;1
+2015;1005;1;"Père de l'épouse";"épse-P";"Père de la mariée.";;2009-08-04 22:08:00;1;1
+2016;1005;1;"Mère de l'épouse";"épse-M";"Mère de la mariée.";;2009-08-04 22:08:00;1;1
+2017;1006;1;"Naissance";"N";"NULL";;2009-08-04 22:08:00;1;1
+2018;1006;1;"Baptême";"b";"NULL";;2009-08-04 22:08:00;1;1
+2019;1006;1;"Mariage";"M";"NULL";;2009-08-04 22:08:00;1;1
+2020;1006;1;"Décès";"D";"NULL";;2009-08-04 22:08:00;1;1
+2021;1006;1;"Contrat de mariage";"C";"NULL";;2009-08-04 22:08:00;1;1
+2022;1006;1;"Divorce";"D";"NULL";;2009-08-04 22:08:00;1;1
+2023;1006;1;"Ban";"B";"NULL";;2009-08-04 22:08:00;1;1
+2024;1006;1;"Sépulture";"S";"NULL";;2009-08-04 22:08:00;1;1
+2025;1006;1;"Épitaphe";"E";"NULL";;2009-08-04 22:08:00;1;1
+2026;1006;1;"Testament";"T";"NULL";;2009-08-04 22:08:00;1;1
+2027;1006;1;"Dot";"D";"NULL";;2009-08-04 22:08:00;1;1
+2028;1006;1;"Insinuation";"I";"NULL";;2009-08-04 22:08:00;1;1
+2029;1006;1;"Recensement";"R";"NULL";;2009-08-04 22:08:00;1;1
+2030;1007;1;"Archive départementale";"AD";"NULL";;2009-08-04 22:08:00;1;1
+2031;1007;1;"Mairie";"M";"NULL";;2009-08-04 22:08:00;1;1
+2032;1007;1;"Cimetière";"C";"NULL";;2009-08-04 22:08:00;1;1
+2033;1008;1;"Premier niveau de division administrative";"A.ADM1";"Le niveau de division administrative de type région.";;;;
+2034;1008;1;"Deuxième niveau de division administrative";"A.ADM2";"Le niveau de division administrative de type département.";;;;
+2035;1008;1;"Troisième niveau de division administrative";"A.ADM3";"Le niveau de division administrative de type arrondissement.";;;;
+2036;1008;1;"Quatrième niveau de division administrative";"A.ADM4";"Le niveau de division administrative de type commune.";;2009-08-04 22:08:00;1;1
+2037;1008;1;"Division administrative";"A.ADMD";"Une division administrative d'un pays sans indication de niveau.";;;;
+2038;1008;1;"Entité politique indépendante";"A.PCLI";"Un pays...";;;;
+2039;1008;1;"Paroisse";"A.PRSH";"Une division administrative de l'église.";;2009-08-04 22:08:00;1;1
