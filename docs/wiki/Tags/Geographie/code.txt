@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2012-11-14T00:01:35+01:00
+
+====== code ======
+Created mercredi 14 novembre 2012
+
+**Clé :** code
+**Description :** code ISO-3166-1 ou ISO-3166-2 de l'entité géographique.
+**Valeurs possibles :** 

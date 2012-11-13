@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2012-11-13T22:32:21+01:00
+
+====== lieu ======
+Created mardi 13 novembre 2012
+
+**Clé :** lieu
+**Description :**  lieu de l'évènement tel qu'indiqué dans l'acte.
+**Valeurs possibles :** *

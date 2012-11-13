@@ -1,0 +1,62 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: jeu., 29 avril 2010 22:01:31 +0200
+
+====== API ======
+Created jeudi 29 avril 2010
+
+== Informations générales ==
+API de type RESTful.
+Identification par HTTP Basic Authorization.
+Utilisation de JRest côté serveur pour réaliser les services.
+
+== Url+identification ==
+L'API est accessible à : http://api.depouillement.org/
+Tous les appels qui ajoutent, modifient ou suppriment des données doivent être réalisé par un utilisateur identifiée et autorisé (acceptation de la licence et courriel validé).
+
+== Elements ==
+Les éléments sont : structure, document, acte et personneCitation.
+L'API permet de lire, créer, mettre à jour et supprimer les informations liées aux éléments.
+
+== Changements ==
+Chaque modification d'un ou plusieurs éléments fait référence à un changement précis.
+Un changement correspond à un ensemble de modification sur un ou plusieurs enregistrement d'une ou plusieurs tables.
+
+== Tags ==
+Chaque élément, changement et utilisateur peut posséder des tags. Un tag est une paire clé-valeur de chaine Unicode (UTF8) d'une taille de 255 caractères maximum.
+Tous les champs ne nécessitant qu'un stockage sous forme de chaine de 255 caractères maximum utilise les tags pour être stockés.
+Les champs obligatoires et ceux nécessitant plus de 255 caractères sont définit dans la table principal de l'élément. 
+
+== Historique ==
+Chaque élément est historisé lors d'un ajout, d'une modification ou d'une suppression.
+Cela signifie que les tables du module Historique contiennent toutes les versions de tous les enregistrements des tables non historique.
+
+== Version ==
+Chaque élément possède un numéro de version qui vaut 1 lors de sa création.
+Chaque modification sur cet élément incrémente son numéro de version de 1.
+La suppression finale d'un élément incrémente aussi son numéro de version de 1.
+
+== Suppression d'élément ==
+Aucun élément n'est réellement supprimé de la base de données. La suppression finale d'un élément incrémente son numéro de version de 1 et fait passer son champ "visible" de "1" à "0".
+Par ailleurs, la table historique correspondant à cet élement contient toutes les données des versions précédentes.
+
+== Restauration d'élément ==
+Il est est possible de récupérer un élément "détruit" à l'aide d'une requête de mise à jour.
+Dans ce cas, une nouvelle version de l'élément est créée où son champ "visible" passe de "0" à "1".
+
+== Format JSON ==
+La majorité des services renverront un résultat au format JSON.
+Le resultat est un objet JSON pouvant contenir plusieurs éléments.
+Tous les résultats contient un objet dpim contenant les attributs : version et generateur.
+'''
+dpim : {
+  version : "0.1",
+  generateur : "serveur dpim"
+}
+'''
+
+
+== Tromper la méthode HTTP ==
+Certaines API HTTP ne permettent pas de réaliser de vrai PUT ou DELETE. Dans ce cas, il est possible de contourner le problème en envoyant un entête X_HTTP_METHOD_OVERRIDE avec le nom de la méthode que l'on veut utiliser.
+Exemple avec CURL :
+''curl -v -v -d @test.dpim -H "X_HTTP_METHOD_OVERRIDE: PUT" "http://server/api/0.1/structure/"''

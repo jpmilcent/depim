@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2012-11-14T00:18:46+01:00
+
+====== insee ======
+Created mercredi 14 novembre 2012
+
+**Clé :** ref:insee
+**Description :** identifiant INSEE de l'entité géographique. 
+**Valeurs possibles :** *

@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2012-11-13T23:46:20+01:00
+
+====== origine ======
+Created mardi 13 novembre 2012
+
+**Clé :** origine
+**Description :**  lieu d'origine de la personne tel qu'indiqué dans l'acte.
+**Valeurs possibles :** *

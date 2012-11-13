@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2012-11-13T21:16:31+01:00
+
+====== support ======
+Created mardi 13 novembre 2012
+
+**Clé :** support
+**Description :** Identifiant du type de support du document : 
+**Valeurs possibles :** registre, microfilm, micro-fiche, numérisé.

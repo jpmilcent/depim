@@ -1,0 +1,35 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: ven., 30 avril 2010 09:12:53 +0200
+
+====== Tags ======
+Created vendredi 30 avril 2010
+
+Un tag est une paire clé-valeur de chaine Unicode (UTF8) d'une taille de 255 caractères maximum.
+Pour les clés, appliquer les recommandations suivantes :
+ - utiliser des clés en français
+ - utiliser le signe underscore _ à la place des espaces si la clé est composée de plusieurs mots
+ - utiliser le signe deux-points : pour indiquer une hiérarchie dans le mot clé.
+ - remplacer les caractères accentués par leur équivalant non accentué
+
+Exemples de clés-valeurs : http://wiki.openstreetmap.org/wiki/FR:Map_Features
+
+== Format fiche tag ==
+**Clé :** 
+**Description :**  
+**Valeurs possibles :** 
+
+== Structure ==
+[[tags:structure:type|type]]
+[[tags:Structure:nom|nom]]
+[[tags:Structure:code|code]]
+[[tags:structure:adresse|adresse]]
+[[tags:structure:adresse:complement|adresse:complement]]
+[[tags:structure:ville|ville]]
+[[tags:structure:code postal|code_postal]]
+[[tags:Structure:telephone:fixe|telephone:fixe]]
+[[tags:Structure:telephone:gsm|telephone:gsm]]
+[[tags:structure:telephone:fax|telephone:fax]]
+[[tags:structure:courriel|courriel]]
+[[tags:structure:url|url]]
+[[tags:structure:note|note]]

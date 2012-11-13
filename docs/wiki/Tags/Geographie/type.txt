@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2012-11-14T00:01:00+01:00
+
+====== type ======
+Created mercredi 14 novembre 2012
+
+**Clé :** type
+**Description :**  Type de l'entité géographique.
+**Valeurs possibles :** voir http://www.geonames.org/export/codes.html

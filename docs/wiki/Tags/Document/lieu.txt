@@ -1,0 +1,8 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2012-11-13T21:35:07+01:00
+
+====== lieu ======
+Created mardi 13 novembre 2012
+
+Informations sur la zone géographique concernée par le document tel quelle est mentionnée dans l'acte.
