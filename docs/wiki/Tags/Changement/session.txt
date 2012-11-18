@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2012-11-14T22:40:19+01:00
+
+====== session ======
+Created mercredi 14 novembre 2012
+
+**Clé :** session
+**Description :** identifiant de session correspondant au changement. 
+**Valeurs possibles :** *
