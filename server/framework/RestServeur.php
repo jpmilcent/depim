@@ -532,12 +532,16 @@ class RestServeur {
 		if ($this->requeteDonneesParsees != null) {
 			$donnees = $this->requeteDonneesParsees;
 		} else if ($this->requeteDonnees != null) {
-			$paires = explode('&', $this->requeteDonnees);
-			foreach ($paires as $paire) {
-				list($cle, $valeur) = explode('=', $paire);
-				$cle = (isset($cle)) ? trim(urldecode($cle)) : '';
-				$valeur = (isset($valeur)) ? trim(urldecode($valeur)) : '';
-				$donnees[$cle] = $valeur;
+			if (preg_match('/application\/json/', $_SERVER['CONTENT_TYPE'])) {
+				$donnees = json_decode($this->requeteDonnees, true);
+			} else {
+				$paires = explode('&', $this->requeteDonnees);
+				foreach ($paires as $paire) {
+					list($cle, $valeur) = explode('=', $paire);
+					$cle = (isset($cle)) ? trim(urldecode($cle)) : '';
+					$valeur = (isset($valeur)) ? trim(urldecode($valeur)) : '';
+					$donnees[$cle] = $valeur;
+				}
 			}
 			$this->requeteDonneesParsees = $donnees;
 		}

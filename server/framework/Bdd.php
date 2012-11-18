@@ -193,13 +193,6 @@ class Bdd {
 	}
 
 	/**
-	 * @deprecated changement de nom. Disparaîtra dans la version 0.4. Utiliser à la place : @see requeter
-	 */
-	final protected function requete($requete) {
-		return $this->requeter($requete);
-	}
-
-	/**
 	 * Execute une requête et retourne le résultat tel que renvoyé par l'abstraction courante.
 	 *
 	 * @param string la requête à effectuer
@@ -229,13 +222,6 @@ class Bdd {
 				break;
 		}
 		return $retour;
-	}
-
-	/**
-	 * @deprecated changement de nom. Disparaîtra dans la version 0.4. Utiliser à la place : @see recuperer
-	 */
-	final protected function requeteUn($requete, $mode = self::MODE_ASSOC) {
-		return $this->recuperer($requete, $mode);
 	}
 
 	/**
@@ -276,14 +262,7 @@ class Bdd {
 		}
 		return $retour;
 	}
-
-	/**
-	 * @deprecated changement de nom. Disparaîtra dans la version 0.4. Utiliser à la place : @see recupererTous
-	 */
-	final protected function requeteTous($requete, $mode = self::MODE_ASSOC) {
-		return $this->recupererTous($requete, $mode);
-	}
-
+	
 	/**
 	 * Execute une requête et retourne un tableau de résultats. Un résultat peut être présentés sous forme
 	 * de tableau (par défaut) ou d'objet.
@@ -379,6 +358,19 @@ class Bdd {
 		return $champsProteges;
 	}
 
+	/**
+	 * Protège les chaines d'un tableau de caractères avant l'insertion dans la base de données (ajout de quotes ou guillemets).
+	 * @param array le tableau de chaines à protéger
+	 * @return array le tableau avec les chaines protégées
+	 */
+	public function protegerCleValeur(Array $tableau) {
+		$champsProteges = array();
+		foreach($tableau as $champ => $valeur) {
+			$champsProteges[$this->proteger($champ)] = $this->proteger($valeur);
+		}
+		return $champsProteges;
+	}
+	
 	/**
 	 * Retourne l'identifiant de la dernière ligne insérée, ou la dernière valeur d'une séquence d'objets, dépendamment, dans
 	 * le cas de PDO, du driver utilisé. Les méthodes utilisées pour retourner l'identifiant peuvent avoir des comportements
