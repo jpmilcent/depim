@@ -191,7 +191,67 @@ class Bdd {
 			}
 		}
 	}
-
+	
+	public function debuterTransaction() {
+		$retour = null;
+		switch ($this->abstraction) {
+			case self::ABSTRACTION_PDO :
+				try {
+					$retour = $this->connexion->beginTransaction();
+				} catch (PDOException $e) {
+					$m = sprintf(self::ERREUR_REQUETE_TPL, $e->getFile(), $e->getLine(), $e->getMessage(), $requete);
+					trigger_error($m, E_USER_WARNING);
+				}
+				break;
+		}
+		return $retour;
+	}
+	
+	public function validerTransaction() {
+		$retour = null;
+		switch ($this->abstraction) {
+			case self::ABSTRACTION_PDO :
+				try {
+					$retour = $this->connexion->commit();
+				} catch (PDOException $e) {
+					$m = sprintf(self::ERREUR_REQUETE_TPL, $e->getFile(), $e->getLine(), $e->getMessage(), $requete);
+					trigger_error($m, E_USER_WARNING);
+				}
+				break;
+		}
+		return $retour;
+	}
+	
+	public function annulerTransaction() {
+		$retour = null;
+		switch ($this->abstraction) {
+			case self::ABSTRACTION_PDO :
+				try {
+					$retour = $this->connexion->rollBack();
+				} catch (PDOException $e) {
+					$m = sprintf(self::ERREUR_REQUETE_TPL, $e->getFile(), $e->getLine(), $e->getMessage(), $requete);
+					trigger_error($m, E_USER_WARNING);
+				}
+				break;
+		}
+		return $retour;
+	}
+	
+	public function executer($requete) {
+		$retour = null;
+		switch ($this->abstraction) {
+			case self::ABSTRACTION_PDO :
+				try {
+					$retour = $this->connexion->exec($requete);
+				} catch (PDOException $e) {
+					$m = sprintf(self::ERREUR_REQUETE_TPL, $e->getFile(), $e->getLine(), $e->getMessage(), $requete);
+					trigger_error($m, E_USER_WARNING);
+				}
+				break;
+		}
+		return $retour;		
+	}
+	
 	/**
 	 * Execute une requête et retourne le résultat tel que renvoyé par l'abstraction courante.
 	 *
@@ -326,7 +386,7 @@ class Bdd {
 	 */
 	public function proteger($chaine) {
 		$this->connecter();
-
+		$chaine = trim($chaine);
 		$retour = $chaine;
 		switch ($this->abstraction) {
 			case self::ABSTRACTION_PDO :

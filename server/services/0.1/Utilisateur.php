@@ -1,6 +1,6 @@
 <?php
 /**
-* Structures
+* Utilisateur
 *
 * @package depim
 * @author Jean-Pascal MILCENT <jpm@tela-botanica.org>
@@ -8,17 +8,19 @@
 * @version 0.1
 * @copyright 1999-2011 Jean-Pascal Milcent (jpm@clapas.org)
 */
-class Structure extends RestService {
-
+class Utilisateur extends RestService {
+	
+	private $salt = 'depim2012';
+	
 	/** Indique si oui (true) ou non (false), on veut utiliser les paramètres brutes. */
 	protected $utilisationParametresBruts = true;
-
-
+	
+	
 	public function consulter($ressources, $parametres) {
 		$resultat = '';
 		$reponseHttp = new ReponseHttp();
 		try {
-			$resultat = $this->getStructures();
+			$resultat = $this->getUtilisateurs();
 			$reponseHttp->setResultatService($resultat);
 		} catch (Exception $e) {
 			$reponseHttp->ajouterErreur($e);
@@ -28,13 +30,10 @@ class Structure extends RestService {
 		return $corps;
 	}
 	
-	private function getStructures() {
-		$requete = 'SELECT s.id_structure, s.meta_version, s.meta_date, c.date, u.fmt_nom_complet, st.cle, st.valeur 
-			FROM structure AS s 
-			LEFT JOIN meta_changement AS c ON (s.ce_meta = c.id_changement) 
-			LEFT JOIN meta_utilisateur AS u ON (c.ce_utilisateur = u.id_utilisateur) 
-			LEFT JOIN structure_tags AS st ON (s.id_structure = st.id)  
-			ORDER BY meta_date DESC';
+	private function getUtilisateurs() {
+		$requete = 'SELECT u.*, c.* FROM meta_utilisateur AS u '.
+				'LEFT JOIN meta_changement As c ON (ce_meta = id_changement) '.
+				'ORDER BY fmt_nom_complet ASC';
 		$tables = $this->getBdd()->recupererTous($requete);
 		return $tables;
 	}
@@ -43,25 +42,29 @@ class Structure extends RestService {
 		$meta = $requeteDonnees['meta'];
 		$idChgment = $this->ajouterChangement($meta);
 		
-		$requete = 'INSERT INTO structure (ce_meta, meta_version, meta_date) '.
-			"VALUES ($idChgment, 1, datetime('now'))";
+		$infos = $requeteDonnees['utilisateur'];
+		$utilisateur = $this->getBdd()->protegerTableau($infos);
+		$prenom = $utilisateur['prenom'];
+		$nom = $utilisateur['nom'];
+		$nomComplet = $this->getBdd()->proteger($infos['nom'].' '.$infos['prenom']);
+		$pseudo = $utilisateur['pseudo'];
+		$courriel = $utilisateur['courriel'];
+		$motDePasse = $this->getBdd()->proteger(hash('sha256', $this->salt.$infos['mot_de_passe']));
+		$licence = $infos['licence'] == true ? 1 : 0;
+		$sessionId = $this->getBdd()->proteger(hash('md5', rand()));
+		$requete = 'INSERT INTO meta_utilisateur ('.
+			'fmt_nom_complet, prenom, nom, pseudo, courriel, mot_de_passe, mark_licence, '.
+  			'session_id, ce_meta ) '.
+			'VALUES ( '.
+			"$nomComplet, $prenom, $nom, $pseudo, $courriel, $motDePasse, $licence, ".
+			"$sessionId, $idChgment)";
 		$this->getBdd()->requeter($requete);
-		
+	
 		$requete = 'SELECT last_insert_rowid() AS id';
 		$resultat = $this->getBdd()->recuperer($requete);
-		$idStructure = $resultat['id'];
-		
-		$tags = $this->getBdd()->protegerCleValeur($requeteDonnees['tags']);
-		$this->getBdd()->debuterTransaction();
-		foreach ($tags as $cle => $valeur) {
-			$cle = trim($cle);
-			$valeur = trim($valeur);
-			$requete = 'INSERT INTO structure_tags (id, cle, valeur) '.
-				"VALUES ($idStructure, $cle, $valeur)";
-			$this->getBdd()->executer($requete);
-		}
-		$this->getBdd()->validerTransaction();
-		return $idStructure;
+		$id = $resultat['id'];
+
+		return $id;
 	}
 	
 	private function ajouterChangement($meta) {
