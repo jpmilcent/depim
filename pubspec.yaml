@@ -6,4 +6,4 @@ description: >
   Gestion des dépouillements en ligne.
 dependencies:
   unittest: { sdk: unittest }
-  #web_components: any
+  web_components: any

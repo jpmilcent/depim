@@ -1,6 +1,6 @@
-//import 'package:web_components/component_build.dart';
+import 'package:web_components/component_build.dart';
 import 'dart:io';
 
 void main() {
-  //build(new Options().arguments, ['web/index.html']);
+  build(new Options().arguments, ['web/index.html']);
 }
