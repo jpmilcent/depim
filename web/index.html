@@ -16,6 +16,7 @@
 		<link rel="stylesheet" href="css/bootstrap.css">
 		<link rel="stylesheet" href="css/app.css">
 
+    <link rel="components" href="components/click.html">
 	</head>
 	<body>
     <div id="app">
@@ -38,13 +39,13 @@
       <nav id="menu" role="navigation">
         <ul class="nav nav-tabs">
           <li id="menu-home" class="active">
-            <a href="#">
+            <a href="#" data-action="click:openHomeView">
               <i class="icon-th"></i>
               Accueil
             </a>
           </li>
           <li id="menu-warehouse">
-            <a href="#">
+            <a href="#" data-action="click:openWareHouseView">
               <i class="icon-home"></i>
               Dépôts
             </a>
@@ -70,6 +71,7 @@
           <a href="#">Home</a>
           <span class="divider">></span>
         </li>
+        <li><x-click-counter/></li>
       </ul>
 
 			<article id="main" role="main"></article>
@@ -95,6 +97,6 @@
   	</div>
 
 		<script type="application/dart" src="app.dart"></script>
-    <script src="https://dart.googlecode.com/svn/branches/bleeding_edge/dart/client/dart.js"></script>
+		<script src="https://dart.googlecode.com/svn/branches/bleeding_edge/dart/client/dart.js"></script>
 	</body>
 </html>

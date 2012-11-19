@@ -1,14 +1,10 @@
 library depim;
 
+import 'package:web_components/web_components.dart';
 import 'dart:html';
 import 'ui/ui.dart';
 
-main() {
-  query("#menu-home a").on.click.add(openHomeView);
-  query("#menu-warehouse a").on.click.add(openWareHouseView);
-
-  query("#menu-home a").click();
-}
+main() {}
 
 void openHomeView(Event event) {
   switchMenu('#menu-home');
