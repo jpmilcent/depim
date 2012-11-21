@@ -16,6 +16,12 @@ class Message {
       </div>''');
 
     addCloseEvent();
+
+    window.on.keyPress.add((e) {
+      if (e.keyCode == 27) // Escape
+        this.delete();
+    });
+
     query('#msg-bloc').nodes.add(elem);
     addTimer();
   }
@@ -30,7 +36,7 @@ class Message {
     });
   }
 
-  delete() {
+  void delete() {
     elem.remove();
   }
 }

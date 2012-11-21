@@ -1,60 +1,27 @@
 library depim;
 
 import 'package:web_components/web_components.dart';
+import 'package:web_components/watcher.dart' as watchers;
+
 import 'dart:html';
-import 'ui/ui.dart';
 
 main() {}
 
 void openHomeView(Event event) {
   switchMenu('#menu-home');
-  var pathBinder = new PathBinder();
-  var path = '';
-  var html = '''
-    <h1>Accueil</h1>
-    <p>
-      Path : <span id="path">${path}</span>
-      <button class="msg">Add msg</button>
-      <button class="msg-overlay">Add msg overlay</button>
-    </p>
-  ''';
-  addMainBlocView(html);
-
-  query('button.msg').on.click.add((e) {
-    var now = new Date.now();
-    var msg = new Message('success').show('''Welcome to Dart! ${now}''');
-    //query('#path').text = pathBinder.getPath();
-  });
-
-  query('button.msg-overlay').on.click.add((e) {
-    var now = new Date.now();
-    var msg = new MessageOverlay('success').show('''<p>Welcome to Dart! ${now}</p><button>Un bouton</button>''');
-  });
-
+  switchView('x-home');
 }
 
 void openWareHouseView(Event event) {
   switchMenu('#menu-warehouse');
-  var html = '''
-    <div>
-      <h1>Warehouse</h1>
-    </div>
-  ''';
-  addMainBlocView(html);
+  switchView('x-warehouse');
 }
 
-void addMainBlocView(mainBlocHtml) {
-  var mainBlocContainer = query("#main-bloc");
-
-  if (mainBlocContainer is Element) mainBlocContainer.remove();
-
-  var mainBlocContainerElemnt = new Element.html("""
-      <section id="main-bloc">
-        ${mainBlocHtml}
-      </section>
-    """);
-
-  query("#main").nodes.add(mainBlocContainerElemnt);
+void switchView(id) {
+  query('#main-bloc').elements.forEach((elem) {
+    elem.attributes['style'] = 'display:none';
+  });
+  query(id).attributes['style'] = '';
 }
 
 void switchMenu(id) {
@@ -62,4 +29,34 @@ void switchMenu(id) {
     elem.attributes['class'] = '';
   });
   query(id).attributes['class'] = 'active';
+  changeBreadcrumb(id);
+}
+
+void changeBreadcrumb(id) {
+  Map<String, String> entryPath = <String, String>{
+    'Accueil': '#menu-home',
+    'Dépots': '#menu-warehouse'
+  };
+  Map<String, List> breadcrumb = <String, List>{
+    '#menu-home': ['Accueil'],
+    '#menu-warehouse': ['Accueil', 'Dépots']
+  };
+
+  queryAll('#breadcrumb li').forEach((e) {
+    e.remove();
+  });
+  var breadcrumbLength = breadcrumb[id].length;
+
+  var breadcrumbHtml = new StringBuffer();
+  for (var i = 0; i < breadcrumbLength; i++) {
+    var entry = breadcrumb[id][i],
+        position = i + 1,
+        classCss = (position == breadcrumbLength) ? 'active' : '',
+        href = (entryPath[entry] != null) ? 'href="${entryPath[entry]}"' : '',
+        divider = (position != breadcrumbLength) ? '<span class="divider">></span>' : '',
+        html = '<li class="$classCss"><a $href>$entry</a>$divider</li>';
+    breadcrumbHtml.add(html);
+    print('i:$i/position:$position/length:$breadcrumbLength/html:$html');
+  }
+  query('#breadcrumb').addHtml(breadcrumbHtml.toString());
 }

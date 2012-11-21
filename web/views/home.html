@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <link rel="components" href="../components/click.html">
+  </head>
+  <body>
+    <element name="x-home" constructor="Home" extends="div">
+      <template>
+		    <h1>Accueil</h1>
+		    <p>
+		      Path : <span id="path">${path}</span>
+		      <button class="msg" data-action="click:addMessage">Add msg</button>
+		      <button class="msg-overlay" data-action="click:addMessageOverlay">Add msg overlay</button>
+		      <x-click-counter/>
+		    </p>
+      </template>
+	    <script type="application/dart" src="home.dart"></script>
+    </element>
+  </body>
+</html>

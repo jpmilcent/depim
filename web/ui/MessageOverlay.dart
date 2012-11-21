@@ -24,8 +24,12 @@ class MessageOverlay {
       </div>''');
 
     elem.query('.close').on.click.add((e) {
-      query('#dialog-overlay #msg-overlay').remove();
-      removeBackdrop();
+      this.hide();
+    });
+
+    window.on.keyPress.add((e) {
+      if (e.keyCode == 27) // Escape
+        this.hide();
     });
 
     addBackdrop();
@@ -45,6 +49,11 @@ class MessageOverlay {
     backdrop = new Element.tag('div');
     backdrop.attributes['class'] = 'modal-backdrop fade in';
     document.body.nodes.add(backdrop);
+  }
+
+  void hide() {
+    removeBackdrop();
+    query('#dialog-overlay #msg-overlay').remove();
   }
 
   void removeBackdrop() {

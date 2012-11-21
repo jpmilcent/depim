@@ -1,12 +1,12 @@
 part of depim_ui;
 
 class PathBinder {
-  var PATH = const RegExp(r'^[^#]*(#.+)$');
-  var PATH_REPLACER = const RegExp(r'([^\/]+)');
-  var PATH_NAME_MATCHER = const RegExp(r'/:([\w\d]+)/g');
-  var QUERY_STRING_MATCHER = const RegExp(r'/\?([^#]*)$/');
-  var SPLAT_MATCHER = const RegExp(r'/(\*)/');
-  var SPLAT_REPLACER = const RegExp(r'(.+)');
+  final PATH = new RegExp(r'^[^#]*(#.+)$');
+  final PATH_REPLACER = new RegExp(r'([^\/]+)');
+  final PATH_NAME_MATCHER = new RegExp(r'/:([\w\d]+)/g');
+  final QUERY_STRING_MATCHER = new RegExp(r'/\?([^#]*)$/');
+  final SPLAT_MATCHER = new RegExp(r'/(\*)/');
+  final SPLAT_REPLACER = new RegExp(r'(.+)');
   var _currentPath;
   var _lastPath;
   var _pathInterval;

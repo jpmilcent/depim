@@ -17,6 +17,8 @@
 		<link rel="stylesheet" href="css/app.css">
 
     <link rel="components" href="components/click.html">
+    <link rel="components" href="views/home.html">
+    <link rel="components" href="views/warehouse.html">
 	</head>
 	<body>
     <div id="app">
@@ -60,7 +62,6 @@
             <a href="#">
               <i class="icon-file"></i>
               Actes
-
             </a>
           </li>
         </ul>
@@ -71,10 +72,15 @@
           <a href="#">Home</a>
           <span class="divider">></span>
         </li>
-        <li><x-click-counter/></li>
       </ul>
 
-			<article id="main" role="main"></article>
+			<article id="main" role="main">
+			  <section id="main-bloc">
+          <x-home></x-home>
+          <x-warehouse style="display:none"></x-warehouse>
+          <x-click-counter/>
+        </section
+		  </article>
 
       <div id="msg-bloc"></div>
 
