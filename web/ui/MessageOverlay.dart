@@ -27,7 +27,7 @@ class MessageOverlay {
       this.hide();
     });
 
-    window.on.keyPress.add((e) {
+    window.on.keyDown.add((e) {
       if (e.keyCode == 27) // Escape
         this.hide();
     });

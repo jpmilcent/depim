@@ -67,22 +67,20 @@
         </ul>
       </nav>
 
-      <ul id="breadcrumb" class="breadcrumb">
-        <li class="active">
-          <a href="#">Home</a>
-          <span class="divider">></span>
-        </li>
-      </ul>
-
-			<article id="main" role="main">
-			  <section id="main-bloc">
-          <x-home></x-home>
-          <x-warehouse style="display:none"></x-warehouse>
-          <x-click-counter/>
-        </section
-		  </article>
-
-      <div id="msg-bloc"></div>
+      <div id="main" role="main">
+				<article>
+				  <ul id="breadcrumb" class="breadcrumb">
+		        <li class="active">
+		          <a href="#">Home</a>
+		          <span class="divider">></span>
+		        </li>
+		      </ul>
+				  <section id="main-bloc">
+	          <x-home></x-home>
+	          <x-warehouse style="display:none"></x-warehouse>
+	        </section
+			  </article>
+      </div>
 
 			<footer id="copyright" role="contentInfo">
         <div class="navbar navbar-fixed-bottom">
@@ -99,6 +97,7 @@
 	      </div>
 	    </footer>
 
+      <div id="msg-bloc"></div>
   		<div id="dialog-overlay"></div>
   	</div>
 

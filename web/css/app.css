@@ -2,7 +2,8 @@
 
 /* BLOC POSITIONNING */
 #menu {
-  padding: 78px 0 0 0;
+  position: absolute;
+  top: 78px;
 }
 
 #breadcrumb {
@@ -17,4 +18,14 @@
   top : 50px;
   right : 20px;
   width : 300px;
+}
+
+#main-bloc {
+  padding: 120px 0 0 0;
+}
+
+.form-edit {
+  overflow: auto;
+  height:500px;
+  width:100%;
 }

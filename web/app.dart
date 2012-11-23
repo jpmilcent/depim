@@ -51,10 +51,10 @@ void changeBreadcrumb(id) {
   for (var i = 0; i < breadcrumbLength; i++) {
     var entry = breadcrumb[id][i],
         position = i + 1,
-        classCss = (position == breadcrumbLength) ? 'active' : '',
+        classCss = (position == breadcrumbLength) ? 'class="active"' : '',
         href = (entryPath[entry] != null) ? 'href="${entryPath[entry]}"' : '',
         divider = (position != breadcrumbLength) ? '<span class="divider">></span>' : '',
-        html = '<li class="$classCss"><a $href>$entry</a>$divider</li>';
+        html = '<li $classCss><a $href>$entry</a>$divider</li>';
     breadcrumbHtml.add(html);
     print('i:$i/position:$position/length:$breadcrumbLength/html:$html');
   }
