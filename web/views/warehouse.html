@@ -12,7 +12,7 @@
             <fieldset id="name-zone-wh">
 	            <legend>Nom et code</legend>
 		          <div class="control-group">
-			          <label class="control-label" for="wh-name">Commune</label>
+			          <label class="control-label" for="wh-name">Nom</label>
 			          <div class="controls">
 			           <input id="wh-name" name="nom" type="text" required value=""/>
 		            </div>
@@ -119,13 +119,17 @@
           </div>
 
           <div class="form-actions">
-            <button type="submit" class="btn btn-primary pull-right">Ajouter</button>
+            <button type="submit" class="btn btn-primary pull-right"
+              data-action="click:addWarehouse">
+              Ajouter
+            </button>
             <button type="button" class="btn">Annuler</button>
           </div>
         </form>
         <script type="application/dart"></script>
         <script src="https://dart.googlecode.com/svn/branches/bleeding_edge/dart/client/dart.js"></script>
       </template>
+       <script type="application/dart" src="warehouse.dart"></script>
     </element>
   </body>
 </html>

@@ -398,6 +398,14 @@ class RestServeur {
 			case 'PUT':
 				$retour = $this->put();
 				break;
+			case 'OPTIONS':
+				header('Access-Control-Allow-Origin: *');
+				header('Access-Control-Allow-Headers:origin, content-type');
+				header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+				header('Access-Control-Allow-Content-Type: application/json');
+				header('Access-Control-Max-Age: 3628800');
+				header('Access-Control-Allow-Credentials: false');
+				break;
 			default :
 				self::envoyerEnteteStatutHttp(self::HTTP_CODE_METHODE_NON_AUTORISE);
 				header('Allow: GET, POST, DELETE, PUT');
@@ -569,6 +577,11 @@ class RestServeur {
 
 		// Envoie des messages d'erreur et d'avertissement du serveur
 		$retour .= self::envoyerMessages();
+
+		header('Access-Control-Allow-Origin: *');
+		//header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+		//header('Access-Control-Allow-Content-Type: application/json');
+		//header('Access-Control-Allow-Credentials: false');
 
 		// Envoie sur la sortie standard le contenu de la réponse HTTP
 		print $retour;

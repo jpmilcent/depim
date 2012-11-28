@@ -13,7 +13,7 @@ import 'package:web_components/watcher.dart' as watchers;
 import 'dart:html';
 
 import 'views/home.dart';
-import 'views/warehouse.html.dart';
+import 'views/warehouse.dart';
 
 
 // Original code

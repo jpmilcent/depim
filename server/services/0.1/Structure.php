@@ -29,14 +29,29 @@ class Structure extends RestService {
 	}
 	
 	private function getStructures() {
-		$requete = 'SELECT s.id_structure, s.meta_version, s.meta_date, c.date, u.fmt_nom_complet, st.cle, st.valeur 
+		$requete = 'SELECT s.id_structure, s.meta_version, s.meta_date, c.date, u.id_utilisateur, u.fmt_nom_complet, st.cle, st.valeur 
 			FROM structure AS s 
 			LEFT JOIN meta_changement AS c ON (s.ce_meta = c.id_changement) 
 			LEFT JOIN meta_utilisateur AS u ON (c.ce_utilisateur = u.id_utilisateur) 
 			LEFT JOIN structure_tags AS st ON (s.id_structure = st.id)  
 			ORDER BY meta_date DESC';
 		$tables = $this->getBdd()->recupererTous($requete);
-		return $tables;
+		
+		$infos = array();
+		foreach ($tables as $table) {
+			if (isset($infos[$table['id_structure']]['meta']) == false) {
+				$meta = array();
+				$meta['id'] = $table['id_structure'];
+				$meta['version'] = $table['meta_version'];
+				$meta['date'] = $table['meta_date'];
+				$meta['utilisateur:id'] = $table['id_utilisateur'];
+				$meta['utilisateur:nom_complet'] = $table['fmt_nom_complet'];
+				
+				$infos[$table['id_structure']]['meta'] = $meta;
+			}
+			$infos[$table['id_structure']]['tags'][$table['cle']] = $table['valeur'];
+		}
+		return $infos;
 	}
 	
 	public function ajouter($ressources, $requeteDonnees) {
