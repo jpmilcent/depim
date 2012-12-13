@@ -142,7 +142,7 @@ abstract class RestService {
 	 * @param array Morceaux de l'url servant à préciser la ressource concerné pour le service demandé.
 	 * @return mixed une chaine indiquant le succès de l'opération ou rien.
 	 */
-	public function supprimer($ressources) {
+	public function supprimer($ressources, $requeteDonnees) {
 		RestServeur::envoyerEnteteStatutHttp(RestServeur::HTTP_CODE_METHODE_NON_AUTORISE);
 		RestServeur::ajouterMessage("Le service '".get_class($this)."' n'autorise pas la suppression.");
 		return null;

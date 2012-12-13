@@ -1,8 +1,7 @@
 library depim;
 
-import 'package:web_components/web_components.dart';
-import 'package:web_components/watcher.dart' as watchers;
-
+import 'package:web_ui/web_ui.dart';
+import 'package:web_ui/watcher.dart' as watchers;
 import 'dart:html';
 
 main() {}
@@ -58,5 +57,5 @@ void changeBreadcrumb(id) {
     breadcrumbHtml.add(html);
     print('i:$i/position:$position/length:$breadcrumbLength/html:$html');
   }
-  query('#breadcrumb').addHtml(breadcrumbHtml.toString());
+  query('#breadcrumb').appendHtml(breadcrumbHtml.toString());
 }

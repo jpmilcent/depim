@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -5,129 +6,194 @@
   <body>
     <element name="x-warehouse" extends="div">
       <template>
-        <h1>Dépots</h1>
+        <div class="app-row">
+          <div id="list-bloc">
+            <form id="list-filter">
+              <fieldset id="filter-zone-wh">
+                <legend>Structures</legend>
+                <div class="input-prepend">
+                  <span class="add-on"><i class="icon-filter"></i></span>
+                  <input id="warehouse-filter" type="text" placeholder="Filtrer" />
+                </div>
+              </fieldset>
+            </form>
 
-        <form id="edit-wh" class="form-horizontal" autocomplete="on">
-          <div class="form-edit">
-            <fieldset id="name-zone-wh">
-	            <legend>Nom et code</legend>
-		          <div class="control-group">
-			          <label class="control-label" for="wh-name">Nom</label>
-			          <div class="controls">
-			           <input id="wh-name" name="nom" type="text" required value=""/>
-		            </div>
-		          </div>
-
-		          <div class="control-group">
-		            <label class="control-label" for="wh-type">Type</label>
-		            <div class="controls">
-		              <input id="wh-type" name="type" type="text" list="wh-type-list" value=""/>
-		              <datalist id="wh-type-list">
-		                <label for="wh-type-std" title="Choisir une valeur standard">ou</label>
-		                <select id="wh-type-std" name="type" >
-		                  <option value="archive">Archive</option>
-		                  <option value="bibliothèque">Bibliothèque</option>
-		                  <option value="cimetière">Cimetière</option>
-		                  <option value="mairie">Mairie</option>
-		                </select>
-		              </datalist>
-		            </div>
-		          </div>
-
-		           <div class="control-group">
-		            <label class="control-label" for="wh-code">Code</label>
-		            <div class="controls">
-		             <input id="wh-code" name="code" type="text" value=""/>
-		            </div>
-		          </div>
-	          </fieldset>
-
-	          <fieldset id="adresse-zone-wh">
-	            <legend>Adresse</legend>
-		          <div class="control-group">
-		            <label class="control-label" for="wh-adresse">Adresse</label>
-		            <div class="controls">
-		             <input id="wh-adresse" name="adresse" type="text" value=""/>
-		            </div>
-		          </div>
-		          <div class="control-group">
-	              <label class="control-label" for="wh-adresse-complement">Complément</label>
-	              <div class="controls">
-	               <input id="wh-adresse-complement" name="adresse-complement" type="text" value=""/>
-	              </div>
-	            </div>
-	            <div class="control-group">
-	              <label class="control-label" for="wh-code-postal">Code postal</label>
-	              <div class="controls">
-	               <input id="wh-code-postal" name="code_postal" type="text" value=""/>
-	              </div>
-	            </div>
-	            <div class="control-group">
-	              <label class="control-label" for="wh-ville">Ville</label>
-	              <div class="controls">
-	               <input id="wh-ville" name="ville" type="text" value=""/>
-	              </div>
-	            </div>
-	          </fieldset>
-
-
-	          <fieldset id="contact-zone-wh">
-	            <legend>Contact</legend>
-	            <div class="control-group">
-	              <label class="control-label" for="wh-courriel">Courriel</label>
-	              <div class="controls">
-	               <input id="wh-courriel" name="courriel" type="text" value=""/>
-	              </div>
-	            </div>
-	            <div class="control-group">
-	              <label class="control-label" for="wh-url">Url du site web</label>
-	              <div class="controls">
-	               <input id="wh-url" name="url" type="text" value=""/>
-	              </div>
-	            </div>
-	            <div class="control-group">
-	              <label class="control-label" for="wh-telephone-fixe">
-	                <abbr title="Téléphone fixe">Tél.</abbr>
-	              </label>
-	              <div class="controls">
-	               <input id="wh-telephone-fixe" name="telephone:fixe" type="text" value=""/>
-	              </div>
-	            </div>
-	            <div class="control-group">
-	              <label class="control-label" for="wh-telephone-fax">Fax</label>
-	              <div class="controls">
-	               <input id="wh-telephone-fax" name="telephone:fax" type="text" value=""/>
-	              </div>
-	            </div>
-	          </fieldset>
-
-	          <fieldset id="note-zone-wh">
-	            <legend>Notes et infos compélementaires</legend>
-	            <div class="control-group">
-	              <label class="control-label" for="wh-url-geneawiki">Url Geneawiki</label>
-	              <div class="controls">
-	               <input id="wh-url-geneawiki" name="url:geneawiki" type="text" value=""/>
-	              </div>
-	            </div>
-	            <div class="control-group">
-	              <label class="control-label" for="wh-note">Note</label>
-	              <div class="controls">
-	               <textarea id="wh-note" name="note"></textarea>
-	              </div>
-	            </div>
-	          </fieldset>
+            <template instantiate='if !whListEmpty'>
+              <ul id="warehouse-list" class="nav nav-list">
+                <template iterate="wh in whList">
+                  <li on-click="onSelectedWarehouse($event)">
+                    <a data-id="{{wh['id']}}">{{wh['nom']}}</a>
+                  </li>
+                </template>
+              </ul>
+            </template>
           </div>
+          <div id="edit-bloc">
+            <form id="edit-wh" class="form-horizontal" autocomplete="on">
+              <div class="form-edit app-column">
+                <div class="app-row">
+                  <fieldset id="name-zone-wh">
+      	            <legend>Nom et code</legend>
+      		          <div class="control-group label-small">
+      			          <label class="control-label" for="wh-name">Nom</label>
+      			          <div class="controls">
+      			            <div class="input-prepend">
+                          <span class="add-on"><i class="icon-home"></i></span>
+        			            <input id="wh-name" class="field input-xlarge" name="nom" type="text" required />
+      			            </div>
+      		            </div>
+      		          </div>
 
-          <div class="form-actions">
-            <button type="submit" class="btn btn-primary pull-right"
-              data-action="click:addWarehouse">
-              Ajouter
-            </button>
-            <button type="button" class="btn">Annuler</button>
+      		          <div class="control-group label-small">
+      		            <label class="control-label" for="wh-type">Type</label>
+      		            <div class="controls">
+      		              <div class="input-prepend">
+                          <span class="add-on"><i class="icon-tag"></i></span>
+      		                <input id="wh-type" class="field input-medium" name="type" type="text" list="wh-type-list" value=""/>
+
+        		              <datalist id="wh-type-list">
+        		                <label for="wh-type-std" title="Choisir une valeur standard">ou</label>
+        		                <select id="wh-type-std" name="type" >
+        		                  <option value="archive">Archive</option>
+        		                  <option value="bibliothèque">Bibliothèque</option>
+        		                  <option value="cimetière">Cimetière</option>
+        		                  <option value="mairie">Mairie</option>
+        		                </select>
+        		              </datalist>
+      		              </div>
+      		            </div>
+      		          </div>
+
+      		           <div class="control-group label-small">
+      		            <label class="control-label" for="wh-code">Code</label>
+      		            <div class="controls">
+      		              <div class="input-prepend">
+                          <span class="add-on"><i class="icon-barcode"></i></span>
+      		                <input id="wh-code" class="field input-small" name="code" type="text" value=""/>
+  		                  </div>
+      		            </div>
+      		          </div>
+      	          </fieldset>
+
+      	          <fieldset id="adresse-zone-wh">
+      	            <legend>Adresse</legend>
+      		          <div class="control-group label-large">
+      		            <label class="control-label" for="wh-adresse">Adresse</label>
+      		            <div class="controls">
+      		             <div class="input-prepend">
+                         <span class="add-on"><i class="icon-road"></i></span>
+      		               <input id="wh-adresse" class="field input-xlarge" name="adresse" type="text" value=""/>
+    		               </div>
+      		            </div>
+      		          </div>
+      		          <div class="control-group label-large">
+      	              <label class="control-label" for="wh-adresse-complement">Complément</label>
+      	              <div class="controls">
+      	               <input id="wh-adresse-complement" class="field input-xlarge" name="adresse:complement" type="text" value=""/>
+      	              </div>
+      	            </div>
+      	            <div class="control-group label-large">
+      	              <label class="control-label" for="wh-code-postal">Code postal</label>
+      	              <div class="controls">
+      	               <input id="wh-code-postal" class="field" name="code_postal" type="text" value=""/>
+      	              </div>
+      	            </div>
+      	            <div class="control-group label-large">
+      	              <label class="control-label" for="wh-ville">Ville</label>
+      	              <div class="controls">
+      	               <input id="wh-ville" class="field" name="ville" type="text" value=""/>
+      	              </div>
+      	            </div>
+      	          </fieldset>
+                </div>
+
+                <div class="app-row">
+      	          <fieldset id="contact-zone-wh">
+      	            <legend>Contact</legend>
+      	            <div class="control-group label-large">
+      	              <label class="control-label" for="wh-courriel">Courriel</label>
+      	              <div class="controls">
+      	                <div class="input-prepend">
+                          <span class="add-on"><i class="icon-envelope"></i></span>
+                          <input id="wh-courriel" class="field" name="courriel" type="email" value=""/>*
+                        </div>
+      	              </div>
+      	            </div>
+      	            <div class="control-group label-large">
+      	              <label class="control-label" for="wh-url">Url du site web</label>
+      	              <div class="controls">
+      	                <div class="input-prepend">
+        	                <span class="add-on">@</span>
+        	                <input id="wh-url" class="field span4" name="url" type="url" value=""/>
+      	                </div>
+      	              </div>
+      	            </div>
+      	            <div class="control-group label-large">
+      	              <label class="control-label" for="wh-telephone-fixe">
+      	                <abbr title="Téléphone fixe">Tél.</abbr>
+      	              </label>
+      	              <div class="controls">
+      	               <input id="wh-telephone-fixe" class="field" name="telephone:fixe" type="tel" value=""/>
+      	              </div>
+      	            </div>
+      	            <div class="control-group label-large">
+      	              <label class="control-label" for="wh-telephone-fax">Fax</label>
+      	              <div class="controls">
+      	               <input id="wh-telephone-fax" class="field" name="telephone:fax" type="tel" value=""/>
+      	              </div>
+      	            </div>
+      	          </fieldset>
+
+      	          <fieldset id="note-zone-wh">
+      	            <legend>Notes et infos compélementaires</legend>
+      	            <div class="control-group label-large">
+      	              <label class="control-label" for="wh-url-geneawiki">Url Geneawiki</label>
+      	              <div class="controls">
+      	                <div class="input-prepend">
+      	                  <span class="add-on">@</span>
+      	                  <input id="wh-url-geneawiki" class="field span4" name="url:geneawiki" type="url" value=""/>
+    	                  </div>
+      	              </div>
+      	            </div>
+      	            <div class="control-group label-large">
+      	              <label class="control-label" for="wh-note">Note</label>
+      	              <div class="controls">
+      	                <div class="input-prepend">
+                          <span class="add-on"><i class="icon-comment"></i></span>
+      	                  <textarea id="wh-note" class="field span4" name="note"></textarea>
+    	                  </div>
+      	              </div>
+      	            </div>
+      	          </fieldset>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <input id="wh-id" class="field" name="id" type="hidden" />
+
+                <button type="submit" class="btn btn-success pull-right hide update-warehouse-cmd"
+                  on-click="updateWarehouse($event)">
+                    Modifier
+                </button>
+                <button type="submit" class="btn btn-primary pull-right add-warehouse-cmd"
+                  on-click="addWarehouse($event)">
+                    Ajouter
+                </button>
+
+                <button type="button" class="btn btn-danger hide delete-warehouse-cmd"
+                  on-click="deleteWarehouse($event)">
+                    Supprimer
+                </button>
+                <button type="reset" class="btn reset-warehouse-cmd"
+                  on-click="resetWarehouse($event)">
+                    Vider
+                </button>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
         <script type="application/dart"></script>
-        <script src="https://dart.googlecode.com/svn/branches/bleeding_edge/dart/client/dart.js"></script>
+        <script type="text/javascript" src="https://dart.googlecode.com/svn/branches/bleeding_edge/dart/client/dart.js"></script>
       </template>
        <script type="application/dart" src="warehouse.dart"></script>
     </element>

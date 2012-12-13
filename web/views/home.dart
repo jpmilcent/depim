@@ -1,4 +1,4 @@
-import 'package:web_components/web_components.dart';
+import 'package:web_ui/web_ui.dart';
 import '../ui/ui.dart';
 
 class Home extends WebComponent {

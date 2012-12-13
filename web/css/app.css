@@ -1,14 +1,24 @@
 @charset "utf8";
 
 /* BLOC POSITIONNING */
+#logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#site-title {
+  margin: 0 0 0 135px;
+  padding: 0;
+}
+
 #menu {
   position: absolute;
-  top: 78px;
+  top: 84px;
 }
 
 #breadcrumb {
   position: absolute;
-  top: 42px;
+  top: 45px;
   left: 110px;
 }
 
@@ -21,11 +31,64 @@
 }
 
 #main-bloc {
-  padding: 120px 0 0 0;
+  padding: 123px 0 0 0;
 }
 
-.form-edit {
+#list-bloc {
+  width: 240px;
+  max-width: 400px;
+  height:650px;
   overflow: auto;
-  height:500px;
-  width:100%;
+  resize: horizontal;
+  padding: 0 5px;
+}
+
+#edit-bloc {
+  overflow: auto;
+  -webkit-flex: 1;
+  overflow: auto;
+  height:650px;
+}
+
+.app-column {
+  display: -webkit-flex;
+  -webkit-flex-direction: column;
+}
+
+.app-row {
+  display: -webkit-flex;
+  -webkit-flex-direction: row;
+}
+
+/* BOOTSTRAP MODIF */
+legend {
+  margin-bottom: 5px;
+}
+fieldset {
+  margin:1em 2em;
+}
+.form-horizontal .control-group {
+  margin-bottom: 8px;
+}
+.form-horizontal .form-actions {
+  padding-left: 8px;
+}
+
+.form-horizontal .label-small .control-label {
+  width: 60px;
+}
+.form-horizontal .label-small .controls {
+  margin-left: 80px;
+}
+.form-horizontal .label-medium .control-label {
+  width: 80px;
+}
+.form-horizontal .label-medium .controls {
+  margin-left: 100px;
+}
+.form-horizontal .label-large .control-label {
+  width: 100px;
+}
+.form-horizontal .label-large .controls {
+  margin-left: 120px;
 }

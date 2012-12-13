@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <link rel="components" href="../components/click.html">
@@ -8,9 +9,9 @@
 		    <h1>Accueil</h1>
 		    <p>
 		      Path : <span id="path">${path}</span>
-		      <button class="msg" data-action="click:addMessage">Add msg</button>
-		      <button class="msg-overlay" data-action="click:addMessageOverlay">Add msg overlay</button>
-		      <x-click-counter/>
+		      <button class="msg" on-click="addMessage($event)">Add msg</button>
+		      <button class="msg-overlay" on-click="addMessageOverlay($event)">Add msg overlay</button>
+		      <x-click-counter></x-click-counter>
 		    </p>
       </template>
 	    <script type="application/dart" src="home.dart"></script>

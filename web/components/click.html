@@ -1,13 +1,14 @@
+<!DOCTYPE html>
 <html><body>
   <element name="x-click-counter" constructor="CounterComponent" extends="div">
     <template>
       <div>
-        <button data-action="click:increment">Click me</button>
+        <button on-click="increment($event)">Click me</button>
         <span>(click count: {{count}})</span>
       </div>
     </template>
     <script type="application/dart">
-      import 'package:web_components/web_components.dart';
+      import 'package:web_ui/web_ui.dart';
 
       class CounterComponent extends WebComponent {
         int count = 0;

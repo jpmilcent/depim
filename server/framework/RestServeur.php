@@ -502,11 +502,12 @@ class RestServeur {
 
 	private function delete() {
 		if (count($this->ressources) != 0) {
+			$paires = $this->parserDonneesRequete();
 			if ($this->service != null) {
 				$Service = new $this->service(self::$config);
 				if (method_exists($Service, self::METHODE_DELETE)) {
 					$methodeDelete = self::METHODE_DELETE;
-					$info = $Service->$methodeDelete($this->ressources);
+					$info = $Service->$methodeDelete($this->ressources, $paires);
 					if ($info === true) {
 						$this->envoyerEnteteStatutHttp(self::HTTP_CODE_SUPPRESSION_OK);
 					} else if ($info === false) {

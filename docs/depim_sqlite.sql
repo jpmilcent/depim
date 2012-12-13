@@ -39,7 +39,8 @@ CREATE TABLE IF NOT EXISTS structure (
   id_structure INTEGER PRIMARY KEY AUTOINCREMENT ,
   ce_meta INTEGER NOT NULL ,
   meta_version INTEGER NOT NULL ,
-  meta_date TEXT NOT NULL
+  meta_date TEXT NOT NULL,
+  meta_visible INTEGER NOT NULL DEFAULT 1
 );
 
 CREATE TABLE IF NOT EXISTS structure_tags (
@@ -56,7 +57,8 @@ CREATE TABLE IF NOT EXISTS document (
   date_fin TEXT ,
   ce_meta INTEGER NOT NULL ,
   meta_version INTEGER NOT NULL ,
-  meta_date TEXT NOT NULL
+  meta_date TEXT NOT NULL,
+  meta_visible INTEGER NOT NULL DEFAULT 1
 );
 
 CREATE TABLE IF NOT EXISTS document_tags (
@@ -74,7 +76,8 @@ CREATE TABLE IF NOT EXISTS acte (
   transcription TEXT ,
   ce_meta INTEGER NOT NULL ,
   meta_version INTEGER NOT NULL ,
-  meta_date TEXT NOT NULL
+  meta_date TEXT NOT NULL,
+  meta_visible INTEGER NOT NULL DEFAULT 1
 );
 
 CREATE TABLE IF NOT EXISTS acte_tags (
@@ -89,7 +92,8 @@ CREATE TABLE IF NOT EXISTS personne_citation (
   ce_acte INTEGER NOT NULL ,
   ce_meta INTEGER NOT NULL ,
   meta_version INTEGER NOT NULL ,
-  meta_date TEXT NOT NULL
+  meta_date TEXT NOT NULL,
+  meta_visible INTEGER NOT NULL DEFAULT 1
 );
 
 CREATE TABLE IF NOT EXISTS personne_citation_tags (
@@ -107,7 +111,8 @@ CREATE TABLE IF NOT EXISTS geographie (
   altitude INTEGER ,
   ce_meta INTEGER NOT NULL ,
   meta_version INTEGER NOT NULL ,
-  meta_date TEXT NOT NULL
+  meta_date TEXT NOT NULL,
+  meta_visible INTEGER NOT NULL DEFAULT 1
 );
 
 CREATE TABLE IF NOT EXISTS geographie_tags (
@@ -122,6 +127,7 @@ CREATE TABLE IF NOT EXISTS structure_historique (
   ce_meta INTEGER NOT NULL ,
   meta_version INTEGER NOT NULL ,
   meta_date TEXT NOT NULL,
+  meta_visible INTEGER NOT NULL,
   PRIMARY KEY (id_structure, meta_version)
 );
 
@@ -141,6 +147,7 @@ CREATE TABLE IF NOT EXISTS document_historique (
   ce_meta INTEGER NOT NULL ,
   meta_version INTEGER NOT NULL ,
   meta_date TEXT NOT NULL,
+  meta_visible INTEGER NOT NULL,
   PRIMARY KEY (id_document, meta_version)
 );
 
@@ -161,6 +168,7 @@ CREATE TABLE IF NOT EXISTS acte_historique (
   ce_meta INTEGER NOT NULL ,
   meta_version INTEGER NOT NULL ,
   meta_date TEXT NOT NULL,
+  meta_visible INTEGER NOT NULL,
   PRIMARY KEY (id_acte, meta_version)
 );
 
@@ -178,6 +186,7 @@ CREATE TABLE IF NOT EXISTS personne_citation_historique (
   ce_meta INTEGER NOT NULL ,
   meta_version INTEGER NOT NULL ,
   meta_date TEXT NOT NULL,
+  meta_visible INTEGER NOT NULL,
   PRIMARY KEY (id_personne_citation, meta_version)
 );
 
@@ -198,6 +207,7 @@ CREATE TABLE IF NOT EXISTS geographie_historique (
   ce_meta INTEGER NOT NULL ,
   meta_version INTEGER NOT NULL ,
   meta_date TEXT NOT NULL,
+  meta_visible INTEGER NOT NULL,
   PRIMARY KEY (id_geographie, meta_version)
 );
 
