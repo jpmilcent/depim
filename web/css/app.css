@@ -35,12 +35,16 @@
 }
 
 #list-bloc {
-  width: 240px;
-  max-width: 400px;
-  height:650px;
+  width: 250px;
+  max-width: 500px;
+  height:580px;
   overflow: auto;
   resize: horizontal;
   padding: 0 5px;
+  border: 1px dotted Gainsboro;
+}
+#filter-zone-wh {
+  margin: 0;
 }
 
 #edit-bloc {
