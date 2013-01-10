@@ -5,86 +5,86 @@ import 'dart:json';
 import 'dart:uri';
 import '../ui/ui.dart';
 
-class Warehouse extends WebComponent {
+class Doc extends WebComponent {
 
-  Map warehouses = {};
+  Map documents = {};
 
   void created() {
-    this.loadWarehouses();
+    this.loadDocuments();
   }
 
-  void loadWarehouses() {
-    var url = 'http://localhost/dart/depim/server/services/0.1/structure';
+  void loadDocuments() {
+    var url = 'http://localhost/dart/depim/server/services/0.1/document';
 
     // call the web server asynchronously
     var request = new HttpRequest.get(url, onSuccess(HttpRequest req) {
-      this.warehouses = JSON.parse(req.responseText);
+      this.documents = JSON.parse(req.responseText);
       watchers.dispatch();
     });
   }
 
-  List get whList {
+  List get docList {
     var res = new List();
-    if (! warehouses.isEmpty) {
-      warehouses.forEach((var key, var wh) {
+    if (! documents.isEmpty) {
+      documents.forEach((var key, var doc) {
         try {
-          if (wh['tags']['nom'] != '') {
-            res.add({'id': wh['meta']['id'], 'nom': wh['tags']['nom']});
+          if (doc['tags']['titre'] != '') {
+            res.add({'id': doc['meta']['id'], 'abbr': doc['tags']['abreviation']});
           } else {
-            res.add({'id': wh['meta']['id'], 'nom': 'Sans nom'});
+            res.add({'id': doc['meta']['id'], 'abbr': 'Sans nom'});
           }
         } catch(e) {
-          res.add({'id': wh['meta']['id'], 'nom': 'Sans nom'});
+          res.add({'id': doc['meta']['id'], 'abbr': 'Sans nom'});
         }
       });
     }
     return res;
   }
 
-  bool get whListEmpty => whList.isEmpty;
+  bool get docListEmpty => docList.isEmpty;
 
-  void onSelectedWarehouse(Event e) {
+  void onSelectedDoc(Event e) {
     Element clickedElem = e.target;
     var id = clickedElem.attributes['data-id'];
 
-    // Put warehouse infos in the form
-    this.loadWarehouseDetails(id);
+    // Put doc infos in the form
+    this.loadDocDetails(id);
 
     // Show delete command
-    queryAll('.delete-warehouse-cmd').forEach((elem) {
+    queryAll('.delete-doc-cmd').forEach((elem) {
       elem.attributes['data-id'] = id;
       elem.classes.remove('hide');
     });
-    queryAll('.update-warehouse-cmd').forEach((elem) {
+    queryAll('.update-doc-cmd').forEach((elem) {
       elem.attributes['data-id'] = id;
       elem.classes.remove('hide');
     });
   }
 
-  void loadWarehouseDetails(id) {
-    var url = 'http://localhost/dart/depim/server/services/0.1/structure/$id';
+  void loadDocDetails(id) {
+    var url = 'http://localhost/dart/depim/server/services/0.1/document/$id';
 
     // call the web server asynchronously
     var request = new HttpRequest.get(url, onSuccess(HttpRequest req) {
       query('.field[name="id"]').value = id;
-      var warehouse = JSON.parse(req.responseText);
-      Map tags = warehouse['tags'];
+      var doc = JSON.parse(req.responseText);
+      Map tags = doc['tags'];
       tags.forEach((key, value) {
         query('.field[name="$key"]').value = value;
       });
     });
   }
 
-  void addWarehouse(Event e) {
+  void addDoc(Event e) {
     e.preventDefault();
-    var dataUrl = 'http://localhost/dart/depim/server/services/0.1/structure',
+    var dataUrl = 'http://localhost/dart/depim/server/services/0.1/document',
       tags = getTags(),
       meta = {
         'utilisateurId' : 1,
         'tags' : {
           'etat' : 'A',
-          'type' : 'structure',
-          'commentaire' : 'Ajout de la structure "${tags['nom']}".',
+          'type' : 'document',
+          'commentaire' : 'Ajout du document "${tags['titre']}".',
           'source' : tags['urlGeneawiki']
         }
       },
@@ -100,32 +100,22 @@ class Warehouse extends WebComponent {
   }
 
   Map getTags() {
-    var nom = query('input[name="nom"]').value,
-      type = query('input[name="type"]').value,
+    var titre = query('input[name="titre"]').value,
+      support = query('input[name="support"]').value,
       code = query('input[name="code"]').value,
-      adresse = query('input[name="adresse"]').value,
-      adresseComplement = query('input[name="adresse:complement"]').value,
-      codePostal = query('input[name="code_postal"]').value,
-      ville = query('input[name="ville"]').value,
-      courriel = query('input[name="courriel"]').value,
-      url = query('input[name="url"]').value,
-      telFixe = query('input[name="telephone:fixe"]').value,
-      telFax = query('input[name="telephone:fax"]').value,
-      urlGeneawiki = query('input[name="url:geneawiki"]').value,
+      abreviation = query('input[name="abreviation"]').value,
+      codeInsee = query('input[name="code:insee"]').value,
+      commune = query('input[name="commune"]').value,
+      urlSource = query('input[name="url:source"]').value,
       note = query('textarea[name="note"]').value;
     return {
-      'nom': nom,
-      'type': type,
+      'titre': titre,
+      'support': support,
       'code': code,
-      'adresse': adresse,
-      'adresse:complement': adresseComplement,
-      'code_postal': codePostal,
-      'ville': ville,
-      'courriel': courriel,
-      'url': url,
-      'telephone:fixe': telFixe,
-      'telephone:fax': telFax,
-      'url:geneawiki': urlGeneawiki,
+      'abreviation': abreviation,
+      'code:insee': codeInsee,
+      'commune': commune,
+      'url:source': urlSource,
       'note': note
     };
   }
@@ -134,20 +124,20 @@ class Warehouse extends WebComponent {
     if (request.status != 201) {
       showError(request);
     } else {
-      showSuccess('Une nouvelle structure avec l\'id #${request.responseText} a été ajoutée.');
+      showSuccess('Un nouveau document avec l\'id #${request.responseText} a été ajouté.');
     }
   }
 
-  void updateWarehouse(Event e) {
+  void updateDoc(Event e) {
     e.preventDefault();
     var id = query('input[name="id"]').value,
-      dataUrl = 'http://localhost/dart/depim/server/services/0.1/structure/$id',
+      dataUrl = 'http://localhost/dart/depim/server/services/0.1/document/$id',
       meta = {
         'utilisateurId' : 1,
         'tags' : {
           'etat' : 'M',
-          'type' : 'structure',
-          'commentaire' : 'Modification de la structure #$id.'
+          'type' : 'document',
+          'commentaire' : 'Modification du document #$id.'
         }
       },
       tags = getTags(),
@@ -165,24 +155,24 @@ class Warehouse extends WebComponent {
     if (request.status != 200) {
       showError(request);
     } else {
-      showSuccess('La structure avec l\'id #$id a été modifiée.');
+      showSuccess('Le document avec l\'id #$id a été modifié.');
     }
   }
 
-  void deleteWarehouse(Event e) {
+  void deleteDoc(Event e) {
     Element clickedElem = e.target;
-    var idStructure = clickedElem.attributes['data-id'],
+    var idDoc = clickedElem.attributes['data-id'],
       meta = {
         'utilisateurId' : 1,
         'tags' : {
           'etat' : 'S',
-          'type' : 'structure',
-          'commentaire' : 'Suppression de la strucutre $idStructure.'
+          'type' : 'document',
+          'commentaire' : 'Suppression du document $idDoc.'
         }
       },
       data = {'meta' : meta},
       encodedData = JSON.stringify(data),
-      url = 'http://localhost/dart/depim/server/services/0.1/structure/$idStructure',
+      url = 'http://localhost/dart/depim/server/services/0.1/document/$idDoc',
       httpRequest = new HttpRequest();
     httpRequest.open('DELETE', url);
     httpRequest.setRequestHeader('Content-type', 'application/json');
@@ -195,13 +185,13 @@ class Warehouse extends WebComponent {
     if (request.status != 204) {
       showError(request);
     } else {
-      showSuccess('une structure a été supprimée');
+      showSuccess('un document a été modifié.');
     }
   }
 
-  void resetWarehouse(Event e) {
+  void resetDoc(Event e) {
     // Show delete command
-    queryAll('.delete-warehouse-cmd, .update-warehouse-cmd').forEach((elem) {
+    queryAll('.delete-doc-cmd, .update-doc-cmd').forEach((elem) {
       elem.attributes.remove('data-id');
       elem.classes.add('hide');
     });
@@ -215,6 +205,6 @@ class Warehouse extends WebComponent {
 
   void showSuccess(String msg) {
     new Message('success').show(msg);
-    this.loadWarehouses();
+    this.loadDocuments();
   }
 }

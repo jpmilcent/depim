@@ -1,5 +1,11 @@
 @charset "utf8";
 
+/* TAGS */
+input[type="date"] {
+  padding-right: 45px;
+  border: 1px dotted gainsboro;
+}
+
 /* BLOC POSITIONNING */
 #logo {
   position: absolute;
@@ -43,7 +49,7 @@
   padding: 0 5px;
   border: 1px dotted Gainsboro;
 }
-#filter-zone-wh {
+#list-filter fieldset {
   margin: 0;
 }
 

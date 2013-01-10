@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <element name="x-doc" extends="div">
+      <template>
+        <div class="app-row">
+          <div id="list-bloc">
+            <form id="list-filter">
+              <fieldset id="filter-zone-doc">
+                <legend>Documents</legend>
+                <div class="input-prepend">
+                  <span class="add-on"><i class="icon-filter"></i></span>
+                  <input id="document-filter" type="text" placeholder="Filtrer" />
+                </div>
+              </fieldset>
+            </form>
+
+            <template instantiate='if !docListEmpty'>
+              <ul id="doc-list" class="nav nav-list">
+                <template iterate="doc in docList">
+                  <li on-click="onSelectedDoc($event)">
+                    <a data-id="{{doc['id']}}">{{doc['abbr']}}</a>
+                  </li>
+                </template>
+              </ul>
+            </template>
+          </div>
+          <div id="edit-bloc">
+            <form id="edit-doc" class="form-horizontal" autocomplete="on">
+              <div class="form-edit app-column">
+                <div class="app-row">
+                  <fieldset id="zone-doc">
+                    <legend>Infos</legend>
+                    <div class="control-group label-small">
+                      <label class="control-label" for="doc-titre">Titre</label>
+                      <div class="controls">
+                        <div class="input-prepend">
+                          <span class="add-on"><i class="icon-home"></i></span>
+                          <input id="doc-titre" class="field input-xlarge" name="titre" type="text" required />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="control-group label-small">
+                      <label class="control-label" for="doc-support">Support</label>
+                      <div class="controls">
+                        <div class="input-prepend">
+                          <span class="add-on"><i class="icon-tag"></i></span>
+                          <input id="doc-support" class="field input-medium" name="support" type="text" list="doc-support-list" value=""/>
+
+                          <datalist id="doc-support-list">
+                            <label for="doc-support-std" title="Choisir une valeur standard">ou</label>
+                            <select id="doc-support-std" name="type" >
+                              <option value="registre">Registre</option>
+                              <option value="micro-film">Micro-film</option>
+                              <option value="micro-fiche">Micro-fiche</option>
+                              <option value="numérique">Numérique</option>
+                            </select>
+                          </datalist>
+                        </div>
+                      </div>
+                    </div>
+
+                     <div class="control-group label-small">
+                      <label class="control-label" for="doc-code">Code</label>
+                      <div class="controls">
+                        <div class="input-prepend">
+                          <span class="add-on"><i class="icon-barcode"></i></span>
+                          <input id="doc-code" class="field input-small" name="code" type="text" value=""/>
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+
+                  <fieldset id="place-zone-doc">
+                    <legend>Lieu et date </legend>
+                    <div class="control-group label-large">
+                      <label class="control-label" for="doc-commune">Commune</label>
+                      <div class="controls">
+                       <input id="doc-commune" class="field" name="commune" type="text" value=""/>
+                      </div>
+                    </div>
+                    <div class="control-group label-large">
+                      <label class="control-label" for="doc-code-insee">Code INSEE</label>
+                      <div class="controls">
+                       <input id="doc-code-insee" class="field input-small" name="code:insee" type="text" value=""/>
+                      </div>
+                    </div>
+
+                    <div class="control-group label-large">
+                      <label class="control-label" for="doc-date-debut">Date</label>
+                      <div class="controls">
+                        <div class="form-inline">
+                          <input id="doc-date-debut" class="field input-small" name="date:debut" type="date" placeholder="jj/mm/aaaa"/>
+                          à
+                          <input id="doc-date-fin" class="field input-small" name="date:fin" type="date" placeholder="jj/mm/aaaa"/>
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+
+                <div class="app-row">
+
+                  <fieldset id="source-zone-doc">
+                    <legend>Source et note</legend>
+                    <div class="control-group label-large">
+                      <label class="control-label" for="doc-url-source">Url source</label>
+                      <div class="controls">
+                        <div class="input-prepend">
+                          <span class="add-on">@</span>
+                          <input id="doc-url-source" class="field span4" name="url:source" type="url" value=""/>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="control-group label-large">
+                      <label class="control-label" for="wh-note">Note</label>
+                      <div class="controls">
+                        <div class="input-prepend">
+                          <span class="add-on"><i class="icon-comment"></i></span>
+                          <textarea id="wh-note" class="field span4" name="note"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <input id="doc-id" class="field" name="id" type="hidden" />
+
+                <button type="submit" class="btn btn-success pull-right hide update-doc-cmd"
+                  on-click="updateDoc($event)">
+                    Modifier
+                </button>
+                <button type="submit" class="btn btn-primary pull-right add-doc-cmd"
+                  on-click="addDoc($event)">
+                    Ajouter
+                </button>
+
+                <button type="button" class="btn btn-danger hide delete-doc-cmd"
+                  on-click="deleteDoc($event)">
+                    Supprimer
+                </button>
+                <button type="reset" class="btn reset-doc-cmd"
+                  on-click="resetDoc($event)">
+                    Vider
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <script type="application/dart"></script>
+        <script type="text/javascript" src="https://dart.googlecode.com/svn/branches/bleeding_edge/dart/client/dart.js"></script>
+      </template>
+      <script type="application/dart" src="doc.dart"></script>
+    </element>
+  </body>
+</html>

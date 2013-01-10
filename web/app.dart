@@ -16,6 +16,11 @@ void openWareHouseView(Event event) {
   switchView('x-warehouse');
 }
 
+void openDocView(Event event) {
+  switchMenu('#menu-doc');
+  switchView('x-doc');
+}
+
 void switchView(id) {
   query('#main-bloc').elements.forEach((elem) {
     elem.attributes['style'] = 'display:none';
@@ -34,11 +39,13 @@ void switchMenu(id) {
 void changeBreadcrumb(id) {
   Map<String, String> entryPath = <String, String>{
     'Accueil': '#menu-home',
-    'Dépots': '#menu-warehouse'
+    'Dépots': '#menu-warehouse',
+    'Documents': '#menu-doc'
   };
   Map<String, List> breadcrumb = <String, List>{
     '#menu-home': ['Accueil'],
-    '#menu-warehouse': ['Accueil', 'Dépots']
+    '#menu-warehouse': ['Accueil', 'Dépots'],
+    '#menu-doc': ['Accueil', 'Documents']
   };
 
   queryAll('#breadcrumb li').forEach((e) {

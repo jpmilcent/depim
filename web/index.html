@@ -19,6 +19,7 @@
     <link rel="components" href="components/click.html">
     <link rel="components" href="views/home.html">
     <link rel="components" href="views/warehouse.html">
+    <link rel="components" href="views/doc.html">
 	</head>
 	<body>
     <div id="app">
@@ -53,7 +54,7 @@
             </a>
           </li>
           <li id="menu-doc">
-            <a href="#">
+            <a href="#" on-click="openDocView($event)">
               <i class="icon-book"></i>
               Documents
             </a>
@@ -78,6 +79,7 @@
 				  <section id="main-bloc">
 	          <x-home></x-home>
 	          <x-warehouse style="display:none"></x-warehouse>
+	          <x-doc style="display:none"></x-doc>
 	        </section>
 			  </article>
       </div>
