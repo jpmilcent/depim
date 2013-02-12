@@ -22,7 +22,7 @@ void openDocView(Event event) {
 }
 
 void switchView(id) {
-  query('#main-bloc').elements.forEach((elem) {
+  query('#main-bloc').children.forEach((elem) {
     elem.attributes['style'] = 'display:none';
   });
   query(id).attributes['style'] = '';

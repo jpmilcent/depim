@@ -1,7 +1,7 @@
 import 'package:web_ui/web_ui.dart';
 import 'package:web_ui/watcher.dart' as watchers;
 import 'dart:html';
-import 'dart:json';
+import 'dart:json' as json;
 import 'dart:uri';
 import '../ui/ui.dart';
 
@@ -9,18 +9,21 @@ class Warehouse extends WebComponent {
 
   Map warehouses = {};
 
-  void created() {
+  created() {
     this.loadWarehouses();
   }
 
-  void loadWarehouses() {
+  loadWarehouses() {
     var url = 'http://localhost/dart/depim/server/services/0.1/structure';
 
     // call the web server asynchronously
-    var request = new HttpRequest.get(url, onSuccess(HttpRequest req) {
-      this.warehouses = JSON.parse(req.responseText);
-      watchers.dispatch();
-    });
+    HttpRequest.getString(url).then(processingWarehousesLoad);
+  }
+
+  processingWarehousesLoad(responseText) {
+    print(responseText);
+    this.warehouses = json.parse(responseText);
+    watchers.dispatch();
   }
 
   List get whList {
@@ -65,13 +68,15 @@ class Warehouse extends WebComponent {
     var url = 'http://localhost/dart/depim/server/services/0.1/structure/$id';
 
     // call the web server asynchronously
-    var request = new HttpRequest.get(url, onSuccess(HttpRequest req) {
-      query('.field[name="id"]').value = id;
-      var warehouse = JSON.parse(req.responseText);
-      Map tags = warehouse['tags'];
-      tags.forEach((key, value) {
-        query('.field[name="$key"]').value = value;
-      });
+    HttpRequest.getString(url).then(processingLoadingForm);
+  }
+
+  processingLoadingForm(responseText) {
+    query('.field[name="id"]').attributes['value'] = id;
+    var warehouse = json.parse(responseText);
+    Map tags = warehouse['tags'];
+    tags.forEach((key, value) {
+      query('.field[name="$key"]').attributes['value'] = value;
     });
   }
 

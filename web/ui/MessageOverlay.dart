@@ -9,7 +9,7 @@ class MessageOverlay {
 
   void show(text) {
     elem = new Element.html('''
-      <div id="msg-overlay" class="modal hide fade" role="dialog" 
+      <div id="msg-overlay" class="modal hide fade" role="dialog"
         aria-labelledby="msgDialogHeader" aria-hidden="true">
 
         <div class="modal-header">
@@ -20,16 +20,17 @@ class MessageOverlay {
         <div class="modal-body">
           ${text}
         </div>
-        
+
       </div>''');
 
     elem.query('.close').on.click.add((e) {
       this.hide();
     });
 
-    window.on.keyDown.add((e) {
-      if (e.keyCode == 27) // Escape
+    window.onKeyDown.listen((e) {
+      if (e.keyCode == 27) { // Escape
         this.hide();
+      }
     });
 
     addBackdrop();

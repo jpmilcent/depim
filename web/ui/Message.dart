@@ -17,9 +17,10 @@ class Message {
 
     addCloseEvent();
 
-    window.on.keyDown.add((e) {
-      if (e.keyCode == 27) // Escape
+    window.onKeyDown.listen((e) {
+      if (e.keyCode == 27) { // Escape
         this.delete();
+      }
     });
 
     query('#msg-bloc').nodes.add(elem);
@@ -27,13 +28,11 @@ class Message {
   }
 
   addCloseEvent() {
-    elem.query('.close').on.click.add((e) => delete());
+    elem.query('.close').onClick.listen((e) => delete());
   }
 
   addTimer() {
-    new Timer(msgDuration, (Timer t) {
-      delete();
-    });
+    new Timer(msgDuration, (Timer t) => delete());
   }
 
   void delete() {

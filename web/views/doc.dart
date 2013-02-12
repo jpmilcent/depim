@@ -1,7 +1,7 @@
 import 'package:web_ui/web_ui.dart';
 import 'package:web_ui/watcher.dart' as watchers;
 import 'dart:html';
-import 'dart:json';
+import 'dart:json' as json;
 import 'dart:uri';
 import '../ui/ui.dart';
 
@@ -9,18 +9,25 @@ class Doc extends WebComponent {
 
   Map documents = {};
 
-  void created() {
+  created() {
     this.loadDocuments();
   }
 
-  void loadDocuments() {
+  loadDocuments() {
     var url = 'http://localhost/dart/depim/server/services/0.1/document';
 
     // call the web server asynchronously
-    var request = new HttpRequest.get(url, onSuccess(HttpRequest req) {
-      this.documents = JSON.parse(req.responseText);
-      watchers.dispatch();
-    });
+    HttpRequest.getString(url).then(processingDocumentsLoad);
+  }
+
+  processingDocumentsLoad(responseText) {
+    print(responseText);
+    try {
+      this.documents = json.parse(responseText);
+    } catch(e) {
+      print(e);
+    }
+    watchers.dispatch();
   }
 
   List get docList {
@@ -65,7 +72,7 @@ class Doc extends WebComponent {
     var url = 'http://localhost/dart/depim/server/services/0.1/document/$id';
 
     // call the web server asynchronously
-    var request = new HttpRequest.get(url, onSuccess(HttpRequest req) {
+    var request = new HttpRequest.get(url, (HttpRequest req) {
       query('.field[name="id"]').value = id;
       var doc = JSON.parse(req.responseText);
       Map tags = doc['tags'];

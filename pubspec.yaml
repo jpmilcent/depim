@@ -5,6 +5,7 @@ homepage: http://www.depim.net
 description: >
   Gestion des dépouillements en ligne.
 dependencies:
+  browser: any
   web_ui: any
   json_object:
     git: git://github.com/chrisbu/dartwatch-JsonObject.git
