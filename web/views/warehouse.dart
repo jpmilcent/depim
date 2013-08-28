@@ -2,7 +2,6 @@ import 'package:web_ui/web_ui.dart';
 import 'package:web_ui/watcher.dart' as watchers;
 import 'dart:html';
 import 'dart:json' as json;
-import 'dart:uri';
 import '../ui/ui.dart';
 
 class Warehouse extends WebComponent {
