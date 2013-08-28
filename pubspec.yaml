@@ -1,11 +1,9 @@
 name: depim
 version: 0.1.0
 author: Jean-Pascal Milcent <jpm@clapas.org>
+description: Gestion des dépouillements en ligne.
 homepage: http://www.depim.net
-description: >
-  Gestion des dépouillements en ligne.
 dependencies:
   browser: any
+  json_object: any
   web_ui: any
-  json_object:
-    git: git://github.com/chrisbu/dartwatch-JsonObject.git
