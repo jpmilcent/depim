@@ -1,7 +1,15 @@
-import 'package:web_ui/web_ui.dart';
+import 'package:polymer/polymer.dart';
 import '../ui/ui.dart';
 
-class Home extends WebComponent {
+@CustomTag('home-panel')
+class Home extends PolymerElement {
+
+	bool get applyAuthorStyles => true;
+
+	void created() {
+		super.created();
+
+	}
 
   void addMessage(e) {
     var now = new DateTime.now();

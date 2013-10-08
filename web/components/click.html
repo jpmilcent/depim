@@ -1,19 +1,10 @@
 <!DOCTYPE html>
-<html><body>
-  <element name="x-click-counter" constructor="CounterComponent" extends="div">
-    <template>
-      <div>
-        <button on-click="increment($event)">Click me</button>
-        <span>(click count: {{count}})</span>
-      </div>
-    </template>
-    <script type="application/dart">
-      import 'package:web_ui/web_ui.dart';
-
-      class CounterComponent extends WebComponent {
-        int count = 0;
-        void increment(e) { count++; }
-      }
-    </script>
-  </element>
-</body></html>
+<polymer-element name="click-counter">
+  <template>
+    <div>
+      <button on-click="increment">Click me</button>
+      <span>(click count: {{count}})</span>
+    </div>
+  </template>
+  <script type="application/dart" src="click.dart"></script>
+</polymer-element>

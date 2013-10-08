@@ -1,7 +1,7 @@
 library depim_ui;
 
-import 'dart:isolate';
 import 'dart:html';
+import 'dart:async';
 
 part 'Message.dart';
 part 'MessageOverlay.dart';

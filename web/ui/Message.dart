@@ -3,7 +3,7 @@ part of depim_ui;
 class Message {
   String type;
   Element elem;
-  var msgDuration = 3000;
+  Duration msgDuration = new Duration(seconds:3);
 
   Message(this.type);
 
@@ -23,7 +23,7 @@ class Message {
       }
     });
 
-    query('#msg-bloc').nodes.add(elem);
+		document.query('#msg-bloc').nodes.add(elem);
     addTimer();
   }
 
@@ -32,7 +32,7 @@ class Message {
   }
 
   addTimer() {
-    new Timer(msgDuration, (Timer t) => delete());
+    new Timer(msgDuration, () => delete());
   }
 
   void delete() {

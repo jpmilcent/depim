@@ -1,20 +1,13 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <link rel="components" href="../components/click.html">
-  </head>
-  <body>
-    <element name="x-home" constructor="Home" extends="div">
-      <template>
-		    <h1>Accueil</h1>
-		    <p>
-		      Path : <span id="path">${path}</span>
-		      <button class="msg" on-click="addMessage($event)">Add msg</button>
-		      <button class="msg-overlay" on-click="addMessageOverlay($event)">Add msg overlay</button>
-		      <x-click-counter></x-click-counter>
-		    </p>
-      </template>
-	    <script type="application/dart" src="home.dart"></script>
-    </element>
-  </body>
-</html>
+
+<polymer-element name="home-panel">
+  <template>
+    <h1>Accueil</h1>
+    <p>
+      Path : <span id="path">${path}</span>
+      <button class="msg" on-click="addMessage">Add msg</button>
+      <button class="msg-overlay" on-click="addMessageOverlay">Add msg overlay</button>
+    </p>
+  </template>
+  <script type="application/dart" src="home.dart"></script>
+</polymer-element>

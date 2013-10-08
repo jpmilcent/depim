@@ -23,7 +23,7 @@ class MessageOverlay {
 
       </div>''');
 
-    elem.query('.close').on.click.add((e) {
+    elem.query('.close').onClick.listen((e) {
       this.hide();
     });
 
@@ -33,14 +33,14 @@ class MessageOverlay {
       }
     });
 
-    addBackdrop();
+		document.query('#dialog-overlay').nodes.add(elem);
+
+		addBackdrop();
     displayMsg();
   }
 
   void displayMsg() {
-    query('#dialog-overlay').nodes.add(elem);
-
-    var msg = query('#msg-overlay');
+    Element msg = document.query('#msg-overlay');
     msg.attributes['style'] = 'display:block';
     msg.classes.add('in');
     msg.attributes['aria-hidden'] = 'false';
@@ -48,13 +48,13 @@ class MessageOverlay {
 
   void addBackdrop() {
     backdrop = new Element.tag('div');
-    backdrop.attributes['class'] = 'modal-backdrop fade in';
+    backdrop.setAttribute('class', 'modal-backdrop fade in');
     document.body.nodes.add(backdrop);
   }
 
   void hide() {
     removeBackdrop();
-    query('#dialog-overlay #msg-overlay').remove();
+    elem.remove();
   }
 
   void removeBackdrop() {

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<link rel="import" href="views/home.html">
+<link rel="import" href="views/warehouse.html">
+<link rel="import" href="views/doc.html">
+
+<polymer-element name="app-main">
+  <template>
+    <div id="app">
+        <header id="banner" role="banner">
+          <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+              <h1 id="site-title" class="brand">
+                <img id="logo" class="pull-left" src="img/depim.png" alt="Depim"/>
+                Outils de dépouillement en ligne
+              </h1>
+              <div id="user-infos" class="pull-right">
+                <img src="img/avatar.jpg" width="23" height="24">
+                <span id="topbar-name">Jean-Pascal</span>
+                <img src="img/icone_config.png" width="77" height="30">
+              </div>
+            </div>
+          </div>
+        </header>
+  
+        <nav id="menu" role="navigation">
+          <ul class="nav nav-tabs">
+            <li id="menu-home" class="active">
+              <a href="#" on-click="openHomeView">
+                <i class="icon-th"></i>
+                Accueil
+              </a>
+            </li>
+            <li id="menu-warehouse">
+              <a href="#" on-click="openWareHouseView">
+                <i class="icon-home"></i>
+                Dépôts
+              </a>
+            </li>
+            <li id="menu-doc">
+              <a href="#" on-click="openDocView">
+                <i class="icon-book"></i>
+                Documents
+              </a>
+            </li>
+            <li id="menu-acte">
+              <a href="#">
+                <i class="icon-file"></i>
+                Actes
+              </a>
+            </li>
+          </ul>
+        </nav>
+  
+        <div id="main" role="main">
+          <article>
+            <ul id="breadcrumb" class="breadcrumb">
+              <li class="active">
+                <a href="#">Home</a>
+                <span class="divider">></span>
+              </li>
+            </ul>
+            <section id="main-bloc">
+              <home-panel id="home-panel"></home-panel>
+            </section>
+          </article>
+        </div>
+  
+        <footer id="copyright" role="contentInfo">
+          <div class="navbar navbar-fixed-bottom">
+            <div class="navbar-inner">
+          <ul class="nav">
+          <li><a>DPIM v<span id="app-version">0.1</span></a></li>
+              <li><a>&copy;<span id="copyright-year">2012</span></a></li>
+              <li><a>Jean-Pascal Milcent</a></li>
+              <li><a href="http://www.depim.net/aide">Aide</a></li>
+              <li><a href="terms.html">Terms</a></li>
+              <li><a href="termsofuse.html">Terms of Use</a></li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+  
+      <div id="msg-bloc"></div>
+     <div id="dialog-overlay"></div>
+    </div>
+  </template>
+  <script type="application/dart" src="app.dart"></script>
+</polymer-element>

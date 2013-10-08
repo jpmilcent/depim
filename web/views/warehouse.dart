@@ -1,19 +1,24 @@
-import 'package:web_ui/web_ui.dart';
-import 'package:web_ui/watcher.dart' as watchers;
+import 'package:polymer/polymer.dart';
+import 'package:observe/observe.dart';
 import 'dart:html';
 import 'dart:json' as json;
 import '../ui/ui.dart';
 
-class Warehouse extends WebComponent {
+@CustomTag('warehouse-panel')
+class Warehouse extends PolymerElement with ObservableMixin {
 
+	bool get applyAuthorStyles => true;
   Map warehouses = {};
+	@observable List whList = toObservable(new List());
 
-  created() {
-    this.loadWarehouses();
-  }
+	void created() {
+		super.created();
+
+		this.loadWarehouses();
+	}
 
   loadWarehouses() {
-    var url = 'http://localhost/dart/depim/server/services/0.1/structure';
+    var url = 'http://localhost/dart/depim/server/services/v1/structures';
 
     // call the web server asynchronously
     HttpRequest.getString(url).then(processingWarehousesLoad);
@@ -22,28 +27,25 @@ class Warehouse extends WebComponent {
   processingWarehousesLoad(responseText) {
     print(responseText);
     this.warehouses = json.parse(responseText);
-    watchers.dispatch();
+		updateWhList();
   }
 
-  List get whList {
-    var res = new List();
+	void updateWhList() {
     if (! warehouses.isEmpty) {
       warehouses.forEach((var key, var wh) {
         try {
           if (wh['tags']['nom'] != '') {
-            res.add({'id': wh['meta']['id'], 'nom': wh['tags']['nom']});
+            whList.add({'id': wh['meta']['id'], 'nom': wh['tags']['nom']});
           } else {
-            res.add({'id': wh['meta']['id'], 'nom': 'Sans nom'});
+						whList.add({'id': wh['meta']['id'], 'nom': 'Sans nom'});
           }
         } catch(e) {
-          res.add({'id': wh['meta']['id'], 'nom': 'Sans nom'});
+					whList.add({'id': wh['meta']['id'], 'nom': 'Sans nom'});
         }
       });
     }
-    return res;
+		print(warehouses.isEmpty.toString()+"-"+whList.toString());
   }
-
-  bool get whListEmpty => whList.isEmpty;
 
   void onSelectedWarehouse(Event e) {
     Element clickedElem = e.target;
@@ -53,11 +55,11 @@ class Warehouse extends WebComponent {
     this.loadWarehouseDetails(id);
 
     // Show delete command
-    queryAll('.delete-warehouse-cmd').forEach((elem) {
+    shadowRoot.queryAll('.delete-warehouse-cmd').forEach((elem) {
       elem.attributes['data-id'] = id;
       elem.classes.remove('hide');
     });
-    queryAll('.update-warehouse-cmd').forEach((elem) {
+    shadowRoot.queryAll('.update-warehouse-cmd').forEach((elem) {
       elem.attributes['data-id'] = id;
       elem.classes.remove('hide');
     });
@@ -71,11 +73,11 @@ class Warehouse extends WebComponent {
   }
 
   processingLoadingForm(responseText) {
-    query('.field[name="id"]').attributes['value'] = id;
+    shadowRoot.query('.field[name="id"]').attributes['value'] = id;
     var warehouse = json.parse(responseText);
     Map tags = warehouse['tags'];
     tags.forEach((key, value) {
-      query('.field[name="$key"]').attributes['value'] = value;
+      shadowRoot.query('.field[name="$key"]').attributes['value'] = value;
     });
   }
 
@@ -93,30 +95,30 @@ class Warehouse extends WebComponent {
         }
       },
       data = {'meta' : meta, 'tags': tags},
-      encodedData = JSON.stringify(data);
+      encodedData = json.stringify(data);
 
     var httpRequest = new HttpRequest();
     httpRequest.open('POST', dataUrl);
     httpRequest.setRequestHeader('Content-type', 'application/json');
-    httpRequest.on.loadEnd.add((e) => addEnd(httpRequest));
+    httpRequest.onLoadEnd.listen((e) => addEnd(httpRequest));
     print(encodedData);
     httpRequest.send(encodedData);
   }
 
   Map getTags() {
-    var nom = query('input[name="nom"]').value,
-      type = query('input[name="type"]').value,
-      code = query('input[name="code"]').value,
-      adresse = query('input[name="adresse"]').value,
-      adresseComplement = query('input[name="adresse:complement"]').value,
-      codePostal = query('input[name="code_postal"]').value,
-      ville = query('input[name="ville"]').value,
-      courriel = query('input[name="courriel"]').value,
-      url = query('input[name="url"]').value,
-      telFixe = query('input[name="telephone:fixe"]').value,
-      telFax = query('input[name="telephone:fax"]').value,
-      urlGeneawiki = query('input[name="url:geneawiki"]').value,
-      note = query('textarea[name="note"]').value;
+    var nom = (shadowRoot.query('input[name="nom"]') as InputElement).value,
+      type = (shadowRoot.query('input[name="type"]') as InputElement).value,
+      code = (shadowRoot.query('input[name="code"]') as InputElement).value,
+      adresse = (shadowRoot.query('input[name="adresse"]') as InputElement).value,
+      adresseComplement = (shadowRoot.query('input[name="adresse:complement"]') as InputElement).value,
+      codePostal = (shadowRoot.query('input[name="code_postal"]') as InputElement).value,
+      ville = (shadowRoot.query('input[name="ville"]') as InputElement).value,
+      courriel = (shadowRoot.query('input[name="courriel"]') as InputElement).value,
+      url = (shadowRoot.query('input[name="url"]') as InputElement).value,
+      telFixe = (shadowRoot.query('input[name="telephone:fixe"]') as InputElement).value,
+      telFax = (shadowRoot.query('input[name="telephone:fax"]') as InputElement).value,
+      urlGeneawiki = (shadowRoot.query('input[name="url:geneawiki"]') as InputElement).value,
+      note = (shadowRoot.query('textarea[name="note"]') as InputElement).value;
     return {
       'nom': nom,
       'type': type,
@@ -144,7 +146,7 @@ class Warehouse extends WebComponent {
 
   void updateWarehouse(Event e) {
     e.preventDefault();
-    var id = query('input[name="id"]').value,
+    var id = (shadowRoot.query('input[name="id"]') as InputElement).value,
       dataUrl = 'http://localhost/dart/depim/server/services/0.1/structure/$id',
       meta = {
         'utilisateurId' : 1,
@@ -156,12 +158,12 @@ class Warehouse extends WebComponent {
       },
       tags = getTags(),
       data = {'meta' : meta, 'tags': tags},
-      encodedData = JSON.stringify(data);
+      encodedData = json.stringify(data);
 
     var httpRequest = new HttpRequest();
     httpRequest.open('POST', dataUrl);
     httpRequest.setRequestHeader('Content-type', 'application/json');
-    httpRequest.on.loadEnd.add((e) => updateEnd(httpRequest, id));
+    httpRequest.onLoadEnd.listen((e) => updateEnd(httpRequest, id));
     httpRequest.send(encodedData);
   }
 
@@ -185,18 +187,18 @@ class Warehouse extends WebComponent {
         }
       },
       data = {'meta' : meta},
-      encodedData = JSON.stringify(data),
+      encodedData = json.stringify(data),
       url = 'http://localhost/dart/depim/server/services/0.1/structure/$idStructure',
       httpRequest = new HttpRequest();
     httpRequest.open('DELETE', url);
     httpRequest.setRequestHeader('Content-type', 'application/json');
-    httpRequest.on.loadEnd.add((e) => deleteEnd(httpRequest));
+    httpRequest.onLoadEnd.listen((e) => deleteEnd(httpRequest));
     print(encodedData);
     httpRequest.send(encodedData);
   }
 
   void deleteEnd(HttpRequest request) {
-    if (request.status != 204) {
+		if (request.status != 204) {
       showError(request);
     } else {
       showSuccess('une structure a été supprimée');
@@ -205,11 +207,11 @@ class Warehouse extends WebComponent {
 
   void resetWarehouse(Event e) {
     // Show delete command
-    queryAll('.delete-warehouse-cmd, .update-warehouse-cmd').forEach((elem) {
+    shadowRoot.queryAll('.delete-warehouse-cmd, .update-warehouse-cmd').forEach((elem) {
       elem.attributes.remove('data-id');
       elem.classes.add('hide');
     });
-    query('.field[name="id"]').attributes.remove('value');
+    shadowRoot.query('.field[name="id"]').attributes.remove('value');
   }
 
   void showError(HttpRequest request) {

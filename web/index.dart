@@ -1,19 +1,9 @@
 library depim;
 
-import 'package:polymer/polymer.dart';
+import "package:polymer/polymer.dart";
 import 'dart:html';
 
-@CustomTag('app-main')
-class App extends PolymerElement with ObservableMixin {
-
-	bool get applyAuthorStyles => true;
-	Element msgBloc;
-
-	void created() {
-		super.created();
-
-	}
-
+main() {
 	changeBreadcrumb(id) {
 		Map<String, String> entryPath = <String, String>{
 			'Accueil': '#menu-home',
@@ -26,7 +16,7 @@ class App extends PolymerElement with ObservableMixin {
 			'#menu-doc': ['Accueil', 'Documents']
 		};
 
-		shadowRoot.queryAll('#breadcrumb li').forEach((e) {
+		queryAll('#breadcrumb li').forEach((e) {
 			e.remove();
 		});
 		var breadcrumbLength = breadcrumb[id].length;
@@ -42,21 +32,23 @@ class App extends PolymerElement with ObservableMixin {
 			breadcrumbHtml.write(html);
 			print('i:$i/position:$position/length:$breadcrumbLength/html:$html');
 		}
-		shadowRoot.query('#breadcrumb').appendHtml(breadcrumbHtml.toString());
+		query('#breadcrumb').appendHtml(breadcrumbHtml.toString());
 	}
 
 	switchMenu(id) {
-		shadowRoot.queryAll('#menu .active').forEach((elem) {
+		queryAll('#menu .active').forEach((elem) {
 			elem.setAttribute('class', '');
 	  });
-		shadowRoot.query(id).setAttribute('class', 'active');
+		print(id);
+		query(id).setAttribute('class', 'active');
 	  changeBreadcrumb(id);
 	}
 
 	switchView(id) {
 		var customElement = createElement(id);
-		shadowRoot.query('#main-bloc').children.clear();
-		shadowRoot.query('#main-bloc').append(customElement);
+		query('#main-bloc').children.clear();
+		query('#main-bloc').append(customElement);
+		print(query('#main-bloc').children[0].toString());
 	}
 
 	openHomeView(Event event) {

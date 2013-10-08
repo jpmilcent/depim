@@ -1,22 +1,26 @@
-import 'package:web_ui/web_ui.dart';
-import 'package:web_ui/watcher.dart' as watchers;
+import 'package:polymer/polymer.dart';
+import 'package:observe/observe.dart';
 import 'dart:html';
 import 'dart:json' as json;
 import '../ui/ui.dart';
 
-class Doc extends WebComponent {
+@CustomTag('doc-panel')
+class Doc extends PolymerElement with ObservableMixin {
 
-  Map documents = {};
+	bool get applyAuthorStyles => true;
 
-  created() {
+  final urlBase = 'http://localhost/dart/depim/server/services/v1/documents';
+
+	@observable Map documents = {};
+
+  void created() {
+		super.created();
     this.loadDocuments();
   }
 
   loadDocuments() {
-    var url = 'http://localhost/dart/depim/server/services/0.1/document';
-
     // call the web server asynchronously
-    HttpRequest.getString(url).then(processingDocumentsLoad);
+    HttpRequest.getString(urlBase).then(processingDocumentsLoad);
   }
 
   processingDocumentsLoad(responseText) {
@@ -26,7 +30,7 @@ class Doc extends WebComponent {
     } catch(e) {
       print(e);
     }
-    watchers.dispatch();
+    //watchers.dispatch();
   }
 
   List get docList {
@@ -68,23 +72,28 @@ class Doc extends WebComponent {
   }
 
   void loadDocDetails(id) {
-    var url = 'http://localhost/dart/depim/server/services/0.1/document/$id';
+    var url = '${urlBase}/$id';
 
     // call the web server asynchronously
-    var request = new HttpRequest.get(url, (HttpRequest req) {
-      query('.field[name="id"]').value = id;
-      var doc = JSON.parse(req.responseText);
+    HttpRequest.getString(url).then((responseText) {
+			InputElement idElmt = query('input.field[name="id"]');
+			idElmt.value = id;
+      var doc = json.parse(responseText);
       Map tags = doc['tags'];
       tags.forEach((key, value) {
-        query('.field[name="$key"]').value = value;
+        var field = query('.field[name="$key"]');
+        if (field != null) {
+          field.attributes['value'] = value;
+        } else {
+          print('Not implemented => $key : $value');
+        }
       });
     });
   }
 
   void addDoc(Event e) {
     e.preventDefault();
-    var dataUrl = 'http://localhost/dart/depim/server/services/0.1/document',
-      tags = getTags(),
+    var tags = getTags(),
       meta = {
         'utilisateurId' : 1,
         'tags' : {
@@ -93,27 +102,28 @@ class Doc extends WebComponent {
           'commentaire' : 'Ajout du document "${tags['titre']}".',
           'source' : tags['urlGeneawiki']
         }
+
       },
       data = {'meta' : meta, 'tags': tags},
-      encodedData = JSON.stringify(data);
+      encodedData = json.stringify(data);
 
     var httpRequest = new HttpRequest();
-    httpRequest.open('POST', dataUrl);
+    httpRequest.open('POST', urlBase);
     httpRequest.setRequestHeader('Content-type', 'application/json');
-    httpRequest.on.loadEnd.add((e) => addEnd(httpRequest));
+    httpRequest.onLoadEnd.listen((e) => addEnd(httpRequest));
     print(encodedData);
     httpRequest.send(encodedData);
   }
 
   Map getTags() {
-    var titre = query('input[name="titre"]').value,
-      support = query('input[name="support"]').value,
-      code = query('input[name="code"]').value,
-      abreviation = query('input[name="abreviation"]').value,
-      codeInsee = query('input[name="code:insee"]').value,
-      commune = query('input[name="commune"]').value,
-      urlSource = query('input[name="url:source"]').value,
-      note = query('textarea[name="note"]').value;
+    var titre = (query('input[name="titre"]') as InputElement).value,
+      support = (query('input[name="support"]') as InputElement).value,
+      code = (query('input[name="code"]') as InputElement).value,
+      abreviation = (query('input[name="abreviation"]') as InputElement).value,
+      codeInsee = (query('input[name="code:insee"]') as InputElement).value,
+      commune = (query('input[name="commune"]') as InputElement).value,
+      urlSource = (query('input[name="url:source"]') as InputElement).value,
+      note = (query('textarea[name="note"]') as InputElement).value;
     return {
       'titre': titre,
       'support': support,
@@ -136,8 +146,8 @@ class Doc extends WebComponent {
 
   void updateDoc(Event e) {
     e.preventDefault();
-    var id = query('input[name="id"]').value,
-      dataUrl = 'http://localhost/dart/depim/server/services/0.1/document/$id',
+    var id = (query('input[name="id"]') as InputElement).value,
+      dataUrl = '${urlBase}/$id',
       meta = {
         'utilisateurId' : 1,
         'tags' : {
@@ -148,12 +158,12 @@ class Doc extends WebComponent {
       },
       tags = getTags(),
       data = {'meta' : meta, 'tags': tags},
-      encodedData = JSON.stringify(data);
+      encodedData = json.stringify(data);
 
     var httpRequest = new HttpRequest();
     httpRequest.open('POST', dataUrl);
     httpRequest.setRequestHeader('Content-type', 'application/json');
-    httpRequest.on.loadEnd.add((e) => updateEnd(httpRequest, id));
+    httpRequest.onLoadEnd.listen((e) => updateEnd(httpRequest, id));
     httpRequest.send(encodedData);
   }
 
@@ -177,12 +187,12 @@ class Doc extends WebComponent {
         }
       },
       data = {'meta' : meta},
-      encodedData = JSON.stringify(data),
-      url = 'http://localhost/dart/depim/server/services/0.1/document/$idDoc',
+      encodedData = json.stringify(data),
+      url = '${urlBase}/$idDoc',
       httpRequest = new HttpRequest();
     httpRequest.open('DELETE', url);
     httpRequest.setRequestHeader('Content-type', 'application/json');
-    httpRequest.on.loadEnd.add((e) => deleteEnd(httpRequest));
+    httpRequest.onLoadEnd.listen((e) => deleteEnd(httpRequest));
     print(encodedData);
     httpRequest.send(encodedData);
   }
@@ -201,7 +211,7 @@ class Doc extends WebComponent {
       elem.attributes.remove('data-id');
       elem.classes.add('hide');
     });
-    query('.field[name="id"]').attributes.remove('value');
+    query('input.field[name="id"]').attributes.remove('value');
   }
 
   void showError(HttpRequest request) {
