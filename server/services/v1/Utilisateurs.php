@@ -8,14 +8,14 @@
 * @version 0.1
 * @copyright 1999-2011 Jean-Pascal Milcent (jpm@clapas.org)
 */
-class Utilisateur extends RestService {
-	
+class Utilisateurs extends RestService {
+
 	private $salt = 'depim2012';
-	
+
 	/** Indique si oui (true) ou non (false), on veut utiliser les paramètres brutes. */
 	protected $utilisationParametresBruts = true;
-	
-	
+
+
 	public function consulter($ressources, $parametres) {
 		$resultat = '';
 		$reponseHttp = new ReponseHttp();
@@ -29,7 +29,7 @@ class Utilisateur extends RestService {
 		$corps = $reponseHttp->getCorps();
 		return $corps;
 	}
-	
+
 	private function getUtilisateurs() {
 		$requete = 'SELECT u.*, c.* FROM meta_utilisateur AS u '.
 				'LEFT JOIN meta_changement As c ON (ce_meta = id_changement) '.
@@ -37,11 +37,11 @@ class Utilisateur extends RestService {
 		$tables = $this->getBdd()->recupererTous($requete);
 		return $tables;
 	}
-	
+
 	public function ajouter($ressources, $requeteDonnees) {
 		$meta = $requeteDonnees['meta'];
 		$idChgment = $this->ajouterChangement($meta);
-		
+
 		$infos = $requeteDonnees['utilisateur'];
 		$utilisateur = $this->getBdd()->protegerTableau($infos);
 		$prenom = $utilisateur['prenom'];
@@ -59,25 +59,25 @@ class Utilisateur extends RestService {
 			"$nomComplet, $prenom, $nom, $pseudo, $courriel, $motDePasse, $licence, ".
 			"$sessionId, $idChgment)";
 		$this->getBdd()->requeter($requete);
-	
+
 		$requete = 'SELECT last_insert_rowid() AS id';
 		$resultat = $this->getBdd()->recuperer($requete);
 		$id = $resultat['id'];
 
 		return $id;
 	}
-	
+
 	private function ajouterChangement($meta) {
 		$utilisateurId = $this->getBdd()->proteger($meta['utilisateurId']);
 		$requete = 'INSERT INTO '.
 				'meta_changement (date, ce_utilisateur) '.
 				"VALUES (datetime('now'), $utilisateurId)";
 		$resultat = $this->getBdd()->requeter($requete);
-	
+
 		$requete = "SELECT last_insert_rowid() AS id ";
 		$resultat = $this->getBdd()->recuperer($requete);
 		$id = $resultat['id'];
-	
+
 		$meta['tags']['ip'] = $_SERVER['REMOTE_ADDR'];
 		$changementTags = $this->getBdd()->protegerCleValeur($meta['tags']);
 		$this->getBdd()->debuterTransaction();
@@ -87,7 +87,7 @@ class Utilisateur extends RestService {
 			$this->getBdd()->executer($requete);
 		}
 		$this->getBdd()->validerTransaction();
-	
+
 		return $id;
 	}
 }

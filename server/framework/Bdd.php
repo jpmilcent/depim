@@ -191,7 +191,7 @@ class Bdd {
 			}
 		}
 	}
-	
+
 	public function debuterTransaction() {
 		$retour = null;
 		switch ($this->abstraction) {
@@ -206,7 +206,7 @@ class Bdd {
 		}
 		return $retour;
 	}
-	
+
 	public function validerTransaction() {
 		$retour = null;
 		switch ($this->abstraction) {
@@ -221,7 +221,7 @@ class Bdd {
 		}
 		return $retour;
 	}
-	
+
 	public function annulerTransaction() {
 		$retour = null;
 		switch ($this->abstraction) {
@@ -236,7 +236,7 @@ class Bdd {
 		}
 		return $retour;
 	}
-	
+
 	public function executer($requete) {
 		$retour = null;
 		switch ($this->abstraction) {
@@ -249,9 +249,9 @@ class Bdd {
 				}
 				break;
 		}
-		return $retour;		
+		return $retour;
 	}
-	
+
 	/**
 	 * Execute une requête et retourne le résultat tel que renvoyé par l'abstraction courante.
 	 *
@@ -322,7 +322,7 @@ class Bdd {
 		}
 		return $retour;
 	}
-	
+
 	/**
 	 * Execute une requête et retourne un tableau de résultats. Un résultat peut être présentés sous forme
 	 * de tableau (par défaut) ou d'objet.
@@ -404,7 +404,7 @@ class Bdd {
 		}
 		return $retour;
 	}
-	
+
 	/**
 	* Protège les chaines d'un tableau de caractères avant l'insertion dans la base de données (ajout de quotes ou guillemets).
 	* @param array le tableau de chaines à protéger
@@ -430,7 +430,7 @@ class Bdd {
 		}
 		return $champsProteges;
 	}
-	
+
 	/**
 	 * Retourne l'identifiant de la dernière ligne insérée, ou la dernière valeur d'une séquence d'objets, dépendamment, dans
 	 * le cas de PDO, du driver utilisé. Les méthodes utilisées pour retourner l'identifiant peuvent avoir des comportements

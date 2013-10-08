@@ -96,7 +96,7 @@ class RestServeur {
 	const HTTP_CODE_ERREUR = '500';
 
 	/** Motif de l'epression régulière vérfiant la version de l'API. */
-	const MOTIF_API_VERSION = '/^[0-9]+(?:[.][0-9]+)*$/';
+	const MOTIF_API_VERSION = '/^v[0-9]+$/';
 
 	/** Motif de l'epression régulière vérfiant le nom du service. */
 	const MOTIF_SERVICE_NOM = '/^[a-z0-9]+(?:[-][a-z0-9]+)*$/';

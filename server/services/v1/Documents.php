@@ -8,7 +8,7 @@
 * @version 0.1
 * @copyright 1999-2011 Jean-Pascal Milcent (jpm@clapas.org)
 */
-class Document extends RestService {
+class Documents extends RestService {
 
     /** Indique si oui (true) ou non (false), on veut utiliser les paramètres brutes. */
 	protected $utilisationParametresBruts = true;
@@ -185,7 +185,7 @@ class Document extends RestService {
 		$requete = 'INSERT INTO '.
 				'meta_changement (date, ce_utilisateur) '.
 				"VALUES (datetime('now'), $utilisateurId)";
-		$resultat = $this->getBdd()->requeter($requete);
+		$this->getBdd()->requeter($requete);
 
 		$requete = "SELECT last_insert_rowid() AS id ";
 		$resultat = $this->getBdd()->recuperer($requete);
@@ -197,7 +197,7 @@ class Document extends RestService {
 		foreach ($changementTags as $cle => $valeur) {
 			$requete = 'INSERT INTO meta_changement_tags (id, cle, valeur) '.
 					"VALUES ($id, $cle, $valeur)";
-			$this->getBdd()->executer($requete);
+			$this->getBdd()->requeter($requete);
 		}
 		$this->getBdd()->validerTransaction();
 
