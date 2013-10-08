@@ -1,6 +1,5 @@
-import 'package:web_ui/component_build.dart';
-import 'dart:io';
+import 'package:polymer/builder.dart';
 
 void main() {
-  build(new Options().arguments, ['web/index.html']);
+	build(entryPoints: ['web/index.html'], options: parseOptions(['--deploy']));
 }
