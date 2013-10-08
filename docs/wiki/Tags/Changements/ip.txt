@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2012-11-14T22:40:12+01:00
+
+====== ip ======
+Created mercredi 14 novembre 2012
+
+**Clé :** ip
+**Description :** adresse ip depuis laquelle le changement a eu lieu. 
+**Valeurs possibles :** xxx.xxx.xxx.xxx

@@ -1,0 +1,8 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-03-12T09:30:41+01:00
+
+====== Individus ======
+Created mardi 12 mars 2013
+
+Une personne représentée par l'ensemble de ces représentations physiques (actes).

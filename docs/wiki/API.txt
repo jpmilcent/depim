@@ -29,7 +29,7 @@ Les champs obligatoires et ceux nécessitant plus de 255 caractères sont défin
 
 == Historique ==
 Chaque élément est historisé lors d'un ajout, d'une modification ou d'une suppression.
-Cela signifie que les tables du module Historique contiennent toutes les versions de tous les enregistrements des tables non historique.
+Cela signifie que les tables suffixées par  " _historique" contiennent toutes les versions de tous les enregistrements des tables correspondantes (sans le suffixe).
 
 == Version ==
 Chaque élément possède un numéro de version qui vaut 1 lors de sa création.

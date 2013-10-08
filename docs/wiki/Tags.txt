@@ -19,17 +19,19 @@ Exemples de clés-valeurs : http://wiki.openstreetmap.org/wiki/FR:Map_Features
 **Description :**  
 **Valeurs possibles :** 
 
-== Structure ==
-[[tags:structure:type|type]]
-[[tags:Structure:nom|nom]]
-[[tags:Structure:code|code]]
-[[tags:structure:adresse|adresse]]
-[[tags:structure:adresse:complement|adresse:complement]]
-[[tags:structure:ville|ville]]
-[[tags:structure:code postal|code_postal]]
-[[tags:Structure:telephone:fixe|telephone:fixe]]
-[[tags:Structure:telephone:gsm|telephone:gsm]]
-[[tags:structure:telephone:fax|telephone:fax]]
-[[tags:structure:courriel|courriel]]
-[[tags:structure:url|url]]
-[[tags:structure:note|note]]
+== Structures ==
+[[+Structures:type|type]]
+[[+Structures:nom|nom]]
+[[+Structures:code|code]]
+[[+Structures:adresse|adresse]]
+[[+Structures:adresse:complement|adresse:complement]]
+[[+Structures:ville|ville]]
+[[+Structures:code postal|code_postal]]
+[[+Structures:telephone:fixe|telephone:fixe]]
+[[+Structures:telephone:gsm|telephone:gsm]]
+[[+Structures:telephone:fax|telephone:fax]]
+[[+Structures:courriel|courriel]]
+[[+Structures:url|url]]
+[[+Structures:note|note]]
+
+== Documents ==

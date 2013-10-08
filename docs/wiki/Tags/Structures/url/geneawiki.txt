@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2012-11-17T23:00:53+01:00
+
+====== geneawiki ======
+Created samedi 17 novembre 2012
+
+**Clé :** [[geneawiki|url:geneawiki]]
+**Description :**  URL de la page Geneawiki de la structure.
+**Valeur possible :** URL

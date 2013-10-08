@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2012-11-13T21:59:05+01:00
+
+====== contrat ======
+Created mardi 13 novembre 2012
+
+**Clé :** date:contrat
+**Description : **Date du contrat de mariage de l'acte présente dans le document dépouillé.
+**Valeurs possibles :** voir [[date]]

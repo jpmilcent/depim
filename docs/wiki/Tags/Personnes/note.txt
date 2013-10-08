@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2012-11-13T23:49:04+01:00
+
+====== note ======
+Created mardi 13 novembre 2012
+
+**Clé :** note
+**Description :**  Notes sur la personne.
+**Valeurs possibles :** *

@@ -1,0 +1,28 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2012-11-18T21:58:53+01:00
+
+====== Utilisateurs ======
+Created dimanche 18 novembre 2012
+
+http://localhost/dart/depim/server/services/v1/utilisateurs
+
+== PUT ==
+{
+    "meta": {
+        "utilisateurId": 0,
+        "tags": {
+            "etat": "A",
+            "type": "utilisateur",
+            "commentaire": "Ajout d'une utilisateur."
+        }
+    },
+    "utilisateur": {
+        "prenom": "Jean-Pascal ",
+        "nom": "MILCENT",
+        "pseudo": "jpm",
+        "courriel": "jpm@clapas.org",
+        "mot_de_passe": "test",
+        "licence": true
+    }
+}
