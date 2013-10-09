@@ -1,7 +1,7 @@
 import 'package:polymer/polymer.dart';
 import 'package:observe/observe.dart';
 import 'dart:html';
-import 'dart:json' as json;
+import 'dart:convert';
 import '../ui/ui.dart';
 
 @CustomTag('doc-panel')
@@ -26,7 +26,7 @@ class Doc extends PolymerElement with ObservableMixin {
   processingDocumentsLoad(responseText) {
     print(responseText);
     try {
-      this.documents = json.parse(responseText);
+      this.documents = JSON.decode(responseText);
     } catch(e) {
       print(e);
     }
@@ -78,7 +78,7 @@ class Doc extends PolymerElement with ObservableMixin {
     HttpRequest.getString(url).then((responseText) {
 			InputElement idElmt = query('input.field[name="id"]');
 			idElmt.value = id;
-      var doc = json.parse(responseText);
+      var doc = JSON.decode(responseText);
       Map tags = doc['tags'];
       tags.forEach((key, value) {
         var field = query('.field[name="$key"]');

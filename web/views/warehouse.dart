@@ -1,7 +1,7 @@
 import 'package:polymer/polymer.dart';
 import 'package:observe/observe.dart';
 import 'dart:html';
-import 'dart:json' as json;
+import 'dart:convert';
 import '../ui/ui.dart';
 
 @CustomTag('warehouse-panel')
@@ -26,7 +26,7 @@ class Warehouse extends PolymerElement with ObservableMixin {
 
   processingWarehousesLoad(responseText) {
     print(responseText);
-    this.warehouses = json.parse(responseText);
+    this.warehouses = JSON.decode(responseText);
 		updateWhList();
   }
 
@@ -74,7 +74,7 @@ class Warehouse extends PolymerElement with ObservableMixin {
 
   processingLoadingForm(responseText) {
     shadowRoot.query('.field[name="id"]').attributes['value'] = id;
-    var warehouse = json.parse(responseText);
+    var warehouse = JSON.decode(responseText);
     Map tags = warehouse['tags'];
     tags.forEach((key, value) {
       shadowRoot.query('.field[name="$key"]').attributes['value'] = value;
