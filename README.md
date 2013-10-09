@@ -2,4 +2,4 @@ depim
 =====
 
 Test d'application web en Dart
-Voir (docs/wiki/Home.txt)
+[En savoir +](docs/wiki/Home.md)
