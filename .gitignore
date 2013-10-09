@@ -1,0 +1,12 @@
+.buildlog
+out/
+packages/
+pubspec.lock
+server/config.ini
+web/components/packages
+web/css/packages
+web/img/packages
+web/js/packages
+web/packages
+web/ui/packages
+web/views/packages
