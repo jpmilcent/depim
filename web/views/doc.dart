@@ -105,7 +105,7 @@ class Doc extends PolymerElement with ObservableMixin {
 
       },
       data = {'meta' : meta, 'tags': tags},
-      encodedData = json.stringify(data);
+      encodedData = JSON.encode(data);
 
     var httpRequest = new HttpRequest();
     httpRequest.open('POST', urlBase);
@@ -158,7 +158,7 @@ class Doc extends PolymerElement with ObservableMixin {
       },
       tags = getTags(),
       data = {'meta' : meta, 'tags': tags},
-      encodedData = json.stringify(data);
+      encodedData = JSON.encode(data);
 
     var httpRequest = new HttpRequest();
     httpRequest.open('POST', dataUrl);
@@ -187,7 +187,7 @@ class Doc extends PolymerElement with ObservableMixin {
         }
       },
       data = {'meta' : meta},
-      encodedData = json.stringify(data),
+      encodedData = JSON.encode(data),
       url = '${urlBase}/$idDoc',
       httpRequest = new HttpRequest();
     httpRequest.open('DELETE', url);

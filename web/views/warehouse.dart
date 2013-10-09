@@ -8,6 +8,7 @@ import '../ui/ui.dart';
 class Warehouse extends PolymerElement with ObservableMixin {
 
 	bool get applyAuthorStyles => true;
+  final urlBase = 'http://localhost/dart/depim/server/services/v1/structures';
   Map warehouses = {};
 	@observable List whList = toObservable(new List());
 
@@ -18,10 +19,8 @@ class Warehouse extends PolymerElement with ObservableMixin {
 	}
 
   loadWarehouses() {
-    var url = 'http://localhost/dart/depim/server/services/v1/structures';
-
     // call the web server asynchronously
-    HttpRequest.getString(url).then(processingWarehousesLoad);
+    HttpRequest.getString(urlBase).then(processingWarehousesLoad);
   }
 
   processingWarehousesLoad(responseText) {
@@ -44,7 +43,7 @@ class Warehouse extends PolymerElement with ObservableMixin {
         }
       });
     }
-		print(warehouses.isEmpty.toString()+"-"+whList.toString());
+		print("warehouses.isEmpty:"+warehouses.isEmpty.toString()+"-"+whList.toString());
   }
 
   void onSelectedWarehouse(Event e) {
@@ -66,7 +65,7 @@ class Warehouse extends PolymerElement with ObservableMixin {
   }
 
   void loadWarehouseDetails(id) {
-    var url = 'http://localhost/dart/depim/server/services/0.1/structure/$id';
+    var url = '${urlBase}/$id';
 
     // call the web server asynchronously
     HttpRequest.getString(url).then(processingLoadingForm);
@@ -83,8 +82,7 @@ class Warehouse extends PolymerElement with ObservableMixin {
 
   void addWarehouse(Event e) {
     e.preventDefault();
-    var dataUrl = 'http://localhost/dart/depim/server/services/0.1/structure',
-      tags = getTags(),
+    var tags = getTags(),
       meta = {
         'utilisateurId' : 1,
         'tags' : {
@@ -95,10 +93,10 @@ class Warehouse extends PolymerElement with ObservableMixin {
         }
       },
       data = {'meta' : meta, 'tags': tags},
-      encodedData = json.stringify(data);
+      encodedData = JSON.encode(data);
 
     var httpRequest = new HttpRequest();
-    httpRequest.open('POST', dataUrl);
+    httpRequest.open('POST', urlBase);
     httpRequest.setRequestHeader('Content-type', 'application/json');
     httpRequest.onLoadEnd.listen((e) => addEnd(httpRequest));
     print(encodedData);
@@ -147,7 +145,7 @@ class Warehouse extends PolymerElement with ObservableMixin {
   void updateWarehouse(Event e) {
     e.preventDefault();
     var id = (shadowRoot.query('input[name="id"]') as InputElement).value,
-      dataUrl = 'http://localhost/dart/depim/server/services/0.1/structure/$id',
+      dataUrl = '${urlBase}/$id',
       meta = {
         'utilisateurId' : 1,
         'tags' : {
@@ -158,7 +156,7 @@ class Warehouse extends PolymerElement with ObservableMixin {
       },
       tags = getTags(),
       data = {'meta' : meta, 'tags': tags},
-      encodedData = json.stringify(data);
+      encodedData = JSON.encode(data);
 
     var httpRequest = new HttpRequest();
     httpRequest.open('POST', dataUrl);
@@ -187,8 +185,8 @@ class Warehouse extends PolymerElement with ObservableMixin {
         }
       },
       data = {'meta' : meta},
-      encodedData = json.stringify(data),
-      url = 'http://localhost/dart/depim/server/services/0.1/structure/$idStructure',
+      encodedData = JSON.encode(data),
+      url = '${urlBase}/$idStructure',
       httpRequest = new HttpRequest();
     httpRequest.open('DELETE', url);
     httpRequest.setRequestHeader('Content-type', 'application/json');
