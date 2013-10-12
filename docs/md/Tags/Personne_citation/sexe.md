@@ -1,0 +1,7 @@
+sexe
+====
+Created mardi 13 novembre 2012
+
+**Clé :** sexe
+**Description :**  Indiquer par "M" pour les garçons et "F" pour filles (majuscule), et "?" si inconnu.
+**Valeurs possibles :** M, F, ?

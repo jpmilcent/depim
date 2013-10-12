@@ -1,0 +1,7 @@
+age
+===
+Created mardi 13 novembre 2012
+
+**Clé :** age
+**Description :**  Âge de la personne dans l'acte en année. Si l'âge n'est pas en année, veuillez indiquer l'unité. Ex : 3 j
+**Valeurs possibles :** 60, 3 jours, 2 semaines, 3 mois

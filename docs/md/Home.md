@@ -3,14 +3,18 @@ Dpim
 Created mercredi 17 juin 2009
 
 ##### Bogues et fonctionnalités
+
 * Suivi :
 * Bogues :
-* Roadmap
-* Liste des noms de version de la Roadmap : liste des mois et jours du calendrier républicain
+* [Roadmap](./Roadmap.md)
+* Liste des noms de version de la Roadmap : [liste des mois et jours du calendrier républicain](http://fr.wikipedia.org/wiki/Calendrier_r%C3%A9publicain)
+
 
 ##### Dépôt
-* SVN accès web : http://svn.tela-botanica.net/websvn/listing.php?repname=Perso.jpm&path=%2Ftrunk%2Fdart%2Fdepim
-* SVN : svn co http://svn.tela-botanica.net/svn/perso/jpm/trunk/dart/depim
+
+* SVN accès web : <http://svn.tela-botanica.net/websvn/listing.php?repname=Perso.jpm&path=%2Ftrunk%2Fdart%2Fdepim>
+* SVN : svn co <http://svn.tela-botanica.net/svn/perso/jpm/trunk/dart/depim>
+
 
 #### Notes
  - Pour tous les actes, le formulaire doit comprendre trois onglets : acte, personnes, transcription.
@@ -26,3 +30,4 @@ Created mercredi 17 juin 2009
  - Trouver un système pour gérer les noms inconnus, et les noms difficile à lire.
  - Export et import au format Nimegue
 
+ Test255
