@@ -13,9 +13,9 @@
           </fieldset>
         </form>
 
-        <template instantiate='if !docListEmpty'>
+        <template if="{{!docListEmpty}}">
           <ul id="doc-list" class="nav nav-list">
-            <template iterate="doc in docList">
+            <template repeat="{{doc in docList}}">
               <li on-click="onSelectedDoc">
                 <a data-id="{{doc['id']}}">{{doc['abbr']}}</a>
               </li>

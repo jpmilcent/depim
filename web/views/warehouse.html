@@ -5,7 +5,7 @@
       <div id="list-bloc">
         <form id="list-filter">
           <fieldset id="filter-zone-wh">
-            <legend>Structures</legend>
+            <legend>Structures ({{whListNber}})</legend>
             <div class="input-prepend">
               <span class="add-on"><i class="icon-filter"></i></span>
               <input id="warehouse-filter" type="text" placeholder="Filtrer" />
@@ -13,7 +13,7 @@
           </fieldset>
         </form>
 
-        <template if="{{!whList.isEmpty}}">
+        <template if="{{whListNber > 0}}">
           <ul id="warehouse-list" class="nav nav-list">
             <template repeat="{{wh in whList}}">
               <li on-click="onSelectedWarehouse">

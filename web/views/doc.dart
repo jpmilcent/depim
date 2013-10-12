@@ -5,7 +5,7 @@ import 'dart:convert';
 import '../ui/ui.dart';
 
 @CustomTag('doc-panel')
-class Doc extends PolymerElement with ObservableMixin {
+class Doc extends PolymerElement {
 
 	bool get applyAuthorStyles => true;
 
@@ -30,7 +30,11 @@ class Doc extends PolymerElement with ObservableMixin {
     } catch(e) {
       print(e);
     }
-    //watchers.dispatch();
+  }
+
+	documentsChanged(Map oldValue) {
+  	notifyProperty(this, #docList);
+		notifyProperty(this, #docListEmpty);
   }
 
   List get docList {
@@ -76,12 +80,12 @@ class Doc extends PolymerElement with ObservableMixin {
 
     // call the web server asynchronously
     HttpRequest.getString(url).then((responseText) {
-			InputElement idElmt = query('input.field[name="id"]');
+			InputElement idElmt = shadowRoot.query('input.field[name="id"]');
 			idElmt.value = id;
       var doc = JSON.decode(responseText);
       Map tags = doc['tags'];
       tags.forEach((key, value) {
-        var field = query('.field[name="$key"]');
+        var field = shadowRoot.query('.field[name="$key"]');
         if (field != null) {
           field.attributes['value'] = value;
         } else {

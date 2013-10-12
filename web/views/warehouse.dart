@@ -5,12 +5,13 @@ import 'dart:convert';
 import '../ui/ui.dart';
 
 @CustomTag('warehouse-panel')
-class Warehouse extends PolymerElement with ObservableMixin {
+class Warehouse extends PolymerElement {
 
 	bool get applyAuthorStyles => true;
   final urlBase = 'http://localhost/dart/depim/server/services/v1/structures';
   Map warehouses = {};
 	@observable List whList = toObservable(new List());
+	@observable int whListNber = 0;
 
 	void created() {
 		super.created();
@@ -43,7 +44,8 @@ class Warehouse extends PolymerElement with ObservableMixin {
         }
       });
     }
-		print("warehouses.isEmpty:"+warehouses.isEmpty.toString()+"-"+whList.toString());
+		whListNber = whList.length;
+		print("warehouses.isEmpty:"+warehouses.isEmpty.toString()+"-"+whListNber.toString());
   }
 
   void onSelectedWarehouse(Event e) {
@@ -116,7 +118,7 @@ class Warehouse extends PolymerElement with ObservableMixin {
       telFixe = (shadowRoot.query('input[name="telephone:fixe"]') as InputElement).value,
       telFax = (shadowRoot.query('input[name="telephone:fax"]') as InputElement).value,
       urlGeneawiki = (shadowRoot.query('input[name="url:geneawiki"]') as InputElement).value,
-      note = (shadowRoot.query('textarea[name="note"]') as InputElement).value;
+      note = (shadowRoot.query('textarea[name="note"]') as TextAreaElement).value;
     return {
       'nom': nom,
       'type': type,
