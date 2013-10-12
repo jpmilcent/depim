@@ -1,4 +1,6 @@
 .buildlog
+.settings/
+.zim/
 out/
 packages/
 pubspec.lock
