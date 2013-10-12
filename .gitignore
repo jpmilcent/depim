@@ -2,6 +2,7 @@
 .settings/
 .zim/
 out/
+notebook.zim
 packages/
 pubspec.lock
 server/config.ini

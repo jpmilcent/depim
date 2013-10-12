@@ -6,8 +6,8 @@ Creation-Date: mer., 17 juin 2009 21:51:58 +0200
 Created mercredi 17 juin 2009
 
 == Bogues et fonctionnalités ==
-* Suivi : 
-* Bogues : 
+* Suivi :
+* Bogues :
 * [[:Roadmap|Roadmap]]
 * Liste des noms de version de la Roadmap : [[http://fr.wikipedia.org/wiki/Calendrier_r%C3%A9publicain|liste des mois et jours du calendrier républicain]]
 
@@ -28,4 +28,3 @@ Created mercredi 17 juin 2009
  - Les champs les plus important sont les noms et prénoms.
  - Trouver un système pour gérer les noms inconnus, et les noms difficile à lire.
  - Export et import au format Nimegue
-
