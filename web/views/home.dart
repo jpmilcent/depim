@@ -15,11 +15,11 @@ class Home extends PolymerElement {
 
   void addMessage(e) {
     var now = new DateTime.now();
-    var msg = "Welcome to Dart polymer element ! $now";
+
 		HtmlElement msgElem = createElement('app-message');
-		AppMessage message = msgElem.xtag;
-		message.text = msg;
-		message.type = 'success';
+		AppMessage message = msgElem.xtag
+			..text = "Welcome to Dart polymer element ! $now"
+			..type = 'success';
 
 		shadowRoot.children.add(msgElem);
   }
