@@ -1,27 +1,12 @@
 <!DOCTYPE html>
+<link rel="import" href="../lib/components/menu-list.html">
+<link rel="import" href="../lib/components/message.html">
+
 <polymer-element name="warehouse-panel">
   <template>
     <div class="app-row">
-      <div id="list-bloc">
-        <form id="list-filter">
-          <fieldset id="filter-zone-wh">
-            <legend>Structures ({{whListNber}})</legend>
-            <div class="input-prepend">
-              <span class="add-on"><i class="icon-filter"></i></span>
-              <input id="warehouse-filter" type="text" placeholder="Filtrer" />
-            </div>
-          </fieldset>
-        </form>
-
-        <template if="{{whListNber > 0}}">
-          <ul id="warehouse-list" class="nav nav-list">
-            <template repeat="{{wh in whList}}">
-              <li on-click="onSelectedWarehouse">
-                <a data-id="{{wh['id']}}">{{wh['nom']}}</a>
-              </li>
-            </template>
-          </ul>
-        </template>
+      <div id="list-bloc">        
+        <menu-list title="Structures" elements="{{whList}}" on-selectmenu="onSelectedWarehouse"></menu-list>
       </div>
       <div id="edit-bloc">
         <form id="edit-wh" class="form-horizontal" autocomplete="on">

@@ -47,16 +47,18 @@ class App extends PolymerElement with ObservableMixin {
 
 	switchMenu(id) {
 		shadowRoot.queryAll('#menu .active').forEach((elem) {
-			elem.setAttribute('class', '');
+			elem.classes.clear();
 	  });
-		shadowRoot.query(id).setAttribute('class', 'active');
+		shadowRoot.query(id)
+			..classes.add('active');
 	  changeBreadcrumb(id);
 	}
 
 	switchView(id) {
 		var customElement = createElement(id);
-		shadowRoot.query('#main-bloc').children.clear();
-		shadowRoot.query('#main-bloc').append(customElement);
+		shadowRoot.query('#main-bloc')
+			..children.clear()
+			..append(customElement);
 	}
 
 	openHomeView(Event event) {

@@ -2,7 +2,6 @@ import 'package:polymer/polymer.dart';
 import 'package:observe/observe.dart';
 import 'dart:html';
 import 'dart:convert';
-import '../ui/ui.dart';
 
 @CustomTag('doc-panel')
 class Doc extends PolymerElement {
@@ -65,11 +64,11 @@ class Doc extends PolymerElement {
     this.loadDocDetails(id);
 
     // Show delete command
-    queryAll('.delete-doc-cmd').forEach((elem) {
+    shadowRoot.queryAll('.delete-doc-cmd').forEach((elem) {
       elem.attributes['data-id'] = id;
       elem.classes.remove('hide');
     });
-    queryAll('.update-doc-cmd').forEach((elem) {
+		shadowRoot.queryAll('.update-doc-cmd').forEach((elem) {
       elem.attributes['data-id'] = id;
       elem.classes.remove('hide');
     });
@@ -127,7 +126,7 @@ class Doc extends PolymerElement {
       codeInsee = (query('input[name="code:insee"]') as InputElement).value,
       commune = (query('input[name="commune"]') as InputElement).value,
       urlSource = (query('input[name="url:source"]') as InputElement).value,
-      note = (query('textarea[name="note"]') as InputElement).value;
+      note = (query('textarea[name="note"]') as TextAreaElement).value;
     return {
       'titre': titre,
       'support': support,
@@ -150,7 +149,7 @@ class Doc extends PolymerElement {
 
   void updateDoc(Event e) {
     e.preventDefault();
-    var id = (query('input[name="id"]') as InputElement).value,
+    var id = (shadowRoot.query('input[name="id"]') as InputElement).value,
       dataUrl = '${urlBase}/$id',
       meta = {
         'utilisateurId' : 1,
@@ -210,12 +209,14 @@ class Doc extends PolymerElement {
   }
 
   void resetDoc(Event e) {
-    // Show delete command
-    queryAll('.delete-doc-cmd, .update-doc-cmd').forEach((elem) {
+    // Show delete & update command
+		shadowRoot.queryAll('.delete-doc-cmd, .update-doc-cmd').forEach((elem) {
       elem.attributes.remove('data-id');
       elem.classes.add('hide');
     });
-    query('input.field[name="id"]').attributes.remove('value');
+		shadowRoot.queryAll('.field').forEach((elem) {
+			elem.attributes.remove('value');
+		});
   }
 
   void showError(HttpRequest request) {

@@ -2,16 +2,15 @@ import 'package:polymer/polymer.dart';
 import 'package:observe/observe.dart';
 import 'dart:html';
 import 'dart:convert';
-import '../ui/ui.dart';
 
 @CustomTag('warehouse-panel')
 class Warehouse extends PolymerElement {
 
 	bool get applyAuthorStyles => true;
+
   final urlBase = 'http://localhost/dart/depim/server/services/v1/structures';
-  Map warehouses = {};
-	@observable List whList = toObservable(new List());
-	@observable int whListNber = 0;
+
+	@observable Map warehouses = {};
 
 	void created() {
 		super.created();
@@ -25,32 +24,38 @@ class Warehouse extends PolymerElement {
   }
 
   processingWarehousesLoad(responseText) {
-    print(responseText);
+    print(urlBase);
     this.warehouses = JSON.decode(responseText);
-		updateWhList();
   }
 
-	void updateWhList() {
-    if (! warehouses.isEmpty) {
-      warehouses.forEach((var key, var wh) {
-        try {
-          if (wh['tags']['nom'] != '') {
-            whList.add({'id': wh['meta']['id'], 'nom': wh['tags']['nom']});
-          } else {
-						whList.add({'id': wh['meta']['id'], 'nom': 'Sans nom'});
-          }
-        } catch(e) {
-					whList.add({'id': wh['meta']['id'], 'nom': 'Sans nom'});
-        }
-      });
-    }
-		whListNber = whList.length;
-		print("warehouses.isEmpty:"+warehouses.isEmpty.toString()+"-"+whListNber.toString());
+	warehousesChanged(Map oldValue) {
+	  notifyProperty(this, #whList);
+		notifyProperty(this, #whListEmpty);
   }
+
+	List get whList {
+  	var list = new List();
+  	if (! warehouses.isEmpty) {
+			warehouses.forEach((var key, var wh) {
+	  		try {
+		  			if (wh['tags']['titre'] != '') {
+							list.add({'id': wh['meta']['id'], 'nom': wh['tags']['nom']});
+		  			} else {
+							list.add({'id': wh['meta']['id'], 'nom': 'Sans nom'});
+		  			}
+	  		} catch(e) {
+					list.add({'id': wh['meta']['id'], 'nom': 'Sans nom'});
+	  		}
+	  	});
+  	}
+  	return list;
+	}
+
+	bool get whListEmpty => whList.isEmpty;
 
   void onSelectedWarehouse(Event e) {
-    Element clickedElem = e.target;
-    var id = clickedElem.attributes['data-id'];
+		var elemMenu = e.detail;
+		var id = elemMenu;//Utiliser elemMenu.id quand on pourra passer un vrai objet
 
     // Put warehouse infos in the form
     this.loadWarehouseDetails(id);
@@ -211,16 +216,31 @@ class Warehouse extends PolymerElement {
       elem.attributes.remove('data-id');
       elem.classes.add('hide');
     });
-    shadowRoot.query('.field[name="id"]').attributes.remove('value');
+		shadowRoot.queryAll('.field').forEach((elem) {
+			elem.attributes.remove('value');
+		});
+
   }
 
   void showError(HttpRequest request) {
     var msg = 'Une erreur de type ${request.status} est survenue. \n ${request.responseText}';
-    new Message('error').show(msg);
+
+		HtmlElement msgElem = createElement('app-message');
+		AppMessage message = msgElem.xtag;
+		message.text = msg;
+		message.type = 'error';
+
+		shadowRoot.children.add(msgElem);
   }
 
   void showSuccess(String msg) {
-    new Message('success').show(msg);
+		HtmlElement msgElem = createElement('app-message');
+		AppMessage message = msgElem.xtag;
+		message.text = msg;
+		message.type = 'success';
+
+		shadowRoot.children.add(msgElem);
+
     this.loadWarehouses();
   }
 }

@@ -28,14 +28,6 @@ input[type="date"] {
   left: 110px;
 }
 
-#msg-bloc {
-  position:fixed;
-  z-index : 10000;
-  top : 50px;
-  right : 20px;
-  width : 300px;
-}
-
 #main-bloc {
   padding: 123px 0 0 0;
 }
