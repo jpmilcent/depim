@@ -2,18 +2,12 @@ Dpim
 ====
 Created mercredi 17 juin 2009
 
-##### Bogues et fonctionnalités
+##### Infos
 
-* Suivi :
-* Bogues :
+* Git : git clone <https://github.com/jpmilcent/depim.git>
+* Bogues : <https://github.com/jpmilcent/depim/issues>
 * [Roadmap](./Roadmap.md)
 * Liste des noms de version de la Roadmap : [liste des mois et jours du calendrier républicain](http://fr.wikipedia.org/wiki/Calendrier_r%C3%A9publicain)
-
-
-##### Dépôt
-
-* SVN accès web : <http://svn.tela-botanica.net/websvn/listing.php?repname=Perso.jpm&path=%2Ftrunk%2Fdart%2Fdepim>
-* SVN : svn co <http://svn.tela-botanica.net/svn/perso/jpm/trunk/dart/depim>
 
 
 #### Notes
@@ -29,5 +23,3 @@ Created mercredi 17 juin 2009
  - Les champs les plus important sont les noms et prénoms.
  - Trouver un système pour gérer les noms inconnus, et les noms difficile à lire.
  - Export et import au format Nimegue
-
- Test255

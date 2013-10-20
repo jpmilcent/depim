@@ -9,13 +9,9 @@ Created samedi 12 juin 2010
  - un MDV
  - un controlleur de l'application (= Présenteur principal)
  - une gestion de l'historique du navigateur
- - un bus d'évènements
  - des tests unitaires
  - le patron Commande pour la gestion des services web
  - éviter d'utiliser des bibliothèques tierces
-
-##### Dessin des interfaces utilisateurs
- - Utiliser le logiciel Glade
 
 ##### Notes
 Réaliser des services web orientés par les besoins de l'interface.
