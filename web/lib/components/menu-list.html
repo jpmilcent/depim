@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<polymer-element name="menu-list">
+  <template>
+    <form id="list-filter">
+      <fieldset id="filter-zone">
+        <legend>{{title}} ({{elements.length}})</legend>
+        <div class="input-prepend">
+          <span class="add-on"><i class="icon-filter"></i></span>
+          <input id="warehouse-filter" type="text" placeholder="Filtrer" />
+        </div>
+      </fieldset>
+    </form>
+    <template if="{{!elements.isEmpty}}">
+      <ul id="menu-list" class="nav nav-list">
+        <template repeat="{{elem in elements}}">
+          <li on-click="onSelectedElement">
+            <a data-id="{{elem['id']}}">{{elem['nom']}}</a>
+          </li>
+        </template>
+      </ul>
+    </template>
+  </template>
+  <script type="application/dart" src="menu-list.dart"></script>
+</polymer-element>

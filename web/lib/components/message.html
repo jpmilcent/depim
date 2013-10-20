@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<polymer-element name="app-message">
+  <template>
+    <style>
+      @host{
+        :scope {
+          display: block;
+          position: fixed;
+          z-index: 10000;
+          top: 50px;
+          right: 20px;
+          width: 300px;
+        }
+      }
+    </style>
+    <div id="message" class="alert alert-{{type}}">
+      <button class="close" data-dismiss="alert">&times;</button>
+      <h4 class="alert-heading">{{type}}</h4>
+      {{text}}
+    </div>
+  </template>
+  <script type="application/dart" src="message.dart"></script>
+</polymer-element>

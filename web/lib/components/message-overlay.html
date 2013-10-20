@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<polymer-element name="app-message-overlay" attributes="type, text, isHtml">
+  <template>
+    <div id="message-overlay" class="modal hide fade" role="dialog"
+      aria-labelledby="msgDialogHeader" aria-hidden="true">
+    
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 id="msgDialogHeader">{{type}}</h3>
+      </div>
+    
+      <div class="modal-body">
+        <!-- Insertion auto du text ou html -->
+      </div>
+    
+    </div>
+  </template>
+  <script type="application/dart" src="message-overlay.dart"></script>
+</polymer-element>

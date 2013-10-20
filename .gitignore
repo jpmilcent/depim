@@ -6,7 +6,9 @@ notebook.zim
 packages/
 pubspec.lock
 server/config.ini
-web/components/packages
+web/lib/packages
+web/lib/models/packages
+web/lib/components/packages
 web/css/packages
 web/img/packages
 web/js/packages

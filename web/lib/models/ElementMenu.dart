@@ -1,0 +1,3 @@
+class ElementMenu {
+	var id;
+}
