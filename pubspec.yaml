@@ -7,3 +7,4 @@ dependencies:
   browser: any
   json_object: '>=1.0.17 <2.0.0'
   polymer: any
+  route: any

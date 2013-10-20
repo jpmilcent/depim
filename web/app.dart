@@ -11,7 +11,6 @@ class App extends PolymerElement with ObservableMixin {
 
 	void created() {
 		super.created();
-
 	}
 
 	changeBreadcrumb(id) {
@@ -46,6 +45,7 @@ class App extends PolymerElement with ObservableMixin {
 	}
 
 	switchMenu(id) {
+		print('id: $id');
 		shadowRoot.queryAll('#menu .active').forEach((elem) {
 			elem.classes.clear();
 	  });
@@ -61,18 +61,17 @@ class App extends PolymerElement with ObservableMixin {
 			..append(customElement);
 	}
 
-	openHomeView(Event event) {
-	  switchMenu('#menu-home');
-	  switchView('home-panel');
+	openView(Event event) {
+  	print('Data:'+event.target.attributes['data-view']);
+		var view = event.target.attributes['data-view'];
+		switchMenu('#menu-${view}');
+	  switchView('${view}-panel');
 	}
 
-	openWareHouseView(Event event) {
-	  switchMenu('#menu-warehouse');
-	  switchView('warehouse-panel');
-	}
-
-	openDocView(Event event) {
-	  switchMenu('#menu-doc');
-	  switchView('doc-panel');
+	openViewByUrl(CustomEvent event) {
+		print('Detail:'+event.detail);
+		var view = event.detail;
+		switchMenu('#menu-${view}');
+	  switchView('${view}-panel');
 	}
 }
