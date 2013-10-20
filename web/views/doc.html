@@ -3,25 +3,7 @@
   <template>
     <div class="app-row">
       <div id="list-bloc">
-        <form id="list-filter">
-          <fieldset id="filter-zone-doc">
-            <legend>Documents ({{docList.length}})</legend>
-            <div class="input-prepend">
-              <span class="add-on"><i class="icon-filter"></i></span>
-              <input id="document-filter" type="text" placeholder="Filtrer" />
-            </div>
-          </fieldset>
-        </form>
-
-        <template if="{{!docListEmpty}}">
-          <ul id="doc-list" class="nav nav-list">
-            <template repeat="{{doc in docList}}">
-              <li on-click="onSelectedDoc">
-                <a data-id="{{doc['id']}}">{{doc['abbr']}}</a>
-              </li>
-            </template>
-          </ul>
-        </template>
+        <menu-list title="Documents" elements="{{docList}}" on-selectmenu="onSelectedDoc"></menu-list>
       </div>
       <div id="edit-bloc">
         <form id="edit-doc" class="form-horizontal" autocomplete="on">

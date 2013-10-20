@@ -42,12 +42,12 @@ class Doc extends PolymerElement {
       documents.forEach((var key, var doc) {
         try {
           if (doc['tags']['titre'] != '') {
-            res.add({'id': doc['meta']['id'], 'abbr': doc['tags']['abreviation']});
+            res.add({'id': doc['meta']['id'], 'nom': doc['tags']['abreviation']});
           } else {
-            res.add({'id': doc['meta']['id'], 'abbr': 'Sans nom'});
+            res.add({'id': doc['meta']['id'], 'nom': 'Sans nom'});
           }
         } catch(e) {
-          res.add({'id': doc['meta']['id'], 'abbr': 'Sans nom'});
+          res.add({'id': doc['meta']['id'], 'nom': 'Sans nom'});
         }
       });
     }
@@ -57,8 +57,8 @@ class Doc extends PolymerElement {
   bool get docListEmpty => docList.isEmpty;
 
   void onSelectedDoc(Event e) {
-    Element clickedElem = e.target;
-    var id = clickedElem.attributes['data-id'];
+		var elemMenu = e.detail;
+		var id = elemMenu;//Utiliser elemMenu.id quand on pourra passer un vrai objet
 
     // Put doc infos in the form
     this.loadDocDetails(id);
