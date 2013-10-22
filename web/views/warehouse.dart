@@ -2,15 +2,17 @@ import 'package:polymer/polymer.dart';
 import 'package:observe/observe.dart';
 import 'dart:html';
 import 'dart:convert';
+import '../lib/models/Warehouse.dart';
 
 @CustomTag('warehouse-panel')
-class Warehouse extends PolymerElement {
+class WarehouseView extends PolymerElement {
 
 	bool get applyAuthorStyles => true;
 
   final urlBase = 'http://localhost/dart/depim/server/services/v1/structures';
 
 	@observable Map warehouses = {};
+	@observable Warehouse warehouse;
 
 	void created() {
 		super.created();
@@ -79,12 +81,9 @@ class Warehouse extends PolymerElement {
   }
 
   processingLoadingForm(responseText) {
-    shadowRoot.query('.field[name="id"]').attributes['value'] = id;
-    var warehouse = JSON.decode(responseText);
-    Map tags = warehouse['tags'];
-    tags.forEach((key, value) {
-      shadowRoot.query('.field[name="$key"]').attributes['value'] = value;
-    });
+    var warehouseInfos = JSON.decode(responseText);
+		print(warehouseInfos);
+		this.warehouse = new Warehouse(warehouseInfos);
   }
 
   void addWarehouse(Event e) {
@@ -110,37 +109,6 @@ class Warehouse extends PolymerElement {
     httpRequest.send(encodedData);
   }
 
-  Map getTags() {
-    var nom = (shadowRoot.query('input[name="nom"]') as InputElement).value,
-      type = (shadowRoot.query('input[name="type"]') as InputElement).value,
-      code = (shadowRoot.query('input[name="code"]') as InputElement).value,
-      adresse = (shadowRoot.query('input[name="adresse"]') as InputElement).value,
-      adresseComplement = (shadowRoot.query('input[name="adresse:complement"]') as InputElement).value,
-      codePostal = (shadowRoot.query('input[name="code_postal"]') as InputElement).value,
-      ville = (shadowRoot.query('input[name="ville"]') as InputElement).value,
-      courriel = (shadowRoot.query('input[name="courriel"]') as InputElement).value,
-      url = (shadowRoot.query('input[name="url"]') as InputElement).value,
-      telFixe = (shadowRoot.query('input[name="telephone:fixe"]') as InputElement).value,
-      telFax = (shadowRoot.query('input[name="telephone:fax"]') as InputElement).value,
-      urlGeneawiki = (shadowRoot.query('input[name="url:geneawiki"]') as InputElement).value,
-      note = (shadowRoot.query('textarea[name="note"]') as TextAreaElement).value;
-    return {
-      'nom': nom,
-      'type': type,
-      'code': code,
-      'adresse': adresse,
-      'adresse:complement': adresseComplement,
-      'code_postal': codePostal,
-      'ville': ville,
-      'courriel': courriel,
-      'url': url,
-      'telephone:fixe': telFixe,
-      'telephone:fax': telFax,
-      'url:geneawiki': urlGeneawiki,
-      'note': note
-    };
-  }
-
   void addEnd(HttpRequest request) {
     if (request.status != 201) {
       showError(request);
@@ -151,7 +119,8 @@ class Warehouse extends PolymerElement {
 
   void updateWarehouse(Event e) {
     e.preventDefault();
-    var id = (shadowRoot.query('input[name="id"]') as InputElement).value,
+		print('Update id :'+e.detail.toString());
+    var id = e.detail.toString(),
       dataUrl = '${urlBase}/$id',
       meta = {
         'utilisateurId' : 1,
@@ -161,10 +130,11 @@ class Warehouse extends PolymerElement {
           'commentaire' : 'Modification de la structure #$id.'
         }
       },
-      tags = getTags(),
+      tags = warehouse.tags,
       data = {'meta' : meta, 'tags': tags},
       encodedData = JSON.encode(data);
-
+		print('Update url :'+dataUrl);
+		print('Update data :'+tags.toString());
     var httpRequest = new HttpRequest();
     httpRequest.open('POST', dataUrl);
     httpRequest.setRequestHeader('Content-type', 'application/json');
