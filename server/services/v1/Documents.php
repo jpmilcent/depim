@@ -32,7 +32,7 @@ class Documents extends RestService {
 	}
 
 	private function demanderUnDocument($ressources) {
-		return (isset($ressources[0]) && count($ressources) == 1 && preg_match('/^[0-9]$/', $ressources[0])) ? true : false;
+		return (isset($ressources[0]) && count($ressources) == 1 && preg_match('/^[0-9]+$/', $ressources[0])) ? true : false;
 	}
 
 	private function getDocument($id) {

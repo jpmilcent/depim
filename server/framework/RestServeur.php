@@ -454,7 +454,7 @@ class RestServeur {
 						$methodePost = self::METHODE_POST;
 						$info = $Service->$methodePost($this->ressources, $paires);
 						if ($info === true) {
-							$this->envoyerEnteteStatutHttp(self::HTTP_CODE_CREATION_OK);
+							$this->envoyerEnteteStatutHttp(self::HTTP_CODE_OK);
 						}
 					} else {
 						self::envoyerEnteteStatutHttp(self::HTTP_CODE_RESSOURCE_INTROUVABLE);

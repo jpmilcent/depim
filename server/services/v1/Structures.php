@@ -18,6 +18,7 @@ class Structures extends RestService {
 	public function consulter($ressources, $parametres) {
 		$resultat = '';
 		$reponseHttp = new ReponseHttp();
+		
 		try {
 			if ($this->demanderUneStructure($ressources)) {
 				$resultat = $this->getStructure($ressources[0]);
@@ -34,7 +35,7 @@ class Structures extends RestService {
 	}
 
 	private function demanderUneStructure($ressources) {
-		return (isset($ressources[0]) && count($ressources) == 1 && preg_match('/^[0-9]$/', $ressources[0])) ? true : false;
+		return (isset($ressources[0]) && count($ressources) == 1 && preg_match('/^[0-9]+$/', $ressources[0])) ? true : false;
 	}
 
 	private function getStructure($id) {
