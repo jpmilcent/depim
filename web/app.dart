@@ -62,8 +62,9 @@ class App extends PolymerElement with ObservableMixin {
 	}
 
 	openView(Event event) {
-  	print('Data:'+event.target.attributes['data-view']);
-		var view = event.target.attributes['data-view'];
+		Element elem = event.target;
+		print('Data:'+elem.attributes['data-view']);
+		var view = elem.attributes['data-view'];
 		switchMenu('#menu-${view}');
 	  switchView('${view}-panel');
 	}
