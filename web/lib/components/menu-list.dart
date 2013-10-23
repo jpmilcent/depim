@@ -9,6 +9,8 @@ class MenuList extends PolymerElement {
 	@published String title = '';
 	@published List elements = new List();
 
+	MenuList.created() : super.created();
+
 	void onSelectedElement(Event e) {
   	HtmlElement clickedElem = e.target;
 		shadowRoot.queryAll("#menu-list li").forEach((elem) {

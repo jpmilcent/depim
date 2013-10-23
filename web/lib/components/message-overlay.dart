@@ -15,6 +15,8 @@ class AppMessageOverlay extends PolymerElement {
 	var backdrop;
 	HtmlElement message;
 
+	AppMessageOverlay.created() : super.created();
+
 	inserted() {
   	super.inserted();
 		message = $['message-overlay'];

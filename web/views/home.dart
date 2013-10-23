@@ -8,10 +8,7 @@ class Home extends PolymerElement {
 
 	bool get applyAuthorStyles => true;
 
-	void created() {
-		super.created();
-
-	}
+	Home.created() : super.created();
 
   void addMessage(e) {
     var now = new DateTime.now();

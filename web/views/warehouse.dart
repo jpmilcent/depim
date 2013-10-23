@@ -14,9 +14,7 @@ class WarehouseView extends PolymerElement {
 	@observable Map warehouses = {};
 	@observable Warehouse warehouse;
 
-	void created() {
-		super.created();
-
+	WarehouseView.created() : super.created() {
 		this.loadWarehouses();
 	}
 

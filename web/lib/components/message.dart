@@ -16,6 +16,8 @@ class AppMessage extends PolymerElement {
 	HtmlElement message;
 	static int calledNber = 0;
 
+	AppMessage.created() : super.created();
+
 	inserted() {
   	super.inserted();
 

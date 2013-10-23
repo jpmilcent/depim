@@ -4,7 +4,7 @@ import 'dart:html';
 import 'dart:convert';
 
 @CustomTag('doc-panel')
-class Doc extends PolymerElement {
+class Doc extends PolymerElement with Observable {
 
 	bool get applyAuthorStyles => true;
 
@@ -12,8 +12,7 @@ class Doc extends PolymerElement {
 
 	@observable Map documents = {};
 
-  void created() {
-		super.created();
+	Doc.created() : super.created() {
     this.loadDocuments();
   }
 
