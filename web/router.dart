@@ -4,7 +4,9 @@ import 'dart:html';
 import 'package:route/client.dart';
 import 'lib/models/urls.dart' as urls;
 
-// TODO : router ne fonctionne pas avec polymer...
+// A partir de Polymer 0.8.6 utiliser les deux lignes suivante :
+//@initMethod
+//route() {
 main() {
 	print('main');
 	var router = new Router()
