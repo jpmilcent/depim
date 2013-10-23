@@ -4,14 +4,12 @@ import 'package:polymer/polymer.dart';
 import 'dart:html';
 
 @CustomTag('app-main')
-class App extends PolymerElement with ObservableMixin {
+class App extends PolymerElement {
 
 	bool get applyAuthorStyles => true;
 	Element msgBloc;
 
-	void created() {
-		super.created();
-	}
+	App.created() : super.created();
 
 	changeBreadcrumb(id) {
 		Map<String, String> entryPath = <String, String>{
@@ -55,7 +53,7 @@ class App extends PolymerElement with ObservableMixin {
 	}
 
 	switchView(id) {
-		var customElement = createElement(id);
+		var customElement = new Element.tag(id);
 		shadowRoot.query('#main-bloc')
 			..children.clear()
 			..append(customElement);
