@@ -2,7 +2,7 @@ library model;
 
 import "package:polymer/polymer.dart";
 
-class Warehouse extends Object with ObservableMixin {
+class Warehouse extends Object with Observable {
 	@observable String id;
 	@observable Map tags;
 
