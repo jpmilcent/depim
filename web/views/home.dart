@@ -13,7 +13,7 @@ class Home extends PolymerElement {
   void addMessage(e) {
     var now = new DateTime.now();
 
-		HtmlElement msgElem = createElement('app-message');
+		HtmlElement msgElem = new Element.tag('app-message');
 		AppMessage message = msgElem.xtag
 			..text = "Welcome to Dart polymer element ! $now"
 			..type = 'success';
@@ -24,7 +24,7 @@ class Home extends PolymerElement {
   void addMessageOverlay(e) {
     var now = new DateTime.now();
 
-		HtmlElement msgElem = createElement('app-message-overlay');
+		HtmlElement msgElem = new Element.tag('app-message-overlay');
 		AppMessageOverlay message = msgElem.xtag
 			..isHtml = true
 			..text = "<p>Welcome to Dart! $now<button>Un bouton</button></p>"

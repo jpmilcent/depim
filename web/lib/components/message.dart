@@ -18,11 +18,11 @@ class AppMessage extends PolymerElement {
 
 	AppMessage.created() : super.created();
 
-	inserted() {
-  	super.inserted();
+	enteredView() {
+		super.enteredView();
 
 		message = $['message'];
-
+		print('ici');
 		positionElement();
 		addCloseEvent();
 		addEscapeKeyEvent();
@@ -31,16 +31,16 @@ class AppMessage extends PolymerElement {
 
 	positionElement() {
 		if (calledNber == 0) {
-			host.style.top = '50px';
+			style.top = '50px';
 		} else if (calledNber > 0) {
-			host.style.top = (90 * calledNber + 50).toString()+'px';
-			print(host.style.top.toString());
+			style.top = (90 * calledNber + 50).toString()+'px';
+			print(style.top.toString());
 		}
 		calledNber++;
 	}
 
 	addCloseEvent() {
-		message.query('.close').onClick.listen((e) => delete());
+		message.querySelector('.close').onClick.listen((e) => delete());
 	}
 
 	addEscapeKeyEvent() {

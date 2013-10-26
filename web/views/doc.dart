@@ -2,18 +2,22 @@ import 'package:polymer/polymer.dart';
 import 'package:observe/observe.dart';
 import 'dart:html';
 import 'dart:convert';
+import '../lib/components/message.dart';
 
 @CustomTag('doc-panel')
 class Doc extends PolymerElement with Observable {
 
 	bool get applyAuthorStyles => true;
-
   final urlBase = 'http://localhost/dart/depim/server/services/v1/documents';
-
 	@observable Map documents = {};
+	@observable List docList;
+	@observable bool docListEmpty;
 
 	Doc.created() : super.created() {
-    this.loadDocuments();
+		var _oldValue;
+		onPropertyChange(this, #docList, () {docList = _docList;});
+		onPropertyChange(this, #docListEmpty, () {docListEmpty = _docListEmpty;});
+		this.loadDocuments();
   }
 
   loadDocuments() {
@@ -30,12 +34,8 @@ class Doc extends PolymerElement with Observable {
     }
   }
 
-	documentsChanged(Map oldValue) {
-  	notifyProperty(this, #docList);
-		notifyProperty(this, #docListEmpty);
-  }
-
-  List get docList {
+	@reflectable
+  List get _docList {
     var res = new List();
     if (! documents.isEmpty) {
       documents.forEach((var key, var doc) {
@@ -53,9 +53,10 @@ class Doc extends PolymerElement with Observable {
     return res;
   }
 
-  bool get docListEmpty => docList.isEmpty;
+	@reflectable
+	bool get _docListEmpty => _docList.isEmpty;
 
-  void onSelectedDoc(Event e) {
+  void onSelectedDoc(CustomEvent e) {
 		var elemMenu = e.detail;
 		var id = elemMenu;//Utiliser elemMenu.id quand on pourra passer un vrai objet
 
@@ -63,11 +64,11 @@ class Doc extends PolymerElement with Observable {
     this.loadDocDetails(id);
 
     // Show delete command
-    shadowRoot.queryAll('.delete-doc-cmd').forEach((elem) {
+    shadowRoot.querySelectorAll('.delete-doc-cmd').forEach((elem) {
       elem.attributes['data-id'] = id;
       elem.classes.remove('hide');
     });
-		shadowRoot.queryAll('.update-doc-cmd').forEach((elem) {
+		shadowRoot.querySelectorAll('.update-doc-cmd').forEach((elem) {
       elem.attributes['data-id'] = id;
       elem.classes.remove('hide');
     });
@@ -78,12 +79,12 @@ class Doc extends PolymerElement with Observable {
 
     // call the web server asynchronously
     HttpRequest.getString(url).then((responseText) {
-			InputElement idElmt = shadowRoot.query('input.field[name="id"]');
+			InputElement idElmt = shadowRoot.querySelector('input.field[name="id"]');
 			idElmt.value = id;
       var doc = JSON.decode(responseText);
       Map tags = doc['tags'];
       tags.forEach((key, value) {
-        var field = shadowRoot.query('.field[name="$key"]');
+        var field = shadowRoot.querySelector('.field[name="$key"]');
         if (field != null) {
           field.attributes['value'] = value;
         } else {
@@ -209,22 +210,33 @@ class Doc extends PolymerElement with Observable {
 
   void resetDoc(Event e) {
     // Show delete & update command
-		shadowRoot.queryAll('.delete-doc-cmd, .update-doc-cmd').forEach((elem) {
+		shadowRoot.querySelectorAll('.delete-doc-cmd, .update-doc-cmd').forEach((elem) {
       elem.attributes.remove('data-id');
       elem.classes.add('hide');
     });
-		shadowRoot.queryAll('.field').forEach((elem) {
+		shadowRoot.querySelectorAll('.field').forEach((elem) {
 			elem.attributes.remove('value');
 		});
   }
 
   void showError(HttpRequest request) {
     var msg = 'Une erreur de type ${request.status} est survenue. \n ${request.responseText}';
-    new Message('error').show(msg);
+		HtmlElement msgElem = new Element.tag('app-message');
+		AppMessage message = msgElem.xtag;
+		message.text = msg;
+		message.type = 'error';
+
+		shadowRoot.children.add(msgElem);
   }
 
   void showSuccess(String msg) {
-    new Message('success').show(msg);
+		HtmlElement msgElem = new Element.tag('app-message');
+		AppMessage message = msgElem.xtag;
+		message.text = msg;
+		message.type = 'success';
+
+		shadowRoot.children.add(msgElem);
+
     this.loadDocuments();
   }
 }

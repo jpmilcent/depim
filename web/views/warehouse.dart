@@ -2,19 +2,22 @@ import 'package:polymer/polymer.dart';
 import 'package:observe/observe.dart';
 import 'dart:html';
 import 'dart:convert';
+import '../lib/components/message.dart';
 import '../lib/models/Warehouse.dart';
 
 @CustomTag('warehouse-panel')
-class WarehouseView extends PolymerElement {
+class WarehouseView extends PolymerElement with Observable {
 
 	bool get applyAuthorStyles => true;
-
   final urlBase = 'http://localhost/dart/depim/server/services/v1/structures';
-
 	@observable Map warehouses = {};
 	@observable Warehouse warehouse;
+	@observable List whList;
+	@observable bool whListEmpty;
 
 	WarehouseView.created() : super.created() {
+		onPropertyChange(this, #whList, () {whList = _whList;});
+		onPropertyChange(this, #whListEmpty, () {whListEmpty = _whListEmpty;});
 		this.loadWarehouses();
 	}
 
@@ -28,12 +31,7 @@ class WarehouseView extends PolymerElement {
     this.warehouses = JSON.decode(responseText);
   }
 
-	warehousesChanged(Map oldValue) {
-	  notifyProperty(this, #whList);
-		notifyProperty(this, #whListEmpty);
-  }
-
-	List get whList {
+	List get _whList {
   	var list = new List();
   	if (! warehouses.isEmpty) {
 			warehouses.forEach((var key, var wh) {
@@ -51,9 +49,11 @@ class WarehouseView extends PolymerElement {
   	return list;
 	}
 
-	bool get whListEmpty => whList.isEmpty;
+	bool get _whListEmpty {
+		return _whList.isEmpty;
+	}
 
-  void onSelectedWarehouse(Event e) {
+  void onSelectedWarehouse(CustomEvent e) {
 		var elemMenu = e.detail;
 		var id = elemMenu;//Utiliser elemMenu.id quand on pourra passer un vrai objet
 
@@ -61,11 +61,11 @@ class WarehouseView extends PolymerElement {
     this.loadWarehouseDetails(id);
 
     // Show delete command
-    shadowRoot.queryAll('.delete-warehouse-cmd').forEach((elem) {
+    shadowRoot.querySelectorAll('.delete-warehouse-cmd').forEach((elem) {
       elem.attributes['data-id'] = id;
       elem.classes.remove('hide');
     });
-    shadowRoot.queryAll('.update-warehouse-cmd').forEach((elem) {
+    shadowRoot.querySelectorAll('.update-warehouse-cmd').forEach((elem) {
       elem.attributes['data-id'] = id;
       elem.classes.remove('hide');
     });
@@ -86,7 +86,7 @@ class WarehouseView extends PolymerElement {
 
   void addWarehouse(Event e) {
     e.preventDefault();
-    var tags = getTags(),
+    var tags = warehouse.tags,
       meta = {
         'utilisateurId' : 1,
         'tags' : {
@@ -115,7 +115,7 @@ class WarehouseView extends PolymerElement {
     }
   }
 
-  void updateWarehouse(Event e) {
+  void updateWarehouse(CustomEvent e) {
     e.preventDefault();
 		print('Update id :'+e.detail.toString());
     var id = e.detail.toString(),
@@ -180,11 +180,11 @@ class WarehouseView extends PolymerElement {
 
   void resetWarehouse(Event e) {
     // Show delete command
-    shadowRoot.queryAll('.delete-warehouse-cmd, .update-warehouse-cmd').forEach((elem) {
+    shadowRoot.querySelectorAll('.delete-warehouse-cmd, .update-warehouse-cmd').forEach((elem) {
       elem.attributes.remove('data-id');
       elem.classes.add('hide');
     });
-		shadowRoot.queryAll('.field').forEach((elem) {
+		shadowRoot.querySelectorAll('.field').forEach((elem) {
 			elem.attributes.remove('value');
 		});
 
@@ -193,7 +193,7 @@ class WarehouseView extends PolymerElement {
   void showError(HttpRequest request) {
     var msg = 'Une erreur de type ${request.status} est survenue. \n ${request.responseText}';
 
-		HtmlElement msgElem = createElement('app-message');
+		HtmlElement msgElem = new Element.tag('app-message');
 		AppMessage message = msgElem.xtag;
 		message.text = msg;
 		message.type = 'error';
@@ -202,7 +202,7 @@ class WarehouseView extends PolymerElement {
   }
 
   void showSuccess(String msg) {
-		HtmlElement msgElem = createElement('app-message');
+		HtmlElement msgElem = new Element.tag('app-message');
 		AppMessage message = msgElem.xtag;
 		message.text = msg;
 		message.type = 'success';

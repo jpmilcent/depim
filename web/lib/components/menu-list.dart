@@ -13,7 +13,7 @@ class MenuList extends PolymerElement {
 
 	void onSelectedElement(Event e) {
   	HtmlElement clickedElem = e.target;
-		shadowRoot.queryAll("#menu-list li").forEach((elem) {
+		shadowRoot.querySelectorAll("#menu-list li").forEach((elem) {
 			elem.classes.remove('active');
 		});
 		clickedElem.parent.classes.add('active');

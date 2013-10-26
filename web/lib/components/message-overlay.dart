@@ -17,8 +17,8 @@ class AppMessageOverlay extends PolymerElement {
 
 	AppMessageOverlay.created() : super.created();
 
-	inserted() {
-  	super.inserted();
+	enteredView() {
+  	super.enteredView();
 		message = $['message-overlay'];
 		addCloseEvent();
 		addEscapeKeyEvent();
@@ -28,7 +28,7 @@ class AppMessageOverlay extends PolymerElement {
 	}
 
 	addCloseEvent() {
-		message.query('.close').onClick.listen((e) => delete());
+		message.querySelector('.close').onClick.listen((e) => delete());
 	}
 
 	delete() {
@@ -57,9 +57,9 @@ class AppMessageOverlay extends PolymerElement {
 			..attributes['aria-hidden'] = 'false';
 
 		if (isHtml) {
-			message.query('.modal-body').appendHtml(text);
+			message.querySelector('.modal-body').appendHtml(text);
 		} else {
-			message.query('.modal-body').appendText(text);
+			message.querySelector('.modal-body').appendText(text);
 		}
   }
 
