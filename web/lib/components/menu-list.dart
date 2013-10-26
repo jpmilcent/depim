@@ -7,7 +7,7 @@ class MenuList extends PolymerElement {
 
 	bool get applyAuthorStyles => true;
 	@published String title = '';
-	@published List elements = new List();
+	@published ObservableList elements = toObservable([]);
 
 	MenuList.created() : super.created();
 

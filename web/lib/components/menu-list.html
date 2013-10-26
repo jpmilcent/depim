@@ -10,11 +10,11 @@
         </div>
       </fieldset>
     </form>
-    <template if="{{!elements.isEmpty}}">
+    <template if="{{elements.length > 0}}">
       <ul id="menu-list" class="nav nav-list">
         <template repeat="{{elem in elements}}">
           <li on-click="onSelectedElement">
-            <a data-id="{{elem['id']}}">{{elem['nom']}}</a>
+            <a data-id="{{elem['id']}}">{{elem['nom']}} ({{elem['id']}})</a>
           </li>
         </template>
       </ul>

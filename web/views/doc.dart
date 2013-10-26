@@ -14,9 +14,8 @@ class Doc extends PolymerElement with Observable {
 	@observable bool docListEmpty;
 
 	Doc.created() : super.created() {
-		var _oldValue;
-		onPropertyChange(this, #docList, () {docList = _docList;});
-		onPropertyChange(this, #docListEmpty, () {docListEmpty = _docListEmpty;});
+		//onPropertyChange(this, #docList, () {docList = _docList;});
+		//onPropertyChange(this, #docListEmpty, () {docListEmpty = _docListEmpty;});
 		this.loadDocuments();
   }
 

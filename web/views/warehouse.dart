@@ -10,25 +10,33 @@ class WarehouseView extends PolymerElement with Observable {
 
 	bool get applyAuthorStyles => true;
   final urlBase = 'http://localhost/dart/depim/server/services/v1/structures';
-	@observable Map warehouses = {};
+	ObservableMap warehouses = toObservable({});
 	@observable Warehouse warehouse;
-	@observable List whList;
-	@observable bool whListEmpty;
+	@observable ObservableList whList = toObservable([]);
+	@observable bool whListEmpty = true;
 
 	WarehouseView.created() : super.created() {
-		onPropertyChange(this, #whList, () {whList = _whList;});
-		onPropertyChange(this, #whListEmpty, () {whListEmpty = _whListEmpty;});
+		warehouses.changes.listen((records) {
+			print('> warehouses changes');
+			whList
+				..clear()
+				..addAll(_whList);
+			whListEmpty = _whListEmpty;
+   	});
 		this.loadWarehouses();
 	}
 
   loadWarehouses() {
     // call the web server asynchronously
+		print('> loadWarehouses');
     HttpRequest.getString(urlBase).then(processingWarehousesLoad);
   }
 
   processingWarehousesLoad(responseText) {
-    print(urlBase);
-    this.warehouses = JSON.decode(responseText);
+    print('> processingWarehousesLoad');
+    this.warehouses
+			..clear()
+			..addAll(JSON.decode(responseText));
   }
 
 	List get _whList {
@@ -46,6 +54,17 @@ class WarehouseView extends PolymerElement with Observable {
 	  		}
 	  	});
   	}
+		list.sort((elemA, elemB) {
+	    var a = int.parse(elemA['id']);
+			var b = int.parse(elemB['id']);
+			if (a == b) {
+	      return 0;
+	    } else if (a > b) {
+	      return 1;
+	    } else {
+	      return -1;
+	    }
+	  });
   	return list;
 	}
 
@@ -55,6 +74,7 @@ class WarehouseView extends PolymerElement with Observable {
 
   void onSelectedWarehouse(CustomEvent e) {
 		var elemMenu = e.detail;
+		print('Id: $elemMenu');
 		var id = elemMenu;//Utiliser elemMenu.id quand on pourra passer un vrai objet
 
     // Put warehouse infos in the form
@@ -115,10 +135,11 @@ class WarehouseView extends PolymerElement with Observable {
     }
   }
 
-  void updateWarehouse(CustomEvent e) {
+  void updateWarehouse(Event e) {
     e.preventDefault();
-		print('Update id :'+e.detail.toString());
-    var id = e.detail.toString(),
+
+		print('Update id : ${warehouse.id}');
+    var id = warehouse.id,
       dataUrl = '${urlBase}/$id',
       meta = {
         'utilisateurId' : 1,
