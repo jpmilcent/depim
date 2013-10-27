@@ -11,7 +11,7 @@ class WarehouseView extends PolymerElement with Observable {
 	bool get applyAuthorStyles => true;
   final urlBase = 'http://localhost/dart/depim/server/services/v1/structures';
 	ObservableMap warehouses = toObservable({});
-	@observable Warehouse warehouse;
+	@observable Warehouse warehouse = new Warehouse.init();
 	@observable ObservableList whList = toObservable([]);
 	@observable bool whListEmpty = true;
 
@@ -23,6 +23,7 @@ class WarehouseView extends PolymerElement with Observable {
 				..addAll(_whList);
 			whListEmpty = _whListEmpty;
    	});
+
 		this.loadWarehouses();
 	}
 
@@ -41,6 +42,7 @@ class WarehouseView extends PolymerElement with Observable {
 
 	List get _whList {
   	var list = new List();
+
   	if (! warehouses.isEmpty) {
 			warehouses.forEach((var key, var wh) {
 	  		try {
@@ -54,6 +56,7 @@ class WarehouseView extends PolymerElement with Observable {
 	  		}
 	  	});
   	}
+
 		list.sort((elemA, elemB) {
 	    var a = int.parse(elemA['id']);
 			var b = int.parse(elemB['id']);
@@ -65,7 +68,8 @@ class WarehouseView extends PolymerElement with Observable {
 	      return -1;
 	    }
 	  });
-  	return list;
+
+		return list;
 	}
 
 	bool get _whListEmpty {
@@ -74,19 +78,13 @@ class WarehouseView extends PolymerElement with Observable {
 
   void onSelectedWarehouse(CustomEvent e) {
 		var elemMenu = e.detail;
-		print('Id: $elemMenu');
-		var id = elemMenu;//Utiliser elemMenu.id quand on pourra passer un vrai objet
+		var id = elemMenu.id;//Utiliser elemMenu.id quand on pourra passer un vrai objet
 
     // Put warehouse infos in the form
     this.loadWarehouseDetails(id);
 
     // Show delete command
-    shadowRoot.querySelectorAll('.delete-warehouse-cmd').forEach((elem) {
-      elem.attributes['data-id'] = id;
-      elem.classes.remove('hide');
-    });
-    shadowRoot.querySelectorAll('.update-warehouse-cmd').forEach((elem) {
-      elem.attributes['data-id'] = id;
+    shadowRoot.querySelectorAll('.delete-warehouse-cmd, .update-warehouse-cmd').forEach((elem) {
       elem.classes.remove('hide');
     });
   }
@@ -106,25 +104,29 @@ class WarehouseView extends PolymerElement with Observable {
 
   void addWarehouse(Event e) {
     e.preventDefault();
-    var tags = warehouse.tags,
-      meta = {
-        'utilisateurId' : 1,
-        'tags' : {
-          'etat' : 'A',
-          'type' : 'structure',
-          'commentaire' : 'Ajout de la structure "${tags['nom']}".',
-          'source' : tags['urlGeneawiki']
-        }
-      },
-      data = {'meta' : meta, 'tags': tags},
-      encodedData = JSON.encode(data);
+		if (! warehouse.isEmpty()) {
+	    var tags = warehouse.tags,
+	      meta = {
+	        'utilisateurId' : 1,
+	        'tags' : {
+	          'etat' : 'A',
+	          'type' : 'structure',
+	          'commentaire' : 'Ajout de la structure "${tags['nom']}".',
+	          'source' : tags['urlGeneawiki']
+	        }
+	      },
+	      data = {'meta' : meta, 'tags': tags},
+	      encodedData = JSON.encode(data);
 
-    var httpRequest = new HttpRequest();
-    httpRequest.open('POST', urlBase);
-    httpRequest.setRequestHeader('Content-type', 'application/json');
-    httpRequest.onLoadEnd.listen((e) => addEnd(httpRequest));
-    print(encodedData);
-    httpRequest.send(encodedData);
+	    var httpRequest = new HttpRequest();
+	    httpRequest.open('POST', urlBase);
+	    httpRequest.setRequestHeader('Content-type', 'application/json');
+	    httpRequest.onLoadEnd.listen((e) => addEnd(httpRequest));
+	    print(encodedData);
+	    httpRequest.send(encodedData);
+		} else {
+			showWarning("Veuillez saisir un contenu avant d'ajouter une structure");
+		}
   }
 
   void addEnd(HttpRequest request) {
@@ -132,33 +134,35 @@ class WarehouseView extends PolymerElement with Observable {
       showError(request);
     } else {
       showSuccess('Une nouvelle structure avec l\'id #${request.responseText} a été ajoutée.');
+	    this.loadWarehouses();
     }
   }
 
   void updateWarehouse(Event e) {
     e.preventDefault();
-
 		print('Update id : ${warehouse.id}');
-    var id = warehouse.id,
-      dataUrl = '${urlBase}/$id',
-      meta = {
-        'utilisateurId' : 1,
-        'tags' : {
-          'etat' : 'M',
-          'type' : 'structure',
-          'commentaire' : 'Modification de la structure #$id.'
-        }
-      },
-      tags = warehouse.tags,
-      data = {'meta' : meta, 'tags': tags},
-      encodedData = JSON.encode(data);
-		print('Update url :'+dataUrl);
-		print('Update data :'+tags.toString());
-    var httpRequest = new HttpRequest();
-    httpRequest.open('POST', dataUrl);
-    httpRequest.setRequestHeader('Content-type', 'application/json');
-    httpRequest.onLoadEnd.listen((e) => updateEnd(httpRequest, id));
-    httpRequest.send(encodedData);
+    var id = warehouse.id;
+		if (id != '') {
+      var dataUrl = '${urlBase}/$id',
+	      meta = {
+	        'utilisateurId' : 1,
+	        'tags' : {
+	          'etat' : 'M',
+	          'type' : 'structure',
+	          'commentaire' : 'Modification de la structure #$id.'
+	        }
+	      },
+	      tags = warehouse.tags,
+	      data = {'meta' : meta, 'tags': tags},
+	      encodedData = JSON.encode(data);
+			print('Update url :'+dataUrl);
+			print('Update data :'+tags.toString());
+	    var httpRequest = new HttpRequest();
+	    httpRequest.open('POST', dataUrl);
+	    httpRequest.setRequestHeader('Content-type', 'application/json');
+	    httpRequest.onLoadEnd.listen((e) => updateEnd(httpRequest, id));
+	    httpRequest.send(encodedData);
+		}
   }
 
   void updateEnd(HttpRequest request, String id) {
@@ -170,66 +174,69 @@ class WarehouseView extends PolymerElement with Observable {
   }
 
   void deleteWarehouse(Event e) {
-    Element clickedElem = e.target;
-    var idStructure = clickedElem.attributes['data-id'],
-      meta = {
-        'utilisateurId' : 1,
-        'tags' : {
-          'etat' : 'S',
-          'type' : 'structure',
-          'commentaire' : 'Suppression de la strucutre $idStructure.'
-        }
-      },
-      data = {'meta' : meta},
-      encodedData = JSON.encode(data),
-      url = '${urlBase}/$idStructure',
-      httpRequest = new HttpRequest();
-    httpRequest.open('DELETE', url);
-    httpRequest.setRequestHeader('Content-type', 'application/json');
-    httpRequest.onLoadEnd.listen((e) => deleteEnd(httpRequest));
-    print(encodedData);
-    httpRequest.send(encodedData);
+		e.preventDefault();
+		print('Delete id : ${warehouse.id}');
+    var id = warehouse.id;
+		if (id != '') {
+      var meta = {
+	        'utilisateurId' : 1,
+	        'tags' : {
+	          'etat' : 'S',
+	          'type' : 'structure',
+	          'commentaire' : 'Suppression de la strucutre $id.'
+	        }
+	      },
+	      data = {'meta' : meta},
+	      encodedData = JSON.encode(data),
+	      url = '${urlBase}/$id',
+	      httpRequest = new HttpRequest();
+	    httpRequest.open('DELETE', url);
+	    httpRequest.setRequestHeader('Content-type', 'application/json');
+	    httpRequest.onLoadEnd.listen((e) => deleteEnd(httpRequest));
+	    print(encodedData);
+	    httpRequest.send(encodedData);
+		}
   }
 
-  void deleteEnd(HttpRequest request) {
+  deleteEnd(HttpRequest request) {
 		if (request.status != 204) {
       showError(request);
     } else {
       showSuccess('une structure a été supprimée');
+	    this.loadWarehouses();
     }
   }
 
-  void resetWarehouse(Event e) {
-    // Show delete command
+  resetWarehouse(Event e) {
+		// Reinitialiser l'objet Warehouse
+		warehouse.clear();
+
+		// Show delete command
     shadowRoot.querySelectorAll('.delete-warehouse-cmd, .update-warehouse-cmd').forEach((elem) {
-      elem.attributes.remove('data-id');
       elem.classes.add('hide');
     });
-		shadowRoot.querySelectorAll('.field').forEach((elem) {
-			elem.attributes.remove('value');
-		});
-
   }
 
-  void showError(HttpRequest request) {
-    var msg = 'Une erreur de type ${request.status} est survenue. \n ${request.responseText}';
+  showError(HttpRequest request) {
+    var msg = 'Une erreur de type ${request.status} est survenue. \n' +
+			'${request.responseText}';
+		_showMessage('error', msg);
+  }
 
+	showWarning(String msg) {
+		_showMessage('warning', msg);
+  }
+
+  showSuccess(String msg) {
+		_showMessage('success', msg);
+  }
+
+	_showMessage(String type, String msg) {
 		HtmlElement msgElem = new Element.tag('app-message');
 		AppMessage message = msgElem.xtag;
 		message.text = msg;
-		message.type = 'error';
+		message.type = type;
 
 		shadowRoot.children.add(msgElem);
-  }
-
-  void showSuccess(String msg) {
-		HtmlElement msgElem = new Element.tag('app-message');
-		AppMessage message = msgElem.xtag;
-		message.text = msg;
-		message.type = 'success';
-
-		shadowRoot.children.add(msgElem);
-
-    this.loadWarehouses();
-  }
+	}
 }
