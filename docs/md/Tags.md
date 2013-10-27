@@ -32,3 +32,12 @@ Exemples de clés-valeurs : <http://wiki.openstreetmap.org/wiki/FR:Map_Features>
 [note](./Tags/Structures/note.md)
 
 ##### Documents
+[abreviation](./Tags/Documents/abreviation.md)
+[code](./Tags/Documents/code.md)
+[code:insee](./Tags/Documents/code/insee.md)
+[commune](./Tags/Documents/commune.md)
+[lieu](./Tags/Documents/lieu.md)
+[note](./Tags/Documents/note.md)
+[support](./Tags/Documents/support.md)
+[titre](./Tags/Documents/titre.md)
+

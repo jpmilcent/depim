@@ -35,3 +35,12 @@ Exemples de clés-valeurs : http://wiki.openstreetmap.org/wiki/FR:Map_Features
 [[+Structures:note|note]]
 
 == Documents ==
+[[:Tags:Documents:abreviation|abreviation]]
+[[:Tags:Documents:code|code]]
+[[:Tags:Documents:code:insee|code:insee]]
+[[:Tags:Documents:commune|commune]]
+[[:Tags:Documents:lieu|lieu]]
+[[:Tags:Documents:note|note]]
+[[:Tags:Documents:support|support]]
+[[:Tags:Documents:titre|titre]]
+

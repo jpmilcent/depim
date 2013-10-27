@@ -6,8 +6,12 @@ Created mercredi 17 juin 2009
 
 * Git : git clone <https://github.com/jpmilcent/depim.git>
 * Bogues : <https://github.com/jpmilcent/depim/issues>
-* [Roadmap](./Roadmap.md)
 * Liste des noms de version de la Roadmap : [liste des mois et jours du calendrier républicain](http://fr.wikipedia.org/wiki/Calendrier_r%C3%A9publicain)
+* [Roadmap](./Roadmap.md)
+* [Recherches](./Recherches.md)
+* [Tags](./Tags.md)
+* [Architecture](./Architecture.md)
+* [API](./API.md)
 
 
 #### Notes

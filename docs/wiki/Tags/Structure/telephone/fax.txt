@@ -1,9 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2012-11-13T20:32:28+01:00
-
-====== fax ======
-Created mardi 13 novembre 2012
-
-**Clé :** [[telephone:fax]]
-**Valeur possible :** +334 00 00 00 00

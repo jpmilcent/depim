@@ -8,8 +8,12 @@ Created mercredi 17 juin 2009
 == Infos ==
 * Git : git clone https://github.com/jpmilcent/depim.git
 * Bogues : https://github.com/jpmilcent/depim/issues
-* [[:Roadmap|Roadmap]]
 * Liste des noms de version de la Roadmap : [[http://fr.wikipedia.org/wiki/Calendrier_r%C3%A9publicain|liste des mois et jours du calendrier républicain]]
+* [[:Roadmap|Roadmap]]
+* [[:Recherches|Recherches]]
+* [[:Tags|Tags]]
+* [[:Architecture|Architecture]]
+* [[:API|API]]
 
 === Notes ===
  - Pour tous les actes, le formulaire doit comprendre trois onglets : acte, personnes, transcription.

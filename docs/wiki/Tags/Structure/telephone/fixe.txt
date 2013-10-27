@@ -1,9 +1,0 @@
-Content-Type: text/x-zim-wiki
-Wiki-Format: zim 0.4
-Creation-Date: 2012-11-13T20:31:47+01:00
-
-====== fixe ======
-Created mardi 13 novembre 2012
-
-**Clé :** [[telephone:fixe]]
-**Valeur possible :** +334 00 00 00 00

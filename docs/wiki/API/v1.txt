@@ -4,6 +4,7 @@ Creation-Date: 2010-09-17T23:33:42.844061
 
 ====== v1 ======
 Created vendredi 17 septembre 2010
+
 Voir : http://wiki.openstreetmap.org/wiki/OSM_Protocol_Version_0.6_%28Archive%29#Database_improvements
 En __jaune__, le services non implémentés.
 
@@ -13,22 +14,27 @@ __GET		capacites					Retourne les informations sur les capacités de l'API.__
 
 [[+Changements|Changement]]
 __GET		changements/#id				Retourne les informations au format JSON de ce changement (#id).__
-__GET		changements/#id/telecharger		Retourne les informations de la donnée concernée par ce changement (#id). __
+__GET		changements/#id/telecharger	Retourne les informations de la donnée concernée par ce changement (#id). __
 __POST	changements/#id				Met à jour les tags du changement avec les informations passés dans le corps de la requête et retourne true en cas de succés sinon false.__
 __GET		changements?...				Retourne les informations au format JSON pour toutes les changements concernées par les paramêtres (changements, utilisateur, utilisateur_nom, date, dates)__
 
-GET		structures						Retourne toutes les informations au format JSON de l'ensemble des structures.
+[[:API:v1:Utilisateurs|Utilisateurs]]
+__PUT		utilisateurs					Créé un utilisateur avec les informations passés dans le corps de la requête. Retourne le nouvel identifiant de l'utilisateur (en version 1).__
+
+[[:API:v1:Structures|Structures]]
+GET		structures					Retourne toutes les informations au format JSON de l'ensemble des structures.
 GET		structures/#id					Retourne les informations au format JSON de cette structure (#id).
-__GET		structures/#id/historique			Retourne les informations de toutes les versions de cette structure (#id).__
+__GET		structures/#id/historique		Retourne les informations de toutes les versions de cette structure (#id).__
 __GET		structures/#id/#version			Retourne les informations de cette version (#version) de cette structure (#id).__
-PUT		structures						Créé une structure avec les informations passés dans le corps de la requête. Retourne le nouvel identifiant de la structure (en version 1).
+PUT		structures					Créé une structure avec les informations passés dans le corps de la requête. Retourne le nouvel identifiant de la structure (en version 1).
 POST	structures/#id					Met à jour la structure et retourne le nouveau numéro de version.
 DELETE	structures/#id					Supprime la structure et retourne le nouveau numéro de version.
 
+[[:API:v1:Documents|Documents]]
 GET		documents					Retourne toutes les informations au format JSON de l'ensemble des documents.
-GET		documents/#id					Retourne les informations au format JSON de ce document (#id).
+GET		documents/#id				Retourne les informations au format JSON de ce document (#id).
 __GET		documents/#id/historique		Retourne les informations de toutes les versions de ce document (#id).__
-__GET		documents/#id/#version			Retourne les informations de cette version (#version) de ce document (#id).__
+__GET		documents/#id/#version		Retourne les informations de cette version (#version) de ce document (#id).__
 PUT		documents					Créé le document avec les informations passés dans le corps de la requête. Retourne le nouvel identifiant de document (en version 1).
-POST	documents/#id					Met à jour le document et retourne le nouveau numéro de version.
-DELETE	documents/#id					Supprime le document et retourne le nouveau numéro de version.
+POST	documents/#id				Met à jour le document et retourne le nouveau numéro de version.
+DELETE	documents/#id				Supprime le document et retourne le nouveau numéro de version.
