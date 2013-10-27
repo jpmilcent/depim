@@ -21,8 +21,8 @@ class MenuList extends PolymerElement {
 		var id = clickedElem.attributes['data-id'];
 		var elemMenu = new ElementMenu()
 			..id = id;
-		print(elemMenu.id.toString());
+
 		// TODO : utiliser vraiment l'objet quand le bug sera résolut ! (écrire un test pour le vérifier)
-		dispatchEvent(new CustomEvent('selectmenu', detail: elemMenu.id));
+		dispatchEvent(new CustomEvent('selectmenu', detail: elemMenu));
   }
 }
