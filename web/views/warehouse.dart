@@ -3,7 +3,9 @@ import 'package:observe/observe.dart';
 import 'dart:html';
 import 'dart:convert';
 import '../lib/components/message.dart';
+import '../lib/dao/WarehousesDao.dart';
 import '../lib/models/Warehouse.dart';
+import '../lib/models/DataRequest.dart';
 
 @CustomTag('warehouse-panel')
 class WarehouseView extends PolymerElement with Observable {
@@ -11,6 +13,7 @@ class WarehouseView extends PolymerElement with Observable {
 	bool get applyAuthorStyles => true;
   final urlBase = 'http://localhost/dart/depim/server/services/v1/structures';
 	ObservableMap warehouses = toObservable({});
+	WarehousesDao dao = new WarehousesDao();
 	@observable Warehouse warehouse = new Warehouse.init();
 	@observable ObservableList whList = toObservable([]);
 	@observable bool whListEmpty = true;
@@ -24,13 +27,13 @@ class WarehouseView extends PolymerElement with Observable {
 			whListEmpty = _whListEmpty;
    	});
 
-		this.loadWarehouses();
+		loadWarehouses();
 	}
 
   loadWarehouses() {
     // call the web server asynchronously
 		print('> loadWarehouses');
-    HttpRequest.getString(urlBase).then(processingWarehousesLoad);
+		dao.loadAll().then(processingWarehousesLoad).catchError(handleError);
   }
 
   processingWarehousesLoad(responseText) {
@@ -90,10 +93,7 @@ class WarehouseView extends PolymerElement with Observable {
   }
 
   void loadWarehouseDetails(id) {
-    var url = '${urlBase}/$id';
-
-    // call the web server asynchronously
-    HttpRequest.getString(url).then(processingLoadingForm);
+    dao.loadDetails(id).then(processingLoadingForm).catchError(handleError);
   }
 
   processingLoadingForm(responseText) {
@@ -105,25 +105,11 @@ class WarehouseView extends PolymerElement with Observable {
   void addWarehouse(Event e) {
     e.preventDefault();
 		if (! warehouse.isEmpty()) {
-	    var tags = warehouse.tags,
-	      meta = {
-	        'utilisateurId' : 1,
-	        'tags' : {
-	          'etat' : 'A',
-	          'type' : 'structure',
-	          'commentaire' : 'Ajout de la structure "${tags['nom']}".',
-	          'source' : tags['urlGeneawiki']
-	        }
-	      },
-	      data = {'meta' : meta, 'tags': tags},
-	      encodedData = JSON.encode(data);
+			var data = new DataRequest.add()
+				..setUserId(1)
+				..setTags(warehouse.tags);
 
-	    var httpRequest = new HttpRequest();
-	    httpRequest.open('POST', urlBase);
-	    httpRequest.setRequestHeader('Content-type', 'application/json');
-	    httpRequest.onLoadEnd.listen((e) => addEnd(httpRequest));
-	    print(encodedData);
-	    httpRequest.send(encodedData);
+			dao.add(data, addEnd);
 		} else {
 			showWarning("Veuillez saisir un contenu avant d'ajouter une structure");
 		}
@@ -131,9 +117,11 @@ class WarehouseView extends PolymerElement with Observable {
 
   void addEnd(HttpRequest request) {
     if (request.status != 201) {
-      showError(request);
+			showRequestError(request);
+			print(request.toString());
     } else {
       showSuccess('Une nouvelle structure avec l\'id #${request.responseText} a été ajoutée.');
+			print(request.responseText.toString());
 	    this.loadWarehouses();
     }
   }
@@ -167,7 +155,7 @@ class WarehouseView extends PolymerElement with Observable {
 
   void updateEnd(HttpRequest request, String id) {
     if (request.status != 200) {
-      showError(request);
+			showRequestError(request);
     } else {
       showSuccess('La structure avec l\'id #$id a été modifiée.');
     }
@@ -200,7 +188,7 @@ class WarehouseView extends PolymerElement with Observable {
 
   deleteEnd(HttpRequest request) {
 		if (request.status != 204) {
-      showError(request);
+			showRequestError(request);
     } else {
       showSuccess('une structure a été supprimée');
 	    this.loadWarehouses();
@@ -217,9 +205,17 @@ class WarehouseView extends PolymerElement with Observable {
     });
   }
 
-  showError(HttpRequest request) {
-    var msg = 'Une erreur de type ${request.status} est survenue. \n' +
-			'${request.responseText}';
+	handleError(e) {
+		showError('Une erreur est survenue : ${e.toString()}');
+	}
+
+	showRequestError(HttpRequest request) {
+  	var msg = 'Une erreur de type ${request.status} est survenue. \n' +
+		'${request.responseText}';
+		showError(msg);
+	}
+
+  showError(String msg) {
 		_showMessage('error', msg);
   }
 
