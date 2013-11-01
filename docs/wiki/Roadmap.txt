@@ -28,23 +28,17 @@ Created samedi 01 mai 2010
 		- Journal des messages
 
 
-== Version 0.2 - ==
+== Version 0.2 - Raisin ==
+ - Utilisation de Webui
+ - Utilisation des web services JSON
  - UI: fonctionnalités de base
  	- Menu
 		- Accueil
-		- Structures	
- 	- Identification
- 	- Aide : 
- 		- Documentation
- 		- À propos...  
- 	- Retour d'expériences...
- - NOYAU : 
-	- Affichage des messages
-	- Journal des messages
+		- Structures : fonctionnement ajout, modification, suppression
 
 
 == Version 0.1 - Floréal ==
- - Utiliser une architecture MVP avec GXT
+ - Utilisation de Dart
  - UI : 
  	- Interface générale : chargement des panneaux principaux
  	- Test d'intéraction sur un formulaire structure simple
