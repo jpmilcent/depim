@@ -59,43 +59,11 @@ class App extends PolymerElement {
   }
 
 	switchMenu(id) {
-		print('id: $id');
-		querySelectorAll('#menu .active').forEach((elem) {
+		print('menu id: $id');
+		shadowRoot.querySelectorAll('#menu .active').forEach((elem) {
 			elem.classes.clear();
 	  });
 		shadowRoot.querySelector(id)
 			..classes.add('active');
-	  changeBreadcrumb(id);
-	}
-
-	changeBreadcrumb(id) {
-		Map<String, String> entryPath = <String, String>{
-			'Accueil': '#menu-home',
-			'Dépots': '#menu-warehouse',
-			'Documents': '#menu-doc'
-		};
-		Map<String, List> breadcrumb = <String, List>{
-			'#menu-home': ['Accueil'],
-			'#menu-warehouse': ['Accueil', 'Dépots'],
-			'#menu-doc': ['Accueil', 'Documents']
-		};
-
-		shadowRoot.querySelectorAll('#breadcrumb li').forEach((e) {
-			e.remove();
-		});
-		var breadcrumbLength = breadcrumb[id].length;
-
-		var breadcrumbHtml = new StringBuffer();
-		for (var i = 0; i < breadcrumbLength; i++) {
-			var entry = breadcrumb[id][i],
-			position = i + 1,
-			classCss = (position == breadcrumbLength) ? 'class="active"' : '',
-			href = (entryPath[entry] != null) ? 'href="${entryPath[entry]}"' : '',
-			divider = (position != breadcrumbLength) ? '<span class="divider">></span>' : '',
-			html = '<li $classCss><a $href>$entry</a>$divider</li>';
-			breadcrumbHtml.write(html);
-			print('i:$i/position:$position/length:$breadcrumbLength/html:$html');
-		}
-		shadowRoot.querySelector('#breadcrumb').appendHtml(breadcrumbHtml.toString());
 	}
 }
