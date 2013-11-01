@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<meta charset="utf-8">
+
 <polymer-element name="menu-list">
   <template>
     <form id="list-filter">
@@ -13,7 +15,7 @@
     <template if="{{elements.length > 0}}">
       <ul id="menu-list" class="nav nav-list">
         <template repeat="{{elem in elements}}">
-          <li on-click="onSelectedElement">
+          <li on-click="{{onSelectedElement}}">
             <a data-id="{{elem['id']}}">{{elem['nom']}} ({{elem['id']}})</a>
           </li>
         </template>

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<meta charset="utf-8">
 <link rel="import" href="../lib/components/menu-list.html">
 <link rel="import" href="../lib/components/message.html">
 
@@ -6,7 +7,7 @@
   <template>
     <div class="app-row">
       <div id="list-bloc">        
-        <menu-list title="Structures" elements="{{whList}}" on-selectmenu="onSelectedWarehouse"></menu-list>
+        <menu-list title="Structures" elements="{{whList}}" on-selectmenu="{{onSelectedWarehouse}}"></menu-list>
       </div>
       <div id="edit-bloc">
         <form id="edit-wh" class="form-horizontal" autocomplete="on">
@@ -164,20 +165,20 @@
             <input id="wh-id" class="field" name="id" type="hidden" />
 
             <button type="submit" class="btn btn-success pull-right hide update-warehouse-cmd"
-              on-click="updateWarehouse">
+              on-click="{{updateWarehouse}}">
                 Modifier
             </button>
             <button type="submit" class="btn btn-primary pull-right add-warehouse-cmd"
-              on-click="addWarehouse">
+              on-click="{{addWarehouse}}">
                 Ajouter
             </button>
 
             <button type="button" class="btn btn-danger hide delete-warehouse-cmd"
-              on-click="deleteWarehouse">
+              on-click="{{deleteWarehouse}}">
                 Supprimer
             </button>
             <button type="reset" class="btn reset-warehouse-cmd"
-              on-click="resetWarehouse">
+              on-click="{{resetWarehouse}}">
                 Vider
             </button>
           </div>

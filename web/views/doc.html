@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<meta charset="utf-8">
 <link rel="import" href="../lib/components/menu-list.html">
 <link rel="import" href="../lib/components/message.html">
 
@@ -6,7 +7,7 @@
   <template>
     <div class="app-row">
       <div id="list-bloc">
-        <menu-list title="Documents" elements="{{docList}}" on-selectmenu="onSelectedDoc"></menu-list>
+        <menu-list title="Documents" elements="{{docList}}" on-selectmenu="{{onSelectedDoc}}"></menu-list>
       </div>
       <div id="edit-bloc">
         <form id="edit-doc" class="form-horizontal" autocomplete="on">
@@ -129,20 +130,20 @@
             <input id="doc-id" class="field" name="id" type="hidden" />
 
             <button type="submit" class="btn btn-success pull-right hide update-doc-cmd"
-              on-click="updateDoc">
+              on-click="{{updateDoc}}">
                 Modifier
             </button>
             <button type="submit" class="btn btn-primary pull-right add-doc-cmd"
-              on-click="addDoc">
+              on-click="{{addDoc}}">
                 Ajouter
             </button>
 
             <button type="button" class="btn btn-danger hide delete-doc-cmd"
-              on-click="deleteDoc">
+              on-click="{{deleteDoc}}">
                 Supprimer
             </button>
             <button type="reset" class="btn reset-doc-cmd"
-              on-click="resetDoc">
+              on-click="{{resetDoc}}">
                 Vider
             </button>
           </div>

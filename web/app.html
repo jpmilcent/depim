@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<meta charset="utf-8">
 
 <polymer-element name="app-main">
   <link rel="import" href="views/home.html">
@@ -25,19 +26,19 @@
       <nav id="menu" role="navigation">
         <ul class="nav nav-tabs">
           <li id="menu-home" class="active">
-            <a href="#" on-click="updateView" data-view="home">
+            <a href="#" on-click="{{updateView}}" data-view="home">
               <i class="icon-th"></i>
               Accueil
             </a>
           </li>
           <li id="menu-warehouse">
-            <a on-click="updateView" data-view="warehouse">
+            <a on-click="{{updateView}}" data-view="warehouse">
               <i class="icon-home"></i>
               Dépôts
             </a>
           </li>
           <li id="menu-doc">
-            <a on-click="updateView" data-view="doc">
+            <a on-click="{{updateView}}" data-view="doc">
               <i class="icon-book"></i>
               Documents
             </a>
