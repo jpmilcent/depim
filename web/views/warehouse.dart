@@ -19,19 +19,24 @@ class WarehouseView extends PolymerElement with Observable {
 	@observable bool whListEmpty = true;
 
 	WarehouseView.created() : super.created() {
-		warehouses.changes.listen((records) {
-			print('> warehouses changes');
-			whList
-				..clear()
-				..addAll(_whList);
-			whListEmpty = _whListEmpty;
-   	});
+		dao.onAdded.listen(addEnd);
+		dao.onUpdated.listen(updateEnd);
+		dao.onDeleted.listen(deleteEnd);
+
+		warehouses.changes.listen(onWarehousesChanges);
 
 		loadWarehouses();
 	}
 
+	onWarehousesChanges(records) {
+		print('> warehouses changes');
+		whList
+			..clear()
+			..addAll(_whList);
+		whListEmpty = _whListEmpty;
+	}
+
   loadWarehouses() {
-    // call the web server asynchronously
 		print('> loadWarehouses');
 		dao.loadAll().then(processingWarehousesLoad).catchError(handleError);
   }
@@ -48,14 +53,19 @@ class WarehouseView extends PolymerElement with Observable {
 
   	if (! warehouses.isEmpty) {
 			warehouses.forEach((var key, var wh) {
-	  		try {
+	  		var classCss = '';
+				if (warehouse.id != '' && warehouse.id == wh['meta']['id']) {
+					classCss = 'active';
+	  		}
+
+				try {
 		  			if (wh['tags']['titre'] != '') {
-							list.add({'id': wh['meta']['id'], 'nom': wh['tags']['nom']});
+							list.add({'id': wh['meta']['id'], 'nom': wh['tags']['nom'], 'classCss': classCss});
 		  			} else {
-							list.add({'id': wh['meta']['id'], 'nom': 'Sans nom'});
+							list.add({'id': wh['meta']['id'], 'nom': 'Sans nom', 'classCss': classCss});
 		  			}
 	  		} catch(e) {
-					list.add({'id': wh['meta']['id'], 'nom': 'Sans nom'});
+					list.add({'id': wh['meta']['id'], 'nom': 'Sans nom', 'classCss': classCss});
 	  		}
 	  	});
   	}
@@ -83,13 +93,8 @@ class WarehouseView extends PolymerElement with Observable {
 		var elemMenu = e.detail;
 		var id = elemMenu.id;//Utiliser elemMenu.id quand on pourra passer un vrai objet
 
-    // Put warehouse infos in the form
     this.loadWarehouseDetails(id);
-
-    // Show delete command
-    shadowRoot.querySelectorAll('.delete-warehouse-cmd, .update-warehouse-cmd').forEach((elem) {
-      elem.classes.remove('hide');
-    });
+    showCommands();
   }
 
   void loadWarehouseDetails(id) {
@@ -108,8 +113,7 @@ class WarehouseView extends PolymerElement with Observable {
 			var data = new DataRequest.add()
 				..setUserId(1)
 				..setTags(warehouse.tags);
-
-			dao.add(data, addEnd);
+			dao.add(data);
 		} else {
 			showWarning("Veuillez saisir un contenu avant d'ajouter une structure");
 		}
@@ -120,9 +124,12 @@ class WarehouseView extends PolymerElement with Observable {
 			showRequestError(request);
 			print(request.toString());
     } else {
-      showSuccess('Une nouvelle structure avec l\'id #${request.responseText} a été ajoutée.');
+			var id = request.responseText;
+      showSuccess('Une nouvelle structure avec l\'id #$id a été ajoutée.');
 			print(request.responseText.toString());
-	    this.loadWarehouses();
+			warehouse.id = id;
+			showCommands();
+			this.loadWarehouses();
     }
   }
 
@@ -131,33 +138,21 @@ class WarehouseView extends PolymerElement with Observable {
 		print('Update id : ${warehouse.id}');
     var id = warehouse.id;
 		if (id != '') {
-      var dataUrl = '${urlBase}/$id',
-	      meta = {
-	        'utilisateurId' : 1,
-	        'tags' : {
-	          'etat' : 'M',
-	          'type' : 'structure',
-	          'commentaire' : 'Modification de la structure #$id.'
-	        }
-	      },
-	      tags = warehouse.tags,
-	      data = {'meta' : meta, 'tags': tags},
-	      encodedData = JSON.encode(data);
-			print('Update url :'+dataUrl);
-			print('Update data :'+tags.toString());
-	    var httpRequest = new HttpRequest();
-	    httpRequest.open('POST', dataUrl);
-	    httpRequest.setRequestHeader('Content-type', 'application/json');
-	    httpRequest.onLoadEnd.listen((e) => updateEnd(httpRequest, id));
-	    httpRequest.send(encodedData);
+			var data = new DataRequest.update()
+				..setUserId(1)
+				..setId(int.parse(warehouse.id))
+				..setTags(warehouse.tags);
+			dao.update(data);
 		}
   }
 
-  void updateEnd(HttpRequest request, String id) {
+  void updateEnd(HttpRequest request) {
     if (request.status != 200) {
 			showRequestError(request);
+			print(request.toString());
     } else {
-      showSuccess('La structure avec l\'id #$id a été modifiée.');
+      showSuccess('La structure avec l\'id #${request.responseText} a été modifiée.');
+			print(request.responseText.toString());
     }
   }
 
@@ -166,23 +161,10 @@ class WarehouseView extends PolymerElement with Observable {
 		print('Delete id : ${warehouse.id}');
     var id = warehouse.id;
 		if (id != '') {
-      var meta = {
-	        'utilisateurId' : 1,
-	        'tags' : {
-	          'etat' : 'S',
-	          'type' : 'structure',
-	          'commentaire' : 'Suppression de la strucutre $id.'
-	        }
-	      },
-	      data = {'meta' : meta},
-	      encodedData = JSON.encode(data),
-	      url = '${urlBase}/$id',
-	      httpRequest = new HttpRequest();
-	    httpRequest.open('DELETE', url);
-	    httpRequest.setRequestHeader('Content-type', 'application/json');
-	    httpRequest.onLoadEnd.listen((e) => deleteEnd(httpRequest));
-	    print(encodedData);
-	    httpRequest.send(encodedData);
+			var data = new DataRequest.delete()
+				..setUserId(1)
+				..setId(int.parse(warehouse.id));
+			dao.delete(data);
 		}
   }
 
@@ -190,20 +172,31 @@ class WarehouseView extends PolymerElement with Observable {
 		if (request.status != 204) {
 			showRequestError(request);
     } else {
-      showSuccess('une structure a été supprimée');
-	    this.loadWarehouses();
+			print('Delete End');
+			this.loadWarehouses();
+			warehouse.clear();
+			hideCommands();
+			showSuccess('une structure a été supprimée');
     }
   }
 
   resetWarehouse(Event e) {
 		// Reinitialiser l'objet Warehouse
 		warehouse.clear();
-
-		// Show delete command
-    shadowRoot.querySelectorAll('.delete-warehouse-cmd, .update-warehouse-cmd').forEach((elem) {
-      elem.classes.add('hide');
-    });
+		hideCommands();
   }
+
+	showCommands() {
+		shadowRoot.querySelectorAll('.delete-warehouse-cmd, .update-warehouse-cmd').forEach((elem) {
+	  	elem.classes.remove('hide');
+	  });
+	}
+
+	hideCommands() {
+	  shadowRoot.querySelectorAll('.delete-warehouse-cmd, .update-warehouse-cmd').forEach((elem) {
+	  	elem.classes.add('hide');
+	  });
+	}
 
 	handleError(e) {
 		showError('Une erreur est survenue : ${e.toString()}');

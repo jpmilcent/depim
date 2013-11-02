@@ -452,8 +452,8 @@ class RestServeur {
 					$Service = new $this->service(self::$config);
 					if (method_exists($Service, self::METHODE_POST)) {
 						$methodePost = self::METHODE_POST;
-						$info = $Service->$methodePost($this->ressources, $paires);
-						if ($info === true) {
+						$retour = $Service->$methodePost($this->ressources, $paires);
+						if ($retour !== false) {
 							$this->envoyerEnteteStatutHttp(self::HTTP_CODE_OK);
 						}
 					} else {

@@ -7,22 +7,28 @@ class MenuList extends PolymerElement {
 
 	bool get applyAuthorStyles => true;
 	@published String title = '';
+	@published String selected = '';
 	@published ObservableList elements = toObservable([]);
 
 	MenuList.created() : super.created();
 
 	void onSelectedElement(Event e) {
   	HtmlElement clickedElem = e.target;
+		var id = clickedElem.attributes['data-id'];
+		selectMenu(id);
+  }
+
+	selectMenu(String id) {
 		shadowRoot.querySelectorAll("#menu-list li").forEach((elem) {
 			elem.classes.remove('active');
 		});
-		clickedElem.parent.classes.add('active');
+		print('>$id>'+shadowRoot.querySelectorAll('a[data-id="$id"]').toString());
+		shadowRoot.querySelector('a[data-id="$id"]').parent.classes.add('active');
+		dispatchClickedMenu(id);
+	}
 
-		var id = clickedElem.attributes['data-id'];
-		var elemMenu = new ElementMenu()
-			..id = id;
-
-		// TODO : utiliser vraiment l'objet quand le bug sera résolut ! (écrire un test pour le vérifier)
+	dispatchClickedMenu(String id) {
+		var elemMenu = new ElementMenu(id);
 		dispatchEvent(new CustomEvent('selectmenu', detail: elemMenu));
-  }
+	}
 }

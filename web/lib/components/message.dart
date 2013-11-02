@@ -22,7 +22,7 @@ class AppMessage extends PolymerElement {
 		super.enteredView();
 
 		message = $['message'];
-		print('ici');
+		print('Msg:${calledNber.toString()}');
 		positionElement();
 		addCloseEvent();
 		addEscapeKeyEvent();
