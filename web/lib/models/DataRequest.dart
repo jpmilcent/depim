@@ -3,50 +3,34 @@ library datarequest;
 import 'dart:convert';
 
 class DataRequest extends Object {
-	int _id = 0;
-	int _utilisateurId = 0;
-	String _etat = '';
-	String _type = '';
-	String _commentaire = '';
-	String _source = '';
-	Map _tags = {};
+	int id = 0;
+	int userId = 0;
+	String state = '';
+	String type = '';
+	String comment = '';
+	String source = '';
+	Map tags = {};
 
 	DataRequest.add() {
-		_etat = 'A';
+		state = 'A';
 	}
 
 	DataRequest.update() {
-		_etat = 'M';
+		state = 'M';
 	}
 
 	DataRequest.delete() {
-		_etat = 'S';
+		state = 'S';
 	}
-
-	setId(int id) => this._id = id;
-
-	int getId() => this._id;
-
-	setUserId(int id) => this._utilisateurId = id;
-
-	setType(String type) => this._type = type;
-
-	setComment(String comment) => this._commentaire = comment;
-
-	setSource(String source) => this._source = source;
-
-	setTags(Map tags) => this._tags = tags;
-
-	String getTag(String tag) => this._tags[tag];
 
 	Map getMeta() {
 		Map meta = {
-		'utilisateurId' : _utilisateurId,
+		'utilisateurId' : userId,
 		'tags' : {
-				'etat' : _etat,
-				'type' : _type,
-				'commentaire' : _commentaire,
-				'source' : _source
+				'etat' : state,
+				'type' : type,
+				'commentaire' : comment,
+				'source' : source
 			}
 		};
 		return meta;
@@ -59,7 +43,7 @@ class DataRequest extends Object {
 	}
 
 	Map getData() {
-		Map data = {'meta': getMeta(), 'tags': this._tags};
+		Map data = {'meta': getMeta(), 'tags': this.tags};
 		return data;
 	}
 

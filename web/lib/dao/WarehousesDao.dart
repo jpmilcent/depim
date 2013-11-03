@@ -28,9 +28,9 @@ class WarehousesDao extends Object {
 	add(DataRequest data) {
 		print('WarehouseDao > add');
 
-		data..setType('structure')
-				..setComment('Ajout de la structure "${data.getTag('nom')}".')
-				..setSource(data.getTag('urlGeneawiki'));
+		data..type = 'structure'
+				..comment = 'Ajout de la structure "${data.tags['nom']}".'
+				..source = data.tags['urlGeneawiki'];
 		print(data.getData().toString());
 
 		var httpRequest = new HttpRequest()
@@ -41,12 +41,12 @@ class WarehousesDao extends Object {
 	}
 
 	update(DataRequest data) {
-		var id = data.getId();
+		var id = data.id;
 		print('WarehouseDao > update $id');
 
-		data..setType('structure')
-				..setComment('Modification de la structure "$id".')
-				..setSource(data.getTag('urlGeneawiki'));
+		data..type ='structure'
+				..comment = 'Modification de la structure "$id".'
+				..source =data.tags['urlGeneawiki'];
 		print(data.getData().toString());
 
 		var httpRequest = new HttpRequest()
@@ -57,12 +57,12 @@ class WarehousesDao extends Object {
 	}
 
 	delete(DataRequest data) {
-		var id = data.getId();
+		var id = data.id;
 		print('WarehouseDao > delete $id');
 
-		data..setType('structure')
-			..setComment('Suppression de la structure "$id".')
-			..setSource(data.getTag('urlGeneawiki'));
+		data..type = 'structure'
+			..comment = 'Suppression de la structure "$id".'
+			..source = data.tags['urlGeneawiki'];
 			print(data.getData().toString());
 
 			var httpRequest = new HttpRequest()

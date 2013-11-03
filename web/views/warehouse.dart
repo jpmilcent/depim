@@ -111,8 +111,8 @@ class WarehouseView extends PolymerElement with Observable {
     e.preventDefault();
 		if (! warehouse.isEmpty()) {
 			var data = new DataRequest.add()
-				..setUserId(1)
-				..setTags(warehouse.tags);
+				..userId = 1
+				..tags = warehouse.tags;
 			dao.add(data);
 		} else {
 			showWarning("Veuillez saisir un contenu avant d'ajouter une structure");
@@ -139,9 +139,9 @@ class WarehouseView extends PolymerElement with Observable {
     var id = warehouse.id;
 		if (id != '') {
 			var data = new DataRequest.update()
-				..setUserId(1)
-				..setId(int.parse(warehouse.id))
-				..setTags(warehouse.tags);
+				..userId = 1
+				..id = int.parse(warehouse.id)
+				..tags = warehouse.tags;
 			dao.update(data);
 		}
   }
@@ -162,8 +162,8 @@ class WarehouseView extends PolymerElement with Observable {
     var id = warehouse.id;
 		if (id != '') {
 			var data = new DataRequest.delete()
-				..setUserId(1)
-				..setId(int.parse(warehouse.id));
+				..userId = 1
+				..id = int.parse(warehouse.id);
 			dao.delete(data);
 		}
   }
