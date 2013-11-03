@@ -1,17 +1,25 @@
+# Dart
 .buildlog
-.settings/
-.zim/
-out/
-notebook.zim
-packages/
+packages
 pubspec.lock
+*.iml
+*.ipr
+*.iws
+*.dart.js
+*.js_
+*.js.deps
+*.js.map
+.idea/
+out/
+web/out/*
+
+# Eclipse config
+.settings/
+.project
+
+# Zim config
+.zim/
+notebook.zim
+
+# Rest serveur PHP
 server/config.ini
-web/lib/packages
-web/lib/models/packages
-web/lib/components/packages
-web/css/packages
-web/img/packages
-web/js/packages
-web/packages
-web/ui/packages
-web/views/packages
