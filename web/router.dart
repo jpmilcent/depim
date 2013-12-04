@@ -8,10 +8,8 @@ final HomeUrl = new UrlPattern(r'/depim/web/index.html');
 final ViewUrl = new UrlPattern(r'/depim/web/index.html#(\w+)');
 
 // A partir de Polymer 0.8.6 utiliser les deux lignes suivante :
-
 main() {
 	initPolymer();
-	print('main');
 	route();
 }
 

@@ -16,8 +16,8 @@ List<String> removedFiles;
  * See the source code of [processArgs] for information about the legal command
  * line options.
  */
-void main() {
-  processArgs();
+void main(arguments) {
+  processArgs(arguments);
 	build(entryPoints: ['web/index.html'], options: parseOptions(['--deploy']));
 	handleBuild();
 	print("Build terminé");
@@ -38,7 +38,7 @@ void handleBuild() {
 /**
  * Handle --changed, --removed, --clean, --full, and --help command-line args.
  */
-void processArgs() {
+void processArgs(List<String> arguments) {
   var parser = new ArgParser()
   	..addOption("changed", help: "the file has changed since the last build",
       allowMultiple: true)
@@ -50,7 +50,7 @@ void processArgs() {
     	negatable: false, help: "produce warnings in a machine parseable format")
   	..addFlag("help", negatable: false, help: "display this help and exit");
 
-  var args = parser.parse(new Options().arguments);
+  var args = parser.parse(arguments);
 
   if (args["help"]) {
     print(parser.getUsage());

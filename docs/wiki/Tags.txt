@@ -39,6 +39,7 @@ Exemples de clés-valeurs : http://wiki.openstreetmap.org/wiki/FR:Map_Features
 [[:Tags:Documents:code|code]]
 [[:Tags:Documents:code:insee|code:insee]]
 [[:Tags:Documents:commune|commune]]
+[[:Tags:Documents:guid:structure|guid:structure]]
 [[:Tags:Documents:lieu|lieu]]
 [[:Tags:Documents:note|note]]
 [[:Tags:Documents:support|support]]

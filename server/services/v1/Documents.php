@@ -10,17 +10,23 @@
 */
 class Documents extends RestService {
 
-    /** Indique si oui (true) ou non (false), on veut utiliser les paramètres brutes. */
+	/** Indique si oui (true) ou non (false), on veut utiliser les paramètres brutes. */
 	protected $utilisationParametresBruts = true;
-
+	private $parametres = array();
+	
     public function consulter($ressources, $parametres) {
+		$this->parametres = $parametres;
 		$resultat = '';
 		$reponseHttp = new ReponseHttp();
 		try {
 			if ($this->demanderUnDocument($ressources)) {
 				$resultat = $this->getDocument($ressources[0]);
 			} else {
-				$resultat = $this->getDocuments();
+				if (array_key_exists('tag', $this->parametres)) {
+					$resultat = $this->getTagValues();
+				} else {
+					$resultat = $this->getDocuments();
+				}
 			}
 			$reponseHttp->setResultatService($resultat);
 		} catch (Exception $e) {
@@ -67,6 +73,8 @@ class Documents extends RestService {
 	}
 
 	private function getDocuments() {
+		$filterWhere = $this->createFilterClauses();
+		
 		$requete = 'SELECT d.id_document, d.ce_structure, d.meta_version, d.meta_date, c.date, u.id_utilisateur, u.fmt_nom_complet,
                 dt.cle, dt.valeur
 			FROM document AS d
@@ -95,16 +103,67 @@ class Documents extends RestService {
 		return $infos;
 	}
 
+	private function createFilterClauses() {
+		$q = $this->createFilterSuffixed('q', '%');
+		
+		$filterWhere = '';
+		if ($q != null) {
+			$filterWhere = "AND d.id_document IN (SELECT id FROM document_tags WHERE cle = 'titre' AND valeur LIKE $q)";
+		}
+		return $filterWhere;
+	}
+
+	private function createFilter($key, $prefixe = '', $suffixe = '') {
+		$filterArg = null;
+		if (isset($this->parametres[$key])) {
+			$filter = trim($this->parametres[$key]);
+			if (!empty($filter)) {
+				$filterArg = $this->getBdd()->proteger("{$prefixe}{$filter}{$suffixe}");
+			}
+		}
+		return $filterArg;
+	}
+	
+	private function createFilterPrefixed($key, $prefixe = '') {
+		return $this->createFilter($key, $prefixe);
+	}
+	
+	private function createFilterSuffixed($key, $suffixe) {
+		return $this->createFilter($key, null, $suffixe);
+	}
+	
+	private function getTagValues() {
+		$tag = $this->createFilter('tag');
+		$q = $this->createFilterSuffixed('q', '%');
+		
+		$results = null;
+		if ($tag != null) {
+			$requete = "SELECT DISTINCT valeur ".
+				"FROM document_tags ".
+				"WHERE cle = $tag ".
+				( ($q != null) ? " AND valeur LIKE $q " : '' );
+			$results = $this->getBdd()->recupererTous($requete);
+		}
+		
+		$values = array();
+		if ($results) {
+			foreach ($results as $tag) {
+				$values[] = $tag['valeur'];
+			}
+		}
+		return $values;
+	}
+
     public function ajouter($ressources, $requeteDonnees) {
 		$meta = $requeteDonnees['meta'];
 		$idChgment = $this->ajouterChangement($meta);
 
-        $data = $requeteDonnees['data'];
-        $structureId = ($data['structureId'] != null) ? $this->getBdd()->proteger($data['structureId']) : 'NULL';
-        $dateDebut = ($data['dateDebut'] != null) ? $this->getBdd()->proteger($data['dateDebut']) : 'NULL';
-        $dateFin = ($data['dateFin'] != null) ? $this->getBdd()->proteger($data['dateFin']) : 'NULL';
+		$data = $requeteDonnees['data'];
+		$structureId = ($data['guid:structure'] != null) ? $this->getBdd()->proteger($data['guid:structure']) : 'NULL';
+		$dateDebut = ($data['date:debut'] != null) ? $this->getBdd()->proteger($data['date:debut']) : 'NULL';
+		$dateFin = ($data['date:fin'] != null) ? $this->getBdd()->proteger($data['date:fin']) : 'NULL';
 
-        $requete = "INSERT INTO document (ce_structure, date_debut, date_fin, ce_meta, meta_version, meta_date)
+		$requete = "INSERT INTO document (ce_structure, date_debut, date_fin, ce_meta, meta_version, meta_date)
 			VALUES ($structureId, $dateDebut, $dateFin, $idChgment, 1, datetime('now'))";
 		$this->getBdd()->requeter($requete);
 
@@ -133,16 +192,16 @@ class Documents extends RestService {
 		$meta = $requeteDonnees['meta'];
 		$idChgment = $this->ajouterChangement($meta);
 
-        $data = $requeteDonnees['data'];
-        $structureId = ($data['structureId'] != null) ? $this->getBdd()->proteger($data['structureId']) : 'NULL';
-        $dateDebut = ($data['dateDebut'] != null) ? $this->getBdd()->proteger($data['dateDebut']) : 'NULL';
-        $dateFin = ($data['dateFin'] != null) ? $this->getBdd()->proteger($data['dateFin']) : 'NULL';
+		$data = $requeteDonnees['tags'];
+		$structureId = ($data['guid:structure'] != null) ? $this->getBdd()->proteger($data['guid:structure']) : 'NULL';
+		$dateDebut = ($data['date:debut'] != null) ? $this->getBdd()->proteger($data['date:debut']) : 'NULL';
+		$dateFin = ($data['date:fin'] != null) ? $this->getBdd()->proteger($data['date:fin']) : 'NULL';
 
 		$requete = 'UPDATE document '.
 			"SET ce_structure = $structureId, ".
-            "   date_debut = $dateDebut, ".
-            "   date_fin = $dateFin, ".
-            "   ce_meta = $idChgment, ".
+			"   date_debut = $dateDebut, ".
+			"   date_fin = $dateFin, ".
+			"   ce_meta = $idChgment, ".
 			'	meta_version = meta_version + 1, '.
 			"	meta_date = datetime('now'), ".
 			"	meta_visible = 1 ".

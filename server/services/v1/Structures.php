@@ -13,9 +13,10 @@ class Structures extends RestService {
 
 	/** Indique si oui (true) ou non (false), on veut utiliser les paramètres brutes. */
 	protected $utilisationParametresBruts = true;
-
+	private $parametres = array();
 
 	public function consulter($ressources, $parametres) {
+		$this->parametres = $parametres;
 		$resultat = '';
 		$reponseHttp = new ReponseHttp();
 		
@@ -23,7 +24,11 @@ class Structures extends RestService {
 			if ($this->demanderUneStructure($ressources)) {
 				$resultat = $this->getStructure($ressources[0]);
 			} else {
-				$resultat = $this->getStructures();
+				if (isset($this->parametres['tag'])) {
+					$resultat = $this->getTagValues();
+				} else {
+					$resultat = $this->getStructures();
+				}
 			}
 			$reponseHttp->setResultatService($resultat);
 		} catch (Exception $e) {
@@ -40,7 +45,7 @@ class Structures extends RestService {
 
 	private function getStructure($id) {
 		$idStructure = $this->getBdd()->proteger($id);
-
+		
 		$requete = "SELECT s.id_structure, s.meta_version, s.meta_date, c.date, u.id_utilisateur, u.fmt_nom_complet, st.cle, st.valeur
 			FROM structure AS s
 				LEFT JOIN meta_changement AS c ON (s.ce_meta = c.id_changement)
@@ -68,13 +73,16 @@ class Structures extends RestService {
 	}
 
 	private function getStructures() {
-		$requete = 'SELECT s.id_structure, s.meta_version, s.meta_date, c.date, u.id_utilisateur, u.fmt_nom_complet, st.cle, st.valeur
+		$filterWhere = $this->createFilterClauses();
+		
+		$requete = "SELECT s.id_structure, s.meta_version, s.meta_date, c.date, u.id_utilisateur, u.fmt_nom_complet, st.cle, st.valeur
 			FROM structure AS s
 				LEFT JOIN meta_changement AS c ON (s.ce_meta = c.id_changement)
 				LEFT JOIN meta_utilisateur AS u ON (c.ce_utilisateur = u.id_utilisateur)
 				LEFT JOIN structure_tags AS st ON (s.id_structure = st.id)
 			WHERE meta_visible = 1
-			ORDER BY meta_date DESC';
+				{$filterWhere} 
+			ORDER BY meta_date DESC";
 		$tables = $this->getBdd()->recupererTous($requete);
 
 		$infos = array();
@@ -92,6 +100,57 @@ class Structures extends RestService {
 			$infos[$table['id_structure']]['tags'][$table['cle']] = $table['valeur'];
 		}
 		return $infos;
+	}
+	
+	private function createFilterClauses() {
+		$q = $this->createFilterSuffixed('q', '%');
+		
+		$filterWhere = '';
+		if ($q != null) {
+			$filterWhere = "AND s.id_structure IN (SELECT id FROM structure_tags WHERE cle = 'nom' AND valeur LIKE $q)";
+		}
+		return $filterWhere;
+	}
+	
+	private function createFilter($key, $prefixe = '', $suffixe = '') {
+		$filterArg = null;
+		if (isset($this->parametres[$key])) {
+			$filter = trim($this->parametres[$key]);
+			if (!empty($filter)) {
+				$filterArg = $this->getBdd()->proteger("{$prefixe}{$filter}{$suffixe}");
+			}
+		}
+		return $filterArg;
+	}
+	
+	private function createFilterPrefixed($key, $prefixe = '') {
+		return $this->createFilter($key, $prefixe);
+	}
+	
+	private function createFilterSuffixed($key, $suffixe) {
+		return $this->createFilter($key, null, $suffixe);
+	}
+	
+	private function getTagValues() {
+		$tag = $this->createFilter('tag');
+		$q = $this->createFilterSuffixed('q', '%');
+		
+		$results = null;
+		if ($tag != null) {
+			$requete = "SELECT DISTINCT valeur ".
+				"FROM structure_tags ".
+				"WHERE cle = $tag ".
+				( ($q != null) ? " AND valeur LIKE $q " : '' );
+			$results = $this->getBdd()->recupererTous($requete);
+		}
+		
+		$values = array();
+		if ($results) {
+			foreach ($results as $tag) {
+				$values[] = $tag['valeur'];
+			}
+		}
+		return $values;
 	}
 
 	public function ajouter($ressources, $requeteDonnees) {

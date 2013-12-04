@@ -30,7 +30,7 @@ class WarehousesDao extends Object {
 
 		data..type = 'structure'
 				..comment = 'Ajout de la structure "${data.tags['nom']}".'
-				..source = data.tags['urlGeneawiki'];
+				..source = data.tags['url:geneawiki'];
 		print(data.getData().toString());
 
 		var httpRequest = new HttpRequest()
