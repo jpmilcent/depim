@@ -2,13 +2,12 @@
 <meta charset="utf-8">
 <link rel="import" href="../lib/components/menu-list.html">
 <link rel="import" href="../lib/components/message.html">
-<link rel="import" href="../lib/components/datalist_autocomplete.html">
 
 <polymer-element name="doc-panel">
   <template>
     <div class="app-row">
       <div id="list-bloc">
-        <menu-list id="doc-menu-list" title="Documents" elements="{{docList}}" on-selectmenu="{{onSelectedDoc}}"></menu-list>
+        <menu-list title="Documents" elements="{{docList}}" on-selectmenu="{{onSelectedDoc}}"></menu-list>
       </div>
       <div id="edit-bloc">
         <form id="edit-doc" class="form-horizontal" autocomplete="on">
@@ -16,23 +15,12 @@
             <div class="app-row">
               <fieldset id="zone-doc">
                 <legend>Infos</legend>
-                
-                <div class="control-group label-small">
-                  <label class="control-label" for="doc-titre">Structure</label>
-                  <div class="controls">
-                    	<datalist-autocomplete class="field" name="guid:structure" 
-                    		choices="http://localhost/dart/depim/server/services/v1/structures?tag=nom&q=%q"
-                    		value="{{document.tags['guid:structure']}}"></datalist-autocomplete>
-                  </div>
-                </div>                
-                
                 <div class="control-group label-small">
                   <label class="control-label" for="doc-titre">Titre</label>
                   <div class="controls">
                     <div class="input-prepend">
                       <span class="add-on"><i class="icon-home"></i></span>
-                      <input id="doc-titre" class="field input-xlarge" name="titre" type="text" required 
-                      	value="{{document.tags['titre']}}"/>
+                      <input id="doc-titre" class="field input-xlarge" name="titre" type="text" required />
                     </div>
                   </div>
                 </div>
@@ -41,8 +29,7 @@
                   <label class="control-label" for="doc-titre">Abréviation</label>
                   <div class="controls">
                     <div class="input-prepend">
-                      <input id="doc-abreviation" class="field" name="abreviation" type="text" required 
-                      	value="{{document.tags['abreviation']}}"/>
+                      <input id="doc-abreviation" class="field" name="abreviation" type="text" required />
                     </div>
                   </div>
                 </div>
@@ -52,9 +39,17 @@
                   <div class="controls">
                     <div class="input-prepend">
                       <span class="add-on"><i class="icon-tag"></i></span>
-                      <datalist-autocomplete class="field input-medium" name="support" 
-                      	choices="registre,micro-film,micro-fiche,numérique"
-                      	value="{{document.tags['support']}}"></datalist-autocomplete>
+                      <input id="doc-support" class="field input-medium" name="support" type="text" list="doc-support-list" value=""/>
+
+                      <datalist id="doc-support-list">
+                        <label for="doc-support-std" title="Choisir une valeur standard">ou</label>
+                        <select id="doc-support-std" name="type" >
+                          <option value="registre">Registre</option>
+                          <option value="micro-film">Micro-film</option>
+                          <option value="micro-fiche">Micro-fiche</option>
+                          <option value="numérique">Numérique</option>
+                        </select>
+                      </datalist>
                     </div>
                   </div>
                 </div>
@@ -64,8 +59,7 @@
                   <div class="controls">
                     <div class="input-prepend">
                       <span class="add-on"><i class="icon-barcode"></i></span>
-                      <input id="doc-code" class="field input-small" name="code" type="text" 
-                      	value="{{document.tags['code']}}"/>
+                      <input id="doc-code" class="field input-small" name="code" type="text" value=""/>
                     </div>
                   </div>
                 </div>
@@ -76,23 +70,19 @@
                 <div class="control-group label-large">
                   <label class="control-label" for="doc-lieu">Lieu</label>
                   <div class="controls">
-                   <input id="doc-lieu" class="field has-tooltip" name="lieu" type="text" 
-                   	title="Nom du lieu couvert par le document tel que mentionné dans le document." 
-                   	value="{{document.tags['lieu']}}"/>
+                   <input id="doc-lieu" class="field has-tooltip" name="lieu" type="text" title="Nom du lieu couvert par le document tel que mentionné dans le document." value=""/>
                   </div>
                 </div>
                 <div class="control-group label-large">
                   <label class="control-label" for="doc-commune">Commune</label>
                   <div class="controls">
-                   <input id="doc-commune" class="field" name="commune" type="text" 
-                   	value="{{document.tags['commune']}}"/>
+                   <input id="doc-commune" class="field" name="commune" type="text" value=""/>
                   </div>
                 </div>
                 <div class="control-group label-large">
                   <label class="control-label" for="doc-code-insee">Code INSEE</label>
                   <div class="controls">
-                   <input id="doc-code-insee" class="field input-small" name="code:insee" type="text"
-                   	value="{{document.tags['code:insee']}}"/>
+                   <input id="doc-code-insee" class="field input-small" name="code:insee" type="text" value=""/>
                   </div>
                 </div>
 
@@ -100,11 +90,9 @@
                   <label class="control-label" for="doc-date-debut">Date</label>
                   <div class="controls">
                     <div class="form-inline">
-                      <input id="doc-date-debut" class="field input-small" name="date:debut" type="date" placeholder="jj/mm/aaaa"
-                      	value="{{document.tags['date:debut']}}"/>
+                      <input id="doc-date-debut" class="field input-small" name="date:debut" type="date" placeholder="jj/mm/aaaa"/>
                       à
-                      <input id="doc-date-fin" class="field input-small" name="date:fin" type="date" placeholder="jj/mm/aaaa"
-                      	value="{{document.tags['date:fin']}}"/>
+                      <input id="doc-date-fin" class="field input-small" name="date:fin" type="date" placeholder="jj/mm/aaaa"/>
                     </div>
                   </div>
                 </div>
@@ -120,8 +108,7 @@
                   <div class="controls">
                     <div class="input-prepend">
                       <span class="add-on">@</span>
-                      <input id="doc-url-source" class="field span4" name="url:source" type="url" 
-                      	value="{{document.tags['url:source']}}"/>
+                      <input id="doc-url-source" class="field span4" name="url:source" type="url" value=""/>
                     </div>
                   </div>
                 </div>
@@ -131,8 +118,7 @@
                   <div class="controls">
                     <div class="input-prepend">
                       <span class="add-on"><i class="icon-comment"></i></span>
-                      <textarea id="wh-note" class="field span4" name="note" 
-                      	value="{{document.tags['note']}}"></textarea>
+                      <textarea id="wh-note" class="field span4" name="note"></textarea>
                     </div>
                   </div>
                 </div>
@@ -164,6 +150,8 @@
         </form>
       </div>
     </div>
+    <script type="application/dart"></script>
+    <script src="packages/browser/dart.js"></script>
   </template>
   <script type="application/dart" src="doc.dart"></script>
 </polymer-element>

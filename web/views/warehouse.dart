@@ -11,7 +11,7 @@ import '../lib/models/DataRequest.dart';
 class WarehouseView extends PolymerElement with Observable {
 
 	bool get applyAuthorStyles => true;
-
+  final urlBase = 'http://localhost/dart/depim/server/services/v1/structures';
 	ObservableMap warehouses = toObservable({});
 	WarehousesDao dao = new WarehousesDao();
 	@observable Warehouse warehouse = new Warehouse.init();
@@ -43,13 +43,9 @@ class WarehouseView extends PolymerElement with Observable {
 
   processingWarehousesLoad(responseText) {
     print('> processingWarehousesLoad');
-		try {
-	    this.warehouses
-				..clear()
-				..addAll(JSON.decode(responseText));
-		} catch(e) {
-  		handleError(e);
-  	}
+    this.warehouses
+			..clear()
+			..addAll(JSON.decode(responseText));
   }
 
 	List get _whList {
@@ -89,7 +85,9 @@ class WarehouseView extends PolymerElement with Observable {
 		return list;
 	}
 
-	bool get _whListEmpty => _whList.isEmpty;
+	bool get _whListEmpty {
+		return _whList.isEmpty;
+	}
 
   void onSelectedWarehouse(CustomEvent e) {
 		var elemMenu = e.detail;
@@ -127,7 +125,7 @@ class WarehouseView extends PolymerElement with Observable {
 			print(request.toString());
     } else {
 			var id = request.responseText;
-      showSuccess("Une nouvelle structure avec l'id #$id a été ajoutée.");
+      showSuccess('Une nouvelle structure avec l\'id #$id a été ajoutée.');
 			print(request.responseText.toString());
 			warehouse.id = id;
 			showCommands();
@@ -153,7 +151,7 @@ class WarehouseView extends PolymerElement with Observable {
 			showRequestError(request);
 			print(request.toString());
     } else {
-      showSuccess("La structure avec l'id #${request.responseText} a été modifiée.");
+      showSuccess('La structure avec l\'id #${request.responseText} a été modifiée.');
 			print(request.responseText.toString());
     }
   }

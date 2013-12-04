@@ -3,231 +3,239 @@ import 'package:observe/observe.dart';
 import 'dart:html';
 import 'dart:convert';
 import '../lib/components/message.dart';
-import '../lib/dao/DocumentsDao.dart';
-import '../lib/models/Doc.dart';
-import '../lib/models/DataRequest.dart';
 
 @CustomTag('doc-panel')
-class DocView extends PolymerElement with Observable {
+class Doc extends PolymerElement with Observable {
 
 	bool get applyAuthorStyles => true;
+  final urlBase = 'http://localhost/dart/depim/server/services/v1/documents';
+	@observable Map documents = {};
+	@observable List docList;
+	@observable bool docListEmpty;
 
-	ObservableMap documents = toObservable({});
-	DocumentsDao dao = new DocumentsDao();
-	@observable Doc document = new Doc.init();
-	@observable ObservableList docList = toObservable([]);
-	@observable bool docListEmpty = true;
-	@observable String supportChoices = 'Javascript,Dart,Java,Php,Python,C#';
-	DocView.created() : super.created() {
-		dao.onAdded.listen(addEnd);
-		dao.onUpdated.listen(updateEnd);
-		dao.onDeleted.listen(deleteEnd);
-
-		documents.changes.listen(onDocumentsChanges);
-
-		loadDocuments();
+	Doc.created() : super.created() {
+		//onPropertyChange(this, #docList, () {docList = _docList;});
+		//onPropertyChange(this, #docListEmpty, () {docListEmpty = _docListEmpty;});
+		this.loadDocuments();
   }
 
-	onDocumentsChanges(records) {
-		print('> doc changes');
-		docList
-			..clear()
-			..addAll(_docList);
-			docListEmpty = _docListEmpty;
-	}
-
   loadDocuments() {
-		print('> loadDocuments');
-		dao.loadAll().then(processingDocumentsLoad).catchError(handleError);
+    // call the web server asynchronously
+    HttpRequest.getString(urlBase).then(processingDocumentsLoad);
   }
 
   processingDocumentsLoad(responseText) {
-		print('> processingDocumentsLoad');
+    print(responseText);
     try {
-      this.documents
-				..clear()
-				..addAll(JSON.decode(responseText));
+      this.documents = JSON.decode(responseText);
     } catch(e) {
-      handleError(e);
+      print(e);
     }
   }
 
+	@reflectable
   List get _docList {
-		var list = new List();
-
-		if (! documents.isEmpty) {
-			documents.forEach((var key, var wh) {
-				var classCss = '';
-				if (document.id != '' && document.id == wh['meta']['id']) {
-					classCss = 'active';
-				}
-
-				try {
-					if (wh['tags']['titre'] != '') {
-						list.add({'id': wh['meta']['id'], 'nom': wh['tags']['abreviation'], 'classCss': classCss});
-					} else {
-						list.add({'id': wh['meta']['id'], 'nom': 'Sans nom', 'classCss': classCss});
-					}
-				} catch(e) {
-					list.add({'id': wh['meta']['id'], 'nom': 'Sans nom', 'classCss': classCss});
-				}
-	  	});
-		}
-
-		list.sort((elemA, elemB) {
-	    var a = int.parse(elemA['id']);
-			var b = int.parse(elemB['id']);
-			if (a == b) {
-	    	return 0;
-	    } else if (a > b) {
-	    	return 1;
-	    } else {
-	    	return -1;
-	    }
-	  });
-
-		return list;
+    var res = new List();
+    if (! documents.isEmpty) {
+      documents.forEach((var key, var doc) {
+        try {
+          if (doc['tags']['titre'] != '') {
+            res.add({'id': doc['meta']['id'], 'nom': doc['tags']['abreviation']});
+          } else {
+            res.add({'id': doc['meta']['id'], 'nom': 'Sans nom'});
+          }
+        } catch(e) {
+          res.add({'id': doc['meta']['id'], 'nom': 'Sans nom'});
+        }
+      });
+    }
+    return res;
   }
 
+	@reflectable
 	bool get _docListEmpty => _docList.isEmpty;
 
-	void onSelectedDoc(CustomEvent e) {
+  void onSelectedDoc(CustomEvent e) {
 		var elemMenu = e.detail;
-		var id = elemMenu.id;//Utiliser elemMenu.id quand on pourra passer un vrai objet
+		var id = elemMenu;//Utiliser elemMenu.id quand on pourra passer un vrai objet
 
-  	this.loadDocDetails(id);
-  	showCommands();
-	}
+    // Put doc infos in the form
+    this.loadDocDetails(id);
+
+    // Show delete command
+    shadowRoot.querySelectorAll('.delete-doc-cmd').forEach((elem) {
+      elem.attributes['data-id'] = id;
+      elem.classes.remove('hide');
+    });
+		shadowRoot.querySelectorAll('.update-doc-cmd').forEach((elem) {
+      elem.attributes['data-id'] = id;
+      elem.classes.remove('hide');
+    });
+  }
 
   void loadDocDetails(id) {
-    dao.loadDetails(id).then(processingLoadingForm).catchError(handleError);
+    var url = '${urlBase}/$id';
+
+    // call the web server asynchronously
+    HttpRequest.getString(url).then((responseText) {
+			InputElement idElmt = shadowRoot.querySelector('input.field[name="id"]');
+			idElmt.value = id;
+      var doc = JSON.decode(responseText);
+      Map tags = doc['tags'];
+      tags.forEach((key, value) {
+        var field = shadowRoot.querySelector('.field[name="$key"]');
+        if (field != null) {
+          field.attributes['value'] = value;
+        } else {
+          print('Not implemented => $key : $value');
+        }
+      });
+    });
   }
 
-  processingLoadingForm(responseText) {
-    var docInfos = JSON.decode(responseText);
-		print(docInfos);
-		this.document = new Doc(docInfos);
-  }
-
-  void addWarehouse(Event e) {
+  void addDoc(Event e) {
     e.preventDefault();
-		if (! document.isEmpty()) {
-			var data = new DataRequest.add()
-				..userId = 1
-				..tags = document.tags;
-			dao.add(data);
-		} else {
-			showWarning("Veuillez saisir un contenu avant d'ajouter une structure");
-		}
+    var tags = getTags(),
+      meta = {
+        'utilisateurId' : 1,
+        'tags' : {
+          'etat' : 'A',
+          'type' : 'document',
+          'commentaire' : 'Ajout du document "${tags['titre']}".',
+          'source' : tags['urlGeneawiki']
+        }
+
+      },
+      data = {'meta' : meta, 'tags': tags},
+      encodedData = JSON.encode(data);
+
+    var httpRequest = new HttpRequest();
+    httpRequest.open('POST', urlBase);
+    httpRequest.setRequestHeader('Content-type', 'application/json');
+    httpRequest.onLoadEnd.listen((e) => addEnd(httpRequest));
+    print(encodedData);
+    httpRequest.send(encodedData);
+  }
+
+  Map getTags() {
+    var titre = (query('input[name="titre"]') as InputElement).value,
+      support = (query('input[name="support"]') as InputElement).value,
+      code = (query('input[name="code"]') as InputElement).value,
+      abreviation = (query('input[name="abreviation"]') as InputElement).value,
+      codeInsee = (query('input[name="code:insee"]') as InputElement).value,
+      commune = (query('input[name="commune"]') as InputElement).value,
+      urlSource = (query('input[name="url:source"]') as InputElement).value,
+      note = (query('textarea[name="note"]') as TextAreaElement).value;
+    return {
+      'titre': titre,
+      'support': support,
+      'code': code,
+      'abreviation': abreviation,
+      'code:insee': codeInsee,
+      'commune': commune,
+      'url:source': urlSource,
+      'note': note
+    };
   }
 
   void addEnd(HttpRequest request) {
     if (request.status != 201) {
-			showRequestError(request);
-			print(request.toString());
+      showError(request);
     } else {
-			var id = request.responseText;
-      showSuccess("Un nouveau document avec l'id #$id a été ajouté.");
-			print(request.responseText.toString());
-			document.id = id;
-			showCommands();
-			this.loadDocuments();
+      showSuccess('Un nouveau document avec l\'id #${request.responseText} a été ajouté.');
     }
   }
 
   void updateDoc(Event e) {
     e.preventDefault();
-		print('Update id : ${document.id}');
-    var id = document.id;
-		if (id != '') {
-			var data = new DataRequest.update()
-				..userId = 1
-				..id = int.parse(document.id)
-				..tags = document.tags;
-			dao.update(data);
-		}
+    var id = (shadowRoot.query('input[name="id"]') as InputElement).value,
+      dataUrl = '${urlBase}/$id',
+      meta = {
+        'utilisateurId' : 1,
+        'tags' : {
+          'etat' : 'M',
+          'type' : 'document',
+          'commentaire' : 'Modification du document #$id.'
+        }
+      },
+      tags = getTags(),
+      data = {'meta' : meta, 'tags': tags},
+      encodedData = JSON.encode(data);
+
+    var httpRequest = new HttpRequest();
+    httpRequest.open('POST', dataUrl);
+    httpRequest.setRequestHeader('Content-type', 'application/json');
+    httpRequest.onLoadEnd.listen((e) => updateEnd(httpRequest, id));
+    httpRequest.send(encodedData);
   }
 
-  void updateEnd(HttpRequest request) {
+  void updateEnd(HttpRequest request, String id) {
     if (request.status != 200) {
-			showRequestError(request);
-			print(request.toString());
+      showError(request);
     } else {
-      showSuccess("Le document avec l'id #${request.responseText} a été modifié.");
-			print(request.responseText.toString());
+      showSuccess('Le document avec l\'id #$id a été modifié.');
     }
   }
 
   void deleteDoc(Event e) {
-		e.preventDefault();
-		print('Delete id : ${document.id}');
-    var id = document.id;
-		if (id != '') {
-			var data = new DataRequest.delete()
-				..userId = 1
-				..id = int.parse(document.id);
-			dao.delete(data);
-		}
+    Element clickedElem = e.target;
+    var idDoc = clickedElem.attributes['data-id'],
+      meta = {
+        'utilisateurId' : 1,
+        'tags' : {
+          'etat' : 'S',
+          'type' : 'document',
+          'commentaire' : 'Suppression du document $idDoc.'
+        }
+      },
+      data = {'meta' : meta},
+      encodedData = JSON.encode(data),
+      url = '${urlBase}/$idDoc',
+      httpRequest = new HttpRequest();
+    httpRequest.open('DELETE', url);
+    httpRequest.setRequestHeader('Content-type', 'application/json');
+    httpRequest.onLoadEnd.listen((e) => deleteEnd(httpRequest));
+    print(encodedData);
+    httpRequest.send(encodedData);
   }
 
-  deleteEnd(HttpRequest request) {
-		if (request.status != 204) {
-			showRequestError(request);
+  void deleteEnd(HttpRequest request) {
+    if (request.status != 204) {
+      showError(request);
     } else {
-			print('Delete End');
-			this.loadDocuments();
-			document.clear();
-			hideCommands();
-			showSuccess('un document a été supprimé');
+      showSuccess('un document a été modifié.');
     }
   }
 
-  resetDoc(Event e) {
-		// Reinitialiser l'objet Warehouse
-		document.clear();
-		hideCommands();
-  }
-
-	showCommands() {
+  void resetDoc(Event e) {
+    // Show delete & update command
 		shadowRoot.querySelectorAll('.delete-doc-cmd, .update-doc-cmd').forEach((elem) {
-	  	elem.classes.remove('hide');
-	  });
-	}
-
-	hideCommands() {
-	  shadowRoot.querySelectorAll('.delete-doc-cmd, .update-doc-cmd').forEach((elem) {
-	  	elem.classes.add('hide');
-	  });
-	}
-
-	handleError(e) {
-		showError('Une erreur est survenue : ${e.toString()}');
-	}
-
-	showRequestError(HttpRequest request) {
-  	var msg = 'Une erreur de type ${request.status} est survenue. \n' +
-		'${request.responseText}';
-		showError(msg);
-	}
-
-  showError(String msg) {
-		_showMessage('error', msg);
+      elem.attributes.remove('data-id');
+      elem.classes.add('hide');
+    });
+		shadowRoot.querySelectorAll('.field').forEach((elem) {
+			elem.attributes.remove('value');
+		});
   }
 
-	showWarning(String msg) {
-		_showMessage('warning', msg);
-  }
-
-  showSuccess(String msg) {
-		_showMessage('success', msg);
-  }
-
-	_showMessage(String type, String msg) {
+  void showError(HttpRequest request) {
+    var msg = 'Une erreur de type ${request.status} est survenue. \n ${request.responseText}';
 		HtmlElement msgElem = new Element.tag('app-message');
 		AppMessage message = msgElem.xtag;
 		message.text = msg;
-		message.type = type;
+		message.type = 'error';
 
 		shadowRoot.children.add(msgElem);
-	}
+  }
+
+  void showSuccess(String msg) {
+		HtmlElement msgElem = new Element.tag('app-message');
+		AppMessage message = msgElem.xtag;
+		message.text = msg;
+		message.type = 'success';
+
+		shadowRoot.children.add(msgElem);
+
+    this.loadDocuments();
+  }
 }

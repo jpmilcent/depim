@@ -5,65 +5,11 @@ Creation-Date: mer., 19 mai 2010 20:37:25 +0200
 ====== Recherches ======
 Created mercredi 19 mai 2010
 
-===== Triplets / Tags =====
-
-== Sur wikini : ==
+=== Triplets / Tags ===
+Sur wikini :
  - http://www.wikini.net/wakka.php?wiki=DiscussionsModeleDeDonneesEvolutif 
  - http://www.wikini.net/wakka.php?wiki=WikiniSemantiqueSolutionsTechniques
 
-== Sur OpenStreetMap : ==
+Sur OpenStreetMap :
  - http://wiki.openstreetmap.org/wiki/Database_schema
  - http://wiki.openstreetmap.org/wiki/API_v0.6
-
-===== Dart =====
-En **gras**, les paquets supportés par l'équipe de développeurs de Dart :
-
-== Framework UI : ==
-* **Polymer** : http://pub.dartlang.org/packages/polymer
-* **html5lib** : http://pub.dartlang.org/packages/html5lib
-* Drag and drop : http://pub.dartlang.org/packages/html5_dnd
-* Lawndart : An easier way to access storage APIs in the browser. http://pub.dartlang.org/packages/lawndart
-* Gravatar : An easy-to-use library for generating gravatar image urls in Dart. http://pub.dartlang.org/packages/gravatar
- 
-
-== Routing : ==
-* **Route** : http://pub.dartlang.org/packages/route
-* **Route hierarchical** : Route is a client + server routing library for Dart that helps make building single-page web apps and using HttpServer easier.http://pub.dartlang.org/packages/route_hierarchical
-
-== Gestion des logs : ==
-* **logging** : http://pub.dartlang.org/packages/logging
-* Loggine Handlers : http://pub.dartlang.org/packages/logging_handlers
-* Log4dart : http://pub.dartlang.org/packages/log4dart
-
-== Gestion des évènements : ==
-* Utilisation d'un Event Bus : http://pub.dartlang.org/packages/event_bus
-* Sytème à la façon ActionScript3 : http://pub.dartlang.org/packages/dart_events
-
-== MVC : ==
-* Exemple de Model/View : http://pub.dartlang.org/packages/dart_mv 
-
-== Gestion des cookies : ==
-* Cookie : http://pub.dartlang.org/packages/cookie
-
-== Utilitaires : ==
-* Json object : http://pub.dartlang.org/packages/json_object
-* **docgen** : http://pub.dartlang.org/packages/docgen
-* **unittest** : http://pub.dartlang.org/packages/unittest
-
-===== HTML5 =====
-Infos sur l'utilisation des balises HTML 5.
-
-== Datalist ==
-Il n'est pas possible de récupérer une valeur caché comme un id d'une valeur sélectionné avec cet élément ([[http://devproconnections.com/html5/working-html5-web-forms-autocompletion-and-datalist-element|voir sur le web]]).
-Il est plutôt utile pour fournir une autocomplétion sur des champs qui récupérerait la valeur elle même comme un nom de famille, prénom, pays...
-Par contre, il est tout à fait possible de [[http://www.raymondcamden.com/index.cfm/2012/6/14/Example-of-a-dynamic-HTML5-datalist-control|charger la liste des options de la datalist dynamiquement]] en fonction des valeurs tapées par l'utilisateur dans le champ input lié.
-
-== Autocomplete ==
- - [[http://programming.oreilly.com/2013/09/build-reusable-widgets-for-the-web-with-polymer-and-dart.html|Build Reusable Widgets for the Web with Polymer and Dart]] ([[https://github.com/sethladd/dart-polymer-dart-examples/tree/master/web/auto_complete|code]])
- - [[https://github.com/hpoul/dart-autocomplete-ui|hpoul - dart-autocomplete-ui]] ([[http://hpoul.github.io/dart-autocomplete-ui/examples/example.html|demo]]) : choix du type de source et du type rendu
- - [[http://www.grobmeier.de/dart-creating-a-dynamic-list-with-dart-php-and-json-20112011.html|Dart: Creating a dynamic list with Dart, PHP and JSON]] ([[https://github.com/grobmeier/dartexamples/tree/master/dynamiclist|code]], [[http://code.grobmeier.de/dart/examples/dynamiclist/|demo]])
-
-===== Automastisme & tests =====
- - [[http://casperjs.org/|Casper.js]], [[http://phantomjs.org/|phantom.js,]] [[http://www.slimerjs.org/|slimmer.js]] : permet de tester des interfaces web sur les moteurs WebKit et Gecko.
- - [[http://gruntjs.com/|Grunt]] : outil automatisant des taches (compilation, minimification, lancement de tests unitaires ...)
-
