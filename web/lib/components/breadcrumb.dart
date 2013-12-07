@@ -31,7 +31,7 @@ class Breadcrumb extends PolymerElement with Observable {
 
 	changeBreadcrumb(id) {
 		print('BC id : $id');
-		/*
+		
 		var breadcrumbLength = siteMap[id].length;
 		breadcrumb.clear();
 		for (var i = 0; i < breadcrumbLength; i++) {
@@ -44,6 +44,5 @@ class Breadcrumb extends PolymerElement with Observable {
 			breadcrumbElemt.divider = (position != breadcrumbLength);
 			breadcrumb.add(breadcrumbElemt);
 		}
-		*/
 	}
 }
