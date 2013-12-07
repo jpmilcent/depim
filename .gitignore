@@ -1,5 +1,6 @@
 # Dart
 .buildlog
+build/
 packages
 pubspec.lock
 *.iml

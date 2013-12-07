@@ -5,6 +5,9 @@ description: Gestion des dépouillements en ligne.
 homepage: http://www.depim.net
 dependencies:
   browser: any
-  json_object: '>=1.0.17 <2.0.0'
+  json_object: any
   polymer: any
-  route: any
+  route: '>=0.4.6'
+transformers:
+- polymer:
+    entry_points: web/index.html

@@ -4,18 +4,14 @@ import 'dart:html';
 import 'package:polymer/polymer.dart';
 import 'package:route/client.dart';
 
-final HomeUrl = new UrlPattern(r'/depim/web/index.html');
-final ViewUrl = new UrlPattern(r'/depim/web/index.html#(\w+)');
-
-// A partir de Polymer 0.8.6 utiliser les deux lignes suivante :
+final HomeUrl = new UrlPattern(r'/depim/(web|build)/index.html');
+final ViewUrl = new UrlPattern(r'/depim/(web|build)/index.html#(\w+)');
 
 main() {
 	initPolymer();
-	print('main');
 	route();
 }
 
-@initMethod
 route() {
 	var router = new Router()
 		..addHandler(HomeUrl, openHomeByUrl)
@@ -31,7 +27,7 @@ void openHomeByUrl(String path) {
 void openViewByUrl(String path) {
 	// Since we only have one match group, we're only worried about the
 	// first result.
-	var fragment = ViewUrl.parse(path)[0];
+	var fragment = ViewUrl.parse(path)[1];
 	print('path: $path - fragment : $fragment');
 
 	// Véfifions l'existence de cette vue
@@ -50,7 +46,7 @@ void openViewByUrl(String path) {
   		view = 'warehouse';
   		break;
   	default:
-  		view = 'help-me';
+  		view = 'home';
   }
 	print('View: $view - Fragment: $fragment');
 	// Grab our custom element and assign to the page property.

@@ -1,6 +1,7 @@
 import 'package:polymer/polymer.dart';
 import 'dart:html';
 
+
 @CustomTag('app-main')
 class App extends PolymerElement {
 
@@ -63,7 +64,6 @@ class App extends PolymerElement {
 		shadowRoot.querySelectorAll('#menu .active').forEach((elem) {
 			elem.classes.clear();
 	  });
-		shadowRoot.querySelector(id)
-			..classes.add('active');
+		shadowRoot.querySelector(id).classes.add('active');
 	}
 }
