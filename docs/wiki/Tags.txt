@@ -19,7 +19,7 @@ Exemples de clés-valeurs : http://wiki.openstreetmap.org/wiki/FR:Map_Features
 **Description :**  
 **Valeurs possibles :** 
 
-== Structures ==
+== Structures : ==
 [[+Structures:type|type]]
 [[+Structures:nom|nom]]
 [[+Structures:code|code]]
@@ -34,7 +34,7 @@ Exemples de clés-valeurs : http://wiki.openstreetmap.org/wiki/FR:Map_Features
 [[+Structures:url|url]]
 [[+Structures:note|note]]
 
-== Documents ==
+== Documents :  ==
 [[:Tags:Documents:abreviation|abreviation]]
 [[:Tags:Documents:code|code]]
 [[:Tags:Documents:code:insee|code:insee]]

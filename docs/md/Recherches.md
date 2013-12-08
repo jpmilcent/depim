@@ -10,3 +10,4 @@ Sur wikini :
 Sur OpenStreetMap :
  - <http://wiki.openstreetmap.org/wiki/Database_schema>
  - <http://wiki.openstreetmap.org/wiki/API_v0.6>
+

@@ -5,20 +5,31 @@ Creation-Date: sam., 12 juin 2010 17:31:19 +0200
 ====== Architecture ======
 Created samedi 12 juin 2010
 
-== Choix technique ==
- - DART
+== Choix techniques ==
+* [[https://www.dartlang.org/|DART]]
 
 == Nous devons utiliser ==
- - un MDV
- - un controlleur de l'application (= Présenteur principal)
- - une gestion de l'historique du navigateur
- - des tests unitaires
- - le patron Commande pour la gestion des services web
- - éviter d'utiliser des bibliothèques tierces
+* des web components : [[https://www.dartlang.org/polymer-dart/|Polymer]]
+* une gestion de l'historique du navigateur : [[http://pub.dartlang.org/packages/route|package route]]
+* des tests unitaires : [[http://pub.dartlang.org/packages/unittest|package unittest]]
+* le [[http://fr.wikipedia.org/wiki/Commande_%28patron_de_conception%29|patron Commande]] pour la gestion des services web
+* éviter d'utiliser des bibliothèques tierces sinon essayer de les encapsuler avec le [[http://fr.wikipedia.org/wiki/Fa%C3%A7ade_%28patron_de_conception%29|patron Façade]]
 
 == Notes ==
-Réaliser des services web orientés par les besoins de l'interface.
-Dans les listes utiliser des objets "légés" contenant qu'une partie des champs de l'objet complet.
-Exemple : 
- - **Contact** contient (id, nom, prénom, nom_complet, courriel, adresse...)
- - **ContactLight** contient (id, nom_complet)
+* Réaliser des services web orientés par les besoins de l'interface.
+* Dans les listes utiliser des objets "légés" contenant qu'une partie des champs de l'objet complet.
+	* Exemple : 
+		 - **Contact** contient (id, nom, prénom, nom_complet, courriel, adresse...)
+		 - **ContactLight** contient (id, nom_complet)
+* Pour tous les actes, le formulaire doit comprendre trois onglets : acte, personnes, transcription.
+	* acte : toutes les infos sur l'acte lui même
+	* personnes : toutes les personnes citées dans l'acte
+	* transcription : une zone permettant de retranscrire le texte de l'acte.
+* Toutes les infos présentes dans la feuille excel de test doivent être accessible sur un même onglet!
+* Laisser la possibilité d'indiquer plusieurs noms, prénoms, lieu... pour une personne et le doute sur la donnée
+
+=== Besoins ===
+* Dans tous les actes pouvoir lister toutes les personnes listées
+* Les champs les plus important sont les noms et prénoms.
+* Trouver un système pour gérer les noms inconnus, et les noms difficile à lire.
+* Export et import au format Nimegue

@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2013-12-08T18:38:19+01:00
+
+====== Source ======
+Created dimanche 08 décembre 2013
+
+== Infos ==
+* Git : git clone https://github.com/jpmilcent/depim.git
+* Bogues : https://github.com/jpmilcent/depim/issues
+* Liste des noms de version de la Roadmap : [[http://fr.wikipedia.org/wiki/Calendrier_r%C3%A9publicain|liste des mois et jours du calendrier républicain]]
