@@ -2,11 +2,11 @@
 <meta charset="utf-8">
 
 <polymer-element name="app-breadcrumb">
-  <template>
+  <template if="{{breadcrumb.length > 0}}">
     <ul id="breadcrumb" class="breadcrumb">
       <template repeat="{{elem in breadcrumb}}">
-        <li class="{{elem.classCss}}">
-          <a href="{{elem.href}}">{{elem.name}}</a>
+        <li class?="{{elem.classCss}}">
+          <a href?="{{elem.href}}">{{elem.name}}</a>
           <template if="{{elem.divider == true}}">
             <span class="divider">></span>
           </template>
